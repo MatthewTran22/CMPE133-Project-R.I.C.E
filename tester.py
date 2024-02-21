@@ -9,4 +9,4 @@ app = Flask(__name__)
 @app.route('/')
 
 def index():
-    return render_template("connection_test.py") #change when renaming file or creating new file
+    return render_template("index.html") #change when renaming file or creating new file
