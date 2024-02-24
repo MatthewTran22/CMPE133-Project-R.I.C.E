@@ -19,15 +19,16 @@ function App(){
   return (
     
     <div>
-    {(typeof data.users_data === "undefined") ? (
+    {data.length === 0 ? (
       <p>Loading...</p>
     ) : (
-        data.users_data.map((user) => (
+      <ul>
+        {data.map((user) => (
           <li key={user.user_id}>
             <strong>User ID:</strong> {user.user_id}, <strong>Password:</strong> {user.password}, <strong>Email:</strong> {user.email}
           </li>
-        ))
-      
+        ))}
+      </ul>
     )}
   </div>
 
