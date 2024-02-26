@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Register: React.FC = () => {
+const Front = () => {
   return (
     <div>
       <h1>
@@ -10,4 +10,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default Front;

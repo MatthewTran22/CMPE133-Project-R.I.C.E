@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-interface UserData {
-  user_id: number;
-  password: string;
-  email: string;
-}
-
-const App: React.FC = () => {
-  const [data, setData] = useState<UserData[]>([]);
+const App = () => {
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     fetch("/test")
       .then(res => res.json())
-      .then((data: UserData[]) => {
+      .then((data) => {
         setData(data);
         console.log(data);
       });
