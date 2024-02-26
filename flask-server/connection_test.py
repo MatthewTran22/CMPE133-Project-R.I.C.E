@@ -1,10 +1,8 @@
 from flask import Flask, jsonify
 from dotenv import load_dotenv
-from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)
 
 env_file = os.environ.get("dbLogin_env")
 load_dotenv(env_file)
