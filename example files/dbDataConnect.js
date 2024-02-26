@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-
+//this file only serves to be a basic example on how to connect to the database from the python server
 function App(){
 
   const [data, setData]=useState([{}])
