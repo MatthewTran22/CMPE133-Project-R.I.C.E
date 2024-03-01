@@ -4,8 +4,8 @@ import os
 
 app = Flask(__name__)
 
-env_file = os.environ.get("dbLogin_env")
-load_dotenv(env_file)
+#env_file = os.environ.get("dbLogin_env")
+load_dotenv(dotenv_path = "dbLogin.env")
 
 import MySQLdb
 host = os.getenv("DB_HOST")
