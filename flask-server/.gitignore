@@ -1,2 +1,2 @@
 #Ignoring .env location#
-.env
+*.env
