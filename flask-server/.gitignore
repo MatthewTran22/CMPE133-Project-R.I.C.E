@@ -1,1 +1,2 @@
-dummyFile.py
+#Ignoring .env location#
+.env
