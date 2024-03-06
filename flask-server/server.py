@@ -1,8 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, session
 from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
+app.secret_key = "so secret"
 
 #env_file = os.environ.get("dbLogin_env")
 load_dotenv(dotenv_path = "dbLogin.env")
@@ -51,6 +52,26 @@ finally:
 @app.route("/test")
 def test():
         return jsonify(users_data)
+    
+
+@app.route("/login", methods=["POST"])
+def login_user():
+    email = request.json.get("email")
+    password = request.json.get("password")
+    
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM users WHERE user_id = %s", (email,))
+    user = cursor.fetchone()
+    
+    if user is None:
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    if password != user[1]:
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    session["user_id"] = user[0]
+    
+    return jsonify({"user_id": user[0], "email": user[2]})
 
     
 if __name__ == '__main__':
