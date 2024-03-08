@@ -23,7 +23,10 @@ connection = MySQLdb.connect(
     passwd=passwd,
     db=db,
     autocommit=True,
-    ssl={"rejectUnauthorized":True}
+    ssl_mode = "VERIFY_IDENTITY",
+  ssl      = {
+    "ca": os.getenv("SSL_PATH")
+  }
 )
 print("Connection success")
 
