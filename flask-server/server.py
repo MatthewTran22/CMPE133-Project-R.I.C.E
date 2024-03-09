@@ -23,6 +23,7 @@ connection = MySQLdb.connect(
     passwd=passwd,
     db=db,
     autocommit=True,
+    ssl={"rejectUnauthorized":True}
 )
 print("Connection success")
 
