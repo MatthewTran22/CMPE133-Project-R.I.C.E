@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
 const Front = () => {
   return (
     <div>
@@ -9,9 +8,8 @@ const Front = () => {
       <br />
       <h1>Welcome to Home Page</h1>
       <br />
-      <Navbar /> 
      
-      
+       
     </div>
   );  
 };  

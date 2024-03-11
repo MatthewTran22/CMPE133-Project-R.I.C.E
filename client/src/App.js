@@ -1,6 +1,7 @@
 import React, {userRef} from 'react';
-import Login from './pages/Login';
-import ReportPurchases from './pages/ReportPurchases';
+import Login from './template/login';
+import Register from './template/register';
+import Home from './template/Home';
 import {
   BrowserRouter as Router,
   Route,
@@ -10,11 +11,14 @@ import {
 
 
 function App() {
+  
+
   return (
     <Router>
       <Routes> 
-        <Route path="/" element={<Login /> } />
-        <Route path="/ReportPurchases" element={<ReportPurchases /> } />
+        <Route path="/" element={<Home /> } />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Register" element={<Register /> } />
 
       </Routes>
     </Router>
