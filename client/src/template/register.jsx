@@ -69,7 +69,7 @@ const Register = () => {
       const response = await fetch('/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email, pwd })
       });
