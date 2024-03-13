@@ -59,6 +59,27 @@ const Register = () => {
       setErrMsg("Invalid Entry");
       return; //will come back to this, this section should be calling the python backend to insert the data into the SQL DB
     }
+    //next steps: call backend to submit data into user db
+    //if successful navigate to the input info page
+    if (typeof email !== 'string' || typeof pwd !== 'string') {
+      console.error('Email and password must be strings.');
+      return;
+    }
+    try {
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'json'
+        },
+        body: JSON.stringify({ email, pwd })
+      });
+      const data = await response.json();
+      console.log(data);
+      // Handle success or display any error messages
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle error
+    }
   }
   
   return (
