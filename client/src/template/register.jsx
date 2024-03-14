@@ -1,9 +1,12 @@
 import React, {useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import Redirect from React Router
+
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; //this checks if the email has at least 2 letters before the email name
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/; //this checks if the password has at least 1 lower case, one upper case, one number and one special character
 
 const Register = () => {
+  const nav = useNavigate();
   const userRef = useRef();
   const errRef = useRef();
 
@@ -21,6 +24,8 @@ const Register = () => {
 
   const[errMsg, setErrMsg] = useState('');
   const[success, setSuccess] = useState(false);
+
+  
 
   useEffect (() => {
     userRef.current.focus();
@@ -74,7 +79,18 @@ const Register = () => {
         body: JSON.stringify({ email, pwd })
       });
       const data = await response.json();
-      console.log(data);
+      const err = data.error;
+      if (response.ok) {
+        setErrMsg('');
+        setSuccess(true);
+        nav('../login');
+      } 
+      else if(err.includes('23505')){
+        setErrMsg("Email already Registered");
+      }
+      else{
+        setErrMsg("Something went wrong! Please try again in a few minutes!");
+      }
       // Handle success or display any error messages
     } catch (error) {
       console.error('Error:', error);
@@ -84,10 +100,10 @@ const Register = () => {
   
   return (
     <section>
-      <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
       <h1>
         Create an Account
-      </h1>
+      </h1> <br />
+      <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email"> {/* input field for email */}
           Email:
@@ -156,6 +172,8 @@ const Register = () => {
 
 
       </form>
+
+      
      
     </section>
   );

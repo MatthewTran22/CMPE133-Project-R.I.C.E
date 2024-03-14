@@ -26,17 +26,17 @@ def register():
         data = request.json
         email = data.get('email')
         password = data.get('pwd')
+
         
         # Insert the data into the "users" table
         response = supabase.table("users").insert({"email": email, "password": password}).execute()
         
         # Check if the insertion was successful
-        if response['status'] == 201:
-            return jsonify({"message": "User registered successfully"})
-        else:
-            return jsonify({"error": "Failed to register user"}), 500
+        
+        return jsonify({"message": "User registered successfully"})
+        
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e.code)}), 500
 
 
 
