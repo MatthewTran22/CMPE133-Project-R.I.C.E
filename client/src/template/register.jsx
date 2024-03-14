@@ -94,6 +94,8 @@ const Register = () => {
       // Handle success or display any error messages
     } catch (error) {
       console.error('Error:', error);
+      setErrMsg('Failed to connect to the server. Please try again later.'); // Set error message
+
       // Handle error
     }
   }
