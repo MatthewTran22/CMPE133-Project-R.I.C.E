@@ -40,6 +40,41 @@ def register():
     except Exception as e:
         return jsonify({"error": str(e.code)}), 500
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    try:
+        email = request.json.get("email")
+        password = request.json.get("password")
+
+        if not email or not password:
+            return jsonify({"error": "Email and password are required"}), 400
+
+        response = supabase.table("users").select("*").eq("email", email).execute()
+        user = response.data[0]
+
+        if user:
+            if user["password"] == password:
+                session["user_id"] = user.get("user_id")
+                return jsonify({"message": "User logged in successfully"}), 200
+            else:
+                return jsonify({"error": "Invalid password"}), 401
+        else:
+            return jsonify({"error": "User not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e.code)}), 500
+    
+'''
+@app.route('/login', methods=['GET','POST'])
+def login():
+    email = request.json.get("email")
+    password = request.json.get("password")
+    
+    response = supabase.table("users").select("*").eq("email", email).execute()
+    user = response. data[0]
+    
+    if user is None or user["password"] != password:
+        return jsonify({"error": "Invalid email or password"}), 401
+'''
 
 
 if __name__ == '__main__':
