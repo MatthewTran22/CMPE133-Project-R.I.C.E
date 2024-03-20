@@ -36,7 +36,7 @@ const Login = () => {
       if (response.ok) {
         setErrMsg("");
         setSuccess(true);
-        nav('/home');
+        nav('/ProcessLogin');
       }
       else {
         setErrMsg(err);

@@ -28,6 +28,8 @@ def register():
         email = data.get('email')
         password = data.get('pwd')
         myuuid = uuid.uuid4()
+        info_start = supabase.table("user_info").insert({"user_id": str(myuuid)}).execute()
+
 
         
         # Insert the data into the "users" table
