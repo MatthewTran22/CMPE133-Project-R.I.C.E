@@ -56,7 +56,11 @@ const Login = () => {
 
 
   return (
-    <div className="flex min-h-full h-screen bg-slate-800 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8">
+      <div id="stars"></div>
+            <div id="stars2"></div>
+            <div id="stars3"></div>
+            <div id="title"></div>
       {/* <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live='assertive'> 
         {errMsg}
       </p> */}
