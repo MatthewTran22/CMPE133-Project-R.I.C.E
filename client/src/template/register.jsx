@@ -90,68 +90,108 @@ const Register = () => {
   }
 
   return (
-    <section style={{ color: 'white' }}>
-      <h1>Create an Account</h1> <br />
+    <section>
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <img
+          className="mx-auto h-20 w-auto drop-shadow-2xl"
+          src="https://media.discordapp.net/attachments/1193446068382355466/1207585940542062612/image.png?ex=65fbde8c&is=65e9698c&hm=36c87a4a2ba25892d6f640439752c023c5cb82077c9dc93c3868cac1c1120ff4&format=webp&quality=lossless&width=365&height=152&"
+          alt="RICE-logo"
+        />
+        <h2 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-white">
+          Create an Account
+        </h2>
+      </div>
       <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          id="email"
-          ref={userRef}
-          autoComplete="off"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          aria-invalid={validEmail ? "false" : "true"}
-          aria-describedby="uidnote"
-          onFocus={() => setEmailFocus(true)}
-          onBlur={() => setEmailFocus(false)}
-        />
-        <p id="uidnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
-          At least 2 characters <br />
-          Needs to be a proper email address <br />
-          TODO: MAKE THIS APPEAR AND DISAPPEAR BASED ON THE STATUS OF THE TEXT BOX
-        </p>
-
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          onChange={(e) => setPwd(e.target.value)}
-          required
-          aria-invalid={validPwd ? "false" : "true"}
-          aria-describedby="pwdnote"
-          onFocus={() => setPwdFocus(true)}
-          onBlur={() => setPwdFocus(false)}
-        />
-        <p id="pwdnote" className={pwdFocus && pwd && !validPwd ? "instructions" : "offscreen"}>
-          8 to 24 characters <br />
-          Must include one lower case, one upper case, one number, and one special character <br />
-          Allowed special characters: <span aria-label='exclamation mark'>!</span> <span aria-label='at symbol'>@</span> <span aria-label='hashtag'>#</span> <span aria-label='dollar sign'>$</span> <span aria-label='percent'>%</span> <br />
-          TODO: MAKE THIS APPEAR AND DISAPPEAR BASED ON THE STATUS OF THE TEXT BOX
-        </p>
-
-        <label htmlFor="confirm_pwd">Confirm Password:</label>
-        <input
-          type="password"
-          id="confirm_pwd"
-          onChange={(e) => setMatchPwd(e.target.value)}
-          required
-          aria-invalid={validMatch ? "false" : "true"}
-          aria-describedby="confirmnote"
-          onFocus={() => setMatchFocus(true)}
-          onBlur={() => setMatchFocus(false)}
-        />
-        <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-          8 to 24 characters <br />
-          Password does not match <br />
-          TODO: MAKE THIS APPEAR AND DISAPPEAR BASED ON THE STATUS OF THE TEXT BOX
-        </p>
-
-        <button disabled={!validEmail || !validPwd || !validMatch ? true : false}>Create an Account</button>
-      </form>
+      <div
+        className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-200 p-5 flex flex-col justify-center"
+        style={{ minHeight: "300px", minWidth: "500px" }}
+      >
+        <form onSubmit={handleSubmit}>
+          <div className="mb-6">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium leading-6 text-stone-800"
+            >
+              Email address
+            </label>
+            <input
+              type="text"
+              id="email"
+              ref={userRef}
+              autoComplete="off"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              aria-invalid={validEmail ? "false" : "true"}
+              aria-describedby="uidnote"
+              onFocus={() => setEmailFocus(true)}
+              onBlur={() => setEmailFocus(false)}
+            />
+            <p id="uidnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
+              At least 2 characters <br />
+              Needs to be a proper email address <br />
+              TODO: MAKE THIS APPEAR AND DISAPPEAR BASED ON THE STATUS OF THE TEXT BOX
+            </p>
+          </div>
+          <div className="mb-6">
+            <div className="flex justify-between">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-stone-800"
+              >
+                Password
+              </label>
+            </div>
+            <div className="mt-1 rounded-md shadow-sm">
+              <input
+                type="password"
+                id="password"
+                onChange={(e) => setPwd(e.target.value)}
+                required
+                aria-invalid={validPwd ? "false" : "true"}
+                aria-describedby="pwdnote"
+                onFocus={() => setPwdFocus(true)}
+                onBlur={() => setPwdFocus(false)}
+              />
+              <p id="pwdnote" className={pwdFocus && pwd && !validPwd ? "instructions" : "offscreen"}>
+                8 to 24 characters <br />
+                Must include one lower case, one upper case, one number, and one special character <br />
+                Allowed special characters: <span aria-label='exclamation mark'>!</span> <span aria-label='at symbol'>@</span> <span aria-label='hashtag'>#</span> <span aria-label='dollar sign'>$</span> <span aria-label='percent'>%</span> <br />
+                TODO: MAKE THIS APPEAR AND DISAPPEAR BASED ON THE STATUS OF THE TEXT BOX
+              </p>
+            </div>
+          </div>
+          <div className="mb-6">
+            <div className="flex justify-between">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-stone-800"
+              >
+                Confirm Password
+              </label>
+            </div>
+            <div className="mt-1 rounded-md shadow-sm">
+              <input
+                type="password"
+                id="confirm_pwd"
+                onChange={(e) => setMatchPwd(e.target.value)}
+                required
+                aria-invalid={validMatch ? "false" : "true"}
+                aria-describedby="confirmnote"
+                onFocus={() => setMatchFocus(true)}
+                onBlur={() => setMatchFocus(false)}
+              />
+              <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+                8 to 24 characters <br />
+                Password does not match <br />
+                TODO: MAKE THIS APPEAR AND DISAPPEAR BASED ON THE STATUS OF THE TEXT BOX
+              </p>
+            </div>
+          </div>
+          <button disabled={!validEmail || !validPwd || !validMatch ? true : false}>Create an Account</button>
+        </form>
+      </div>
     </section>
-  );
+  );  
 };
 
 export default Register;

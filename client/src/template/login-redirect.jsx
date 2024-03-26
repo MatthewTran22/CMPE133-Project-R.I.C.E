@@ -4,7 +4,7 @@ import React from 'react'
 
 const Redirect = () => {
   return (
-    <div>
+    <div style={{ color: 'white' }}>
       <h1>PROCESSING....</h1>
     </div>
   )
