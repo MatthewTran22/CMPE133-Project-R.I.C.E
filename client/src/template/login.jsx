@@ -35,8 +35,9 @@ const Login = () => {
 
       if (response.ok) {
         setErrMsg("");
+        const id = data.user_id;
         setSuccess(true);
-        nav('/ProcessLogin');
+        nav("/ProcessLogin");
       }
       else {
         setErrMsg(err);

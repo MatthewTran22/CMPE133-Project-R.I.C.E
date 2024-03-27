@@ -56,8 +56,9 @@ def login():
 
         if user:
             if user["password"] == password:
-                session["user_id"] = user.get("user_id")
-                return jsonify({"message": "User logged in successfully"}), 200
+                id = user.get("user_id")
+                session["user_id"] = id
+                return jsonify({"Message": "Login Successful"}), 200
             else:
                 return jsonify({"error": "Invalid password"}), 401
         else:
@@ -65,23 +66,22 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e.code)}), 500
     
-'''
-@app.route('/login', methods=['GET','POST'])
-def login():
-    email = request.json.get("email")
-    password = request.json.get("password")
+@app.route('/check_session')
+def check_session():
+    if 'user_id' in session:
+        return jsonify({'Login': True})
+    else:
+         return jsonify({"error": "Session not found"}), 404
     
-    response = supabase.table("users").select("*").eq("email", email).execute()
-    user = response. data[0]
-    
-    if user is None or user["password"] != password:
-        return jsonify({"error": "Invalid email or password"}), 401
-'''
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    return jsonify(message='Logout successful')
 
 
 if __name__ == '__main__':
     app.run(debug=True)
 
 
-
+ 
 
