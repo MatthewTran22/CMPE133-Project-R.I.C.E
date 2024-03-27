@@ -1,0 +1,79 @@
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body, html {
+height: 100%;
+scroll-snap-type: y mandatory;
+}
+
+.box {
+height: 100vh;
+scroll-snap-align: start;
+display: flex;
+color: white;
+font-family: Helvetica;
+justify-content: center;
+align-items: center;
+font-size: 2em;
+background-color: rgba(32,41,58,255);
+}
+
+.footer {
+background: black;
+color:white;
+}
+
+.image-container {
+position: relative;
+width: 100%;
+height: 100%;
+}
+
+.bgpng {
+width: 100%;
+height: 100%;
+object-fit: cover;
+filter: blur(5px); /* Ensures the image fills the container */
+}
+
+.text-overlay {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+color: rgb(239, 239, 255); /* Text color */
+font-size: 1em; /* Adjust font size as needed */
+}
+
+.scroll-to-top {
+position: fixed;
+bottom: 20px;
+right: 20px;
+cursor: pointer;
+z-index: 9999;
+}
+
+.circle {
+width: 40px;
+height: 40px;
+background-color: white;
+border-radius: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.circle:before {
+content: "↑";
+color: black;
+font-size: 20px;
+}
