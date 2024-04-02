@@ -66,6 +66,14 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e.code)}), 500
     
+@app.route('/info_check')
+def info_check():
+    table = 'user_info'
+    id = session.get('user_id')
+    response = supabase.table(table).select('First_Login').eq('user_id', id).execute()
+    ans = response.data
+    return jsonify({'FirstLogin': ans})
+    
 @app.route('/check_session')
 def check_session():
     if 'user_id' in session:
