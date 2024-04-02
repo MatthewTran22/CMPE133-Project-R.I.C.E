@@ -18,6 +18,7 @@ const useUserInfo = () => {
         if (response.ok) {
           const data = await response.json();
           setUserInfo(data.info);
+          console.log(data);
         } else {
           throw new Error("Error checking user info.");
         }

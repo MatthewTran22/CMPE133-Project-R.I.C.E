@@ -71,7 +71,8 @@ def info_check():
     table = 'user_info'
     id = session.get('user_id')
     response = supabase.table(table).select('First_Login').eq('user_id', id).execute()
-    ans = response.data
+    data = response.data
+    ans = data[0]['First_Login']
     return jsonify({'FirstLogin': ans})
     
 @app.route('/check_session')
