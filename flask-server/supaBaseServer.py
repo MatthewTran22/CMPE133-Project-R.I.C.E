@@ -58,7 +58,11 @@ def login():
             if user["password"] == password:
                 id = user.get("user_id")
                 session["user_id"] = id
-                return jsonify({"Message": "Login Successful"}), 200
+                firstLogin = info_check()
+                if(firstLogin):
+                    return jsonify({"Nav":"/InfoInput"}),200
+                else:
+                    return jsonify({"Nav":"/Dashboard"}),200
             else:
                 return jsonify({"error": "Invalid password"}), 401
         else:
@@ -66,14 +70,13 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e.code)}), 500
     
-@app.route('/info_check')
 def info_check():
     table = 'user_info'
     id = session.get('user_id')
     response = supabase.table(table).select('First_Login').eq('user_id', id).execute()
     data = response.data
     ans = data[0]['First_Login']
-    return jsonify({'FirstLogin': ans})
+    return ans
     
 @app.route('/check_session')
 def check_session():
