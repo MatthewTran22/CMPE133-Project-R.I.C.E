@@ -1,4 +1,6 @@
 import React, {useRef, useState, useEffect } from 'react';
+import '../styles.css';
+
 import { useNavigate } from 'react-router-dom'; // Import Redirect from React Router
 
 const Login = () => {
@@ -57,11 +59,14 @@ const Login = () => {
 
 
   return (
-    <div className="flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8">
-      <div id="stars"></div>
+    <div className= "star-bg">
+            <div id="stars"></div>
             <div id="stars2"></div>
             <div id="stars3"></div>
             <div id="title"></div>
+      
+    <div className="flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8">
+      
       {/* <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live='assertive'> 
         {errMsg}
       </p> */}
@@ -153,6 +158,7 @@ const Login = () => {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }
