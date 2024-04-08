@@ -3,6 +3,7 @@ import Login from './template/login';
 import Register from './template/register';
 import Home from './template/Home';
 import InfoInput from './template/input-info';
+import Dashboard from './template/Dashboard'
 import {
   BrowserRouter as Router,
   Route,
@@ -21,6 +22,8 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register /> } />
         <Route path="/InfoInput" element={<InfoInput /> } />
+        <Route path="/InfoInput" element={<InfoInput /> } />
+        <Route path="/Dashboard" element={<Dashboard /> } />
 
       </Routes>
     </Router>
