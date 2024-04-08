@@ -2,7 +2,6 @@ import React, {userRef} from 'react';
 import Login from './template/login';
 import Register from './template/register';
 import Home from './template/Home';
-import useSessionChecker from './components/SessionCheck';
 import InfoInput from './template/input-info';
 import {
   BrowserRouter as Router,
