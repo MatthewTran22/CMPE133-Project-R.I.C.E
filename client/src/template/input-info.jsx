@@ -8,17 +8,19 @@ const InputInfo = () => {
   const [name, setName] = useState('');
   const [income, setIncome] = useState('');
   const [budgetPlan, setBudgetPlan] = useState('50/25/25'); // Default budget plan
+  const [formIsValid, setFormIsValid] = useState(false);
 
   // Use an effect to redirect to a results page when both name, income, and budgetPlan are set
   useEffect(() => {
-    if (name !== '' && income !== '' && budgetPlan !== '') {
+    if (formIsValid) {
       nav('/results', { state: { name, income, budgetPlan } });
     }
-  }, [name, income, budgetPlan, nav]);
+  }, [formIsValid, name, income, budgetPlan, nav]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name !== '' && income !== '' && budgetPlan !== '') {
+    setFormIsValid(name !== '' && income !== '' && budgetPlan !== '');
+    if (formIsValid) {
       nav('/results', { state: { name, income, budgetPlan } });
     }
   };
