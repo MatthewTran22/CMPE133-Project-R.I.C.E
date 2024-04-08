@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import Redirect from React Router
 
+import Logo from './images/ricelogo.png';
+
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; //this checks if the email has at least 2 letters before the email name
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/; //this checks if the password has at least 1 lower case, one upper case, one number and one special character
 
@@ -96,11 +98,9 @@ const Register = () => {
             <div id="stars3"></div>
             <div id="title"></div>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="mx-auto h-20 w-auto drop-shadow-2xl"
-          src="https://media.discordapp.net/attachments/1193446068382355466/1207585940542062612/image.png?ex=65fbde8c&is=65e9698c&hm=36c87a4a2ba25892d6f640439752c023c5cb82077c9dc93c3868cac1c1120ff4&format=webp&quality=lossless&width=365&height=152&"
-          alt="RICE-logo"
-        />
+        <div className="w-1/2"  onClick={() => { nav("/") }}>
+          <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo"  />
+        </div>
         <h2 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-white">
           Create an Account
         </h2>
