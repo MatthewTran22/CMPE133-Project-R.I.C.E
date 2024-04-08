@@ -3,6 +3,8 @@ import '../styles.css';
 
 import { useNavigate } from 'react-router-dom'; // Import Redirect from React Router
 
+import Logo from './images/ricelogo.png';
+
 const Login = () => {
   const nav = useNavigate();
   const userRef = useRef();
@@ -73,12 +75,10 @@ const Login = () => {
       <div className={errMsg ? "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded flex max-w-2xl" : "hidden"}>
         <p ref={errRef}>{errMsg}</p>
       </div>
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="mx-auto h-20 w-auto drop-shadow-2xl"
-          src="https://media.discordapp.net/attachments/1193446068382355466/1207585940542062612/image.png?ex=65fbde8c&is=65e9698c&hm=36c87a4a2ba25892d6f640439752c023c5cb82077c9dc93c3868cac1c1120ff4&format=webp&quality=lossless&width=365&height=152&"
-          alt="RICE-logo"
-        />
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
+        <div onClick={() => { nav("/") }}>
+          <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo" />
+        </div>
         <h2 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-white">
           Sign in to your account
         </h2>
