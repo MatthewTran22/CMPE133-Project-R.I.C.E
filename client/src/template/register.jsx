@@ -92,19 +92,22 @@ const Register = () => {
   }
 
   return (
+
+    <div className= "star-bg">
     <section className="flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8">
-     <div id="stars"></div>
+            <div id="stars"></div>
             <div id="stars2"></div>
             <div id="stars3"></div>
             <div id="title"></div>
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <div className="w-1/2"  onClick={() => { nav("/") }}>
-          <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo"  />
-        </div>
-        <h2 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-white">
-          Create an Account
-        </h2>
+            <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
+      <div onClick={() => { nav("/") }}>
+          <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo" />
       </div>
+      <h2 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-white">
+        Create an Account
+      </h2>
+    </div>
+
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-200 p-5 flex flex-col justify-center" style={{ minHeight: "300px", minWidth: "500px" }}>
         <form onSubmit={handleSubmit}>
         <p ref={errRef} className={`text-center ${errMsg ? "text-red-600" : "hidden"}`} aria-live="assertive">{errMsg}</p>
@@ -183,6 +186,7 @@ const Register = () => {
         </form>
       </div>
     </section>
+  </div>
   );
   
 };
