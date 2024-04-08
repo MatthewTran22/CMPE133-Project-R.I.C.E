@@ -7,18 +7,19 @@ const InputInfo = () => {
   useSessionChecker();
   const [name, setName] = useState('');
   const [income, setIncome] = useState('');
+  const [budgetPlan, setBudgetPlan] = useState('50/25/25'); // Default budget plan
 
-  // Use an effect to redirect to a results page when both name and income are set
+  // Use an effect to redirect to a results page when both name, income, and budgetPlan are set
   useEffect(() => {
-    if (name !== '' && income !== '') {
-      nav('/results', { state: { name, income } });
+    if (name !== '' && income !== '' && budgetPlan !== '') {
+      nav('/results', { state: { name, income, budgetPlan } });
     }
-  }, [name, income, nav]);
+  }, [name, income, budgetPlan, nav]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name !== '' && income !== '') {
-      nav('/results', { state: { name, income } });
+    if (name !== '' && income !== '' && budgetPlan !== '') {
+      nav('/results', { state: { name, income, budgetPlan } });
     }
   };
 
@@ -62,6 +63,23 @@ const InputInfo = () => {
               value={income}
               onChange={(e) => setIncome(e.target.value)}
             />
+          </div>
+          <div className="space-y-1">
+            <label htmlFor="budgetPlan" className="block text-sm font-medium text-gray-700">
+              Choose a Budget Plan
+            </label>
+            <select
+              id="budgetPlan"
+              name="budgetPlan"
+              autoComplete="budget-plan"
+              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+              value={budgetPlan}
+              onChange={(e) => setBudgetPlan(e.target.value)}
+            >
+              <option value="50/25/25">50/25/25</option>
+              <option value="50/20/30">50/20/30</option>
+              <option value="70/20/10">70/20/10</option>
+            </select>
           </div>
           <button
             type="submit"
