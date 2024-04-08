@@ -41,7 +41,7 @@ const Login = () => {
         setErrMsg("");
         const id = data.user_id;
         setSuccess(true);
-        nav(data.Nav);
+        nav(data.Nav);        
       }
       else {
         setErrMsg(err);

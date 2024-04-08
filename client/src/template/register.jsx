@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import Redirect from React Router
+import '../styles.css';
 
 import Logo from './images/ricelogo.png';
 
@@ -99,7 +100,7 @@ const Register = () => {
             <div id="stars2"></div>
             <div id="stars3"></div>
             <div id="title"></div>
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
+    <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
       <div onClick={() => { nav("/") }}>
           <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo" />
       </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import Nav1 from '../components/Nav1';
 import Totalbuget from '../components/TotalBuget';
+import '../styles.css';
 import {
   BrowserRouter as Router,
   Route,
@@ -11,7 +12,7 @@ import {
 
 const Login = () => { 
     return (
-        <div>
+        <div className= "star-bg">
           <div className="w-full h-screen">
           <div id="stars"></div>
           <div id="stars2"></div>
