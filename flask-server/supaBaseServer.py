@@ -103,7 +103,7 @@ def infoInput():
     savingsLeft = (percents[1]/100) * float(monthlyIncome)
 
     #Sets up all the starting info for user
-    response = supabase.table('user_info').update({'username': name, 'monthly_income': monthlyIncome, 'total_needs': needs, 'total_wants': wants, 'total_savings': savingsLeft, 'First_Login' : False}).eq('user_id',id).execute()
+    response = supabase.table('user_info').update({'username': name, 'monthly_income': monthlyIncome, 'total_needs': needs, 'total_wants': wants, 'total_remaining': monthlyIncome, 'total_savings': savingsLeft, 'First_Login' : False}).eq('user_id',id).execute()
     
     
 
