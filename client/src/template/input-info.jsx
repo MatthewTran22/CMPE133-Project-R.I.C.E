@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSessionChecker from '../components/SessionCheck';
 
@@ -9,6 +9,8 @@ const InputInfo = () => {
   const [income, setIncome] = useState('');
   const [budgetPlan, setBudgetPlan] = useState('50/25/25'); // Default budget plan
   const [formIsValid, setFormIsValid] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+
 
   // Use an effect to redirect to a results page when both name, income, and budgetPlan are set
   useEffect(() => {
@@ -17,11 +19,28 @@ const InputInfo = () => {
     }
   }, [formIsValid, name, income, budgetPlan, nav]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormIsValid(name !== '' && income !== '' && budgetPlan !== '');
-    if (formIsValid) {
-      nav('/results', { state: { name, income, budgetPlan } });
+    try {
+      const response = await fetch('/infoUpdate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, income, budgetPlan })
+      });
+      if (response.ok) {
+        console.log('updated');
+        //nav('../Dashboard'); //input info success go to dashboard
+      }
+  
+      // Handle success or display any error messages
+    } catch (error) {
+      console.error('Error:', error);
+      setErrMsg('Failed to connect to the server. Please try again later.'); // Set error message
+      console.log(errMsg);
+  
+      // Handle error
     }
   };
 

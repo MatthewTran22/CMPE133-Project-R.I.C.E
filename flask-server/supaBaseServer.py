@@ -90,6 +90,22 @@ def logout():
     session.pop('user_id', None)
     return jsonify(message='Logout successful')
 
+@app.route('/infoUpdate', methods=['GET', 'POST'])
+def infoUpdate():
+    data = request.json
+    id = session.get('user_id')
+    name = data.get('name')
+    monthlyIncome = data.get('income')
+    budgetPlan = data.get('budgetPlan')
+
+    #Sets up all the starting info for user
+    response = supabase.table('user_info').update({'username': name}).eq('user_id',id).execute()
+    response = supabase.table('user_info').update({'monthly_income': monthlyIncome}).eq('user_id',id).execute()
+    
+
+
+    return jsonify({"Message": "Done"})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
