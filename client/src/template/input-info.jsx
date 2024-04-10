@@ -22,7 +22,7 @@ const InputInfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/infoUpdate', {
+      const response = await fetch('/infoInput', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -31,7 +31,7 @@ const InputInfo = () => {
       });
       if (response.ok) {
         console.log('updated');
-        //nav('../Dashboard'); //input info success go to dashboard
+        nav('../Dashboard'); //input info success go to dashboard
       }
   
       // Handle success or display any error messages

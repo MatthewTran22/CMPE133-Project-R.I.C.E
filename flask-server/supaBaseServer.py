@@ -90,18 +90,23 @@ def logout():
     session.pop('user_id', None)
     return jsonify(message='Logout successful')
 
-@app.route('/infoUpdate', methods=['GET', 'POST'])
-def infoUpdate():
+@app.route('/infoInput', methods=['GET', 'POST'])
+def infoInput():
     data = request.json
     id = session.get('user_id')
     name = data.get('name')
     monthlyIncome = data.get('income')
     budgetPlan = data.get('budgetPlan')
+    percents = numbers = [int(part) for part in budgetPlan.split("/")]
+    needs = (percents[0]/100) * float(monthlyIncome)
+    wants = (percents[2]/100) * float(monthlyIncome)
+    savingsLeft = (percents[1]/100) * float(monthlyIncome)
 
     #Sets up all the starting info for user
-    response = supabase.table('user_info').update({'username': name}).eq('user_id',id).execute()
-    response = supabase.table('user_info').update({'monthly_income': monthlyIncome}).eq('user_id',id).execute()
+    response = supabase.table('user_info').update({'username': name, 'monthly_income': monthlyIncome, 'total_needs': needs, 'total_wants': wants, 'total_savings': savingsLeft, 'First_Login' : False}).eq('user_id',id).execute()
     
+    
+
 
 
     return jsonify({"Message": "Done"})
