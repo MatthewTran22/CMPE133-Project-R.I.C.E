@@ -14,10 +14,11 @@ KEY = os.getenv("SUPABASE_KEY")
 supabase = Client(URL, KEY)
 print("connection success")
 
-@app.route('/users')
-def users():
-    # Execute the query to retrieve users from Supabase
-    response = supabase.table("users").select("*").execute()
+@app.route('/getInfo')
+def getInfo():
+    # Execute the query to retrieve user info from Supabase
+    id = session.get('user_id')
+    response = supabase.table("user_info").select("*").eq('user_id', id).execute()
     return jsonify(response.data)
 
 @app.route('/register', methods=['GET', 'POST'])

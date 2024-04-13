@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Nav1 from '../components/Nav1';
 import Totalbuget from '../components/TotalBuget';
+import TotalNeeds from '../components/TotalNeeds';
 import '../styles.css';
 import {
   BrowserRouter as Router,
@@ -10,7 +11,20 @@ import {
   useNavigate
 } from "react-router-dom";
 
-const Login = () => { 
+const Dashboard = () => { 
+  const[info, setInfo] = useState([]);
+
+  useEffect(() => {
+    fetch("/getInfo")
+      .then(res => res.json())
+      .then((info) => {
+        setInfo(info);
+        console.log(info);
+      });
+  }, []);
+  const totalIncome = info[0].total_remaining;
+  console.log(totalIncome);
+  const totalNeeds = info[0].total_needs;
     return (
         <div className= "star-bg">
           <div className="w-full h-screen">
@@ -19,7 +33,8 @@ const Login = () => {
           <div id="stars3"></div>
           <div id="title"></div>
             <Nav1 />
-            <Totalbuget />
+            <Totalbuget totalIncome = {totalIncome}/> <br/>
+            <TotalNeeds totalNeeds={totalNeeds} />
           </div>
           
           
@@ -27,4 +42,4 @@ const Login = () => {
     );
 }
 
-export default Login;
+export default Dashboard;
