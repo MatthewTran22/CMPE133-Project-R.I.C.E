@@ -1,5 +1,6 @@
 import React, {useRef, useState, useEffect } from 'react';
 import '../styles.css';
+import { TiDeleteOutline } from "react-icons/ti";
 
 import { useNavigate } from 'react-router-dom'; // Import Redirect from React Router
 
@@ -15,13 +16,6 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
-  // useEffect(() => {
-  //   userRef.current.focus();
-  // }, );
-
-  useEffect( () => {
-    setErrMsg("");
-  }, [email, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +30,7 @@ const Login = () => {
       });
       const data = await response.json();
       const err = data.error;
-
+  
       if (response.ok) {
         setErrMsg("");
         const id = data.user_id;
@@ -44,18 +38,16 @@ const Login = () => {
         nav(data.Nav);        
       }
       else {
-        setErrMsg(err);
+        setErrMsg(err); // Assuming the error message is in 'err' property
       }
-
+  
     } catch (error) {
       console.error('Error:', error);
-      setErrMsg("Invalid Entry");
-      errRef.current.focus();
+      setErrMsg(error.message || "An unexpected error occured"); // Access specific error message or provide a generic message
     }
-
+  
     setEmail("");
     setPassword("");
-    console.log(errMsg);
   }
 
 
@@ -67,14 +59,17 @@ const Login = () => {
             <div id="stars3"></div>
             <div id="title"></div>
       
-    <div className="flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full h-screen flex-col justify-center px-6 pb-12 lg:px-8">
       
-      {/* <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live='assertive'> 
-        {errMsg}
-      </p> */}
-      <div className={errMsg ? "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded flex max-w-2xl" : "hidden"}>
-        <p ref={errRef}>{errMsg}</p>
-      </div>
+    {errMsg && (
+            <div className="absolute top-10 left-0 right-0 bg-red-100 border border-red-400 text-red-700 px-4 py-1 rounded mx-auto w-1/2 flex items-center">
+              <p ref={errRef} className="text-sm">{errMsg}</p>
+              <button onClick={() => setErrMsg('')} className="ml-auto">
+                <TiDeleteOutline className="text-red-500" size={20} />
+              </button>
+            </div>
+          )}
+
       <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
         <div onClick={() => { nav("/") }}>
           <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo" />
@@ -156,6 +151,14 @@ const Login = () => {
               </button>
             </span>
           </div>
+          <span className="block w-full"> Don't have an account?{'  '}
+          <a
+            href="./register"
+            className="text-sm font-medium leading-5 text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150"
+          >
+            Register Here
+          </a>
+          </span>
         </form>
       </div>
     </div>
