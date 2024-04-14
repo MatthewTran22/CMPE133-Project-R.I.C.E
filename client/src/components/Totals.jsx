@@ -19,7 +19,7 @@ const TotalNeeds = ({ Category,otherTotals }) => {
         <div className='relative'>
           <div
             className='text-white text-5xl rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer'
-            onClick={handleClick}
+            onClick={handleClick} 
           >
             {Category}: {otherTotals}
            

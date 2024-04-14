@@ -87,7 +87,7 @@ def check_session():
     else:
          return jsonify({"error": "Session not found"}), 404
     
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
     session.pop('user_id', None)
     return jsonify(message='Logout successful')
