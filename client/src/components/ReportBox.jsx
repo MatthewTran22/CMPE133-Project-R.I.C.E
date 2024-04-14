@@ -37,7 +37,7 @@ const ReportBox = ({ numBoxes }) => {
               {/* Add more Categories here */}
               <option>Need</option>
               <option>Want</option>
-              <option>Self-Investment</option>
+              <option>Income</option>
             </select>
           </div>
         </div>
