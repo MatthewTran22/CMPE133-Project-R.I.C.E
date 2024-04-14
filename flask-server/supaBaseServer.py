@@ -119,6 +119,7 @@ def ReportPurchases():
     response = supabase.table('user_info').select('total_remaining').eq('user_id', id).execute()
     current_total = response.data[0]['total_remaining']
     moneyChange = float(data.get('money'))
+
     category = data.get('chosenCategory').lower() #setup to make category fit the column name
     if category == 'income':
         category = "total_savings"
@@ -132,6 +133,8 @@ def ReportPurchases():
     current_category_spent = response.data[0][category]
     new_category_spent = current_category_spent + moneyChange
     update_response = supabase.table('user_info').update({category: new_category_spent ,'total_remaining': new_total}).eq('user_id', id).execute()
+
+    response = supabase.table('transaction_reports').insert({'user_id':id, 'category':data.get('chosenCategory'), 'amount':moneyChange, 'description':"test"}).execute()
     
     
     return "Success"
