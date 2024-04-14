@@ -9,7 +9,7 @@ const Nav1 = () => {
   return (
     <div className="relative">
       <div className="h-24 ml-1 flex w-full items-center relative z-10">
-        <div className="w-1/2"  onClick={() => { navigate("/") }}>
+        <div className="w-1/2"  onClick={() => { navigate("/Dashboard") }}>
           <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo"  />
         </div>
         <div className="w-1/2 flex t   sext-white justify-end items-center mr-3 space-x-3">
