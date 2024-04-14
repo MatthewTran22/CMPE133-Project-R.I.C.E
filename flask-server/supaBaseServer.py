@@ -134,7 +134,7 @@ def ReportPurchases():
     new_category_spent = current_category_spent + moneyChange
     update_response = supabase.table('user_info').update({category: new_category_spent ,'total_remaining': new_total}).eq('user_id', id).execute()
 
-    response = supabase.table('transaction_reports').insert({'user_id':id, 'category':data.get('chosenCategory'), 'amount':moneyChange, 'description':"test"}).execute()
+    response = supabase.table('transaction_reports').insert({'user_id':id, 'category':data.get('chosenCategory'), 'amount':moneyChange, 'description': data.get('description')}).execute()
     
     
     return "Success"

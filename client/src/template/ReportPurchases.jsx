@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Nav2 from '../components/Nav2';
 import useSessionChecker from '../components/SessionCheck';
+import ReportBox from '../components/ReportBox';
 
 const ReportPurchases = () => {
     // Default state
@@ -9,7 +10,8 @@ const ReportPurchases = () => {
     useSessionChecker();
     const [formData, setFormData] = useState({
         amount: '', 
-        category: ''
+        category: '',
+        description: ''
     });
 
     // State to manage error message
@@ -36,6 +38,7 @@ const ReportPurchases = () => {
 
         let money = formData.amount
         let chosenCategory = formData.category
+        let description = formData.description
 
         try {
             const response = await fetch('/ReportPurchases', {
@@ -43,7 +46,7 @@ const ReportPurchases = () => {
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify({money, chosenCategory})
+              body: JSON.stringify({money, chosenCategory, description})
             });
             if (response.ok) {
               console.log('updated');
@@ -80,16 +83,6 @@ const ReportPurchases = () => {
 
             <form onSubmit={handleSubmit} className="w-full h-screen flex flex-col justify-start items-center" >
                 <div className="mt-32 flex flex-col items-center">
-                    <input
-                        type="number"
-                        step="0.01"
-                        name="amount"
-                        id="amount"
-                        className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder="$0.00"
-                        value={formData.amount}
-                        onChange={handleChange}
-                    />
                     <select
                         name="category"
                         id="category"
@@ -102,6 +95,26 @@ const ReportPurchases = () => {
                         <option value="Wants">Wants</option>
                         <option value="Income">Income</option>
                     </select>
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="amount"
+                        id="amount"
+                        min="0.01"
+                        className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder="$0.00"
+                        value={formData.amount}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        name="description"
+                        id="description"
+                        className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder="Description"
+                        value={formData.description}
+                        onChange={handleChange}
+                    />
                     <button type="submit" className="hover:bg-white hover:text-black text-black font-bold py-2 px-4 border-2 rounded-lg mt-10 duration-300">
                         Submit
                     </button>
@@ -112,6 +125,8 @@ const ReportPurchases = () => {
                 {successMessage && <p className="text-green-500">{successMessage}</p>}
                 
             </form>
+            <br/>
+           
         </div>
     );
 };
