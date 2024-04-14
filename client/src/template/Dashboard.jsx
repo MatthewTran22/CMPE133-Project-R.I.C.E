@@ -14,16 +14,35 @@ import {
 
 const Dashboard = () => { 
   const[info, setInfo] = useState([]);
+  const[billInfo, setBillInfo] = useState([]);
   useSessionChecker();
+ 
   useEffect(() => {
-    fetch("/getInfo")
+   
+      fetch("/getInfo")
+      .then(res => res.json())
+      .then((info) => {
+        setInfo(info);
+        console.log(info);
+        
+      });
+    
+    
+  }, []);
+/*
+TODO: Implement after submit bill form
+  useEffect(() => {
+    fetch("/getBills")
       .then(res => res.json())
       .then((info) => {
         setInfo(info);
         
       });
   }, []);
-
+*/
+    if (info.length === 0) {
+      return <div>Loading...</div>;
+    }
   
     return (
         <div className= "star-bg">
@@ -35,6 +54,7 @@ const Dashboard = () => {
             <Nav1 />
             <Totals Category = "Current Recorded Total" otherTotals={info[0].total_remaining} /> <br/>
             <Totals Category = "Budget for Needs" otherTotals={info[0].total_needs} /> <br/>
+           
             <Totals Category = "Budget for Wants" otherTotals={info[0].total_wants} /> <br/>
             <Totals Category = "Budget for Savings" otherTotals={info[0].total_savings} />
           </div>

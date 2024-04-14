@@ -23,7 +23,8 @@ const TotalNeeds = ({ Category,otherTotals }) => {
           >
             {Category}: {otherTotals}
            
-            <IoMdArrowDropdown className={`absolute top-0 right-0 transition-transform transform ${isOpen ? 'rotate-180' : ''}`} size="2rem" />
+           {/*TODO: re-implement this function for displaying bill input form*/}
+           {/*<IoMdArrowDropdown className={`absolute top-0 right-0 transition-transform transform ${isOpen ? 'rotate-180' : ''}`} size="2rem" /> */} 
           </div>
           
           
