@@ -14,6 +14,7 @@ const ReportPurchases = () => {
 
     // State to manage error message
     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     // Function to handle form submission
     const handleSubmit = async (event) => {
@@ -21,6 +22,7 @@ const ReportPurchases = () => {
 
         if (!formData.amount || !formData.category) {
             setErrorMessage('Please fill in both fields.');
+            setSuccessMessage('');
             return;
         }
 
@@ -28,6 +30,7 @@ const ReportPurchases = () => {
         const isValidAmount = /^\d+(\.\d{1,2})?$/.test(formData.amount);
         if (!isValidAmount) {
             setErrorMessage('Please enter a valid number (up to 2 decimals and no negatives).');
+            setSuccessMessage('');
             return;
         }
 
@@ -49,11 +52,13 @@ const ReportPurchases = () => {
         } catch (error) {
             console.error('Error:', error);
             setErrorMessage('Failed to connect to the server. Please try again later.'); // Set error message
+            setSuccessMessage('');
             return;
         }
 
         console.log("Form submitted with data:", formData);
         setErrorMessage(''); // Clear error message if form submission is successful
+        setSuccessMessage('Success!');
     };
 
     // Function to handle input changes
@@ -104,6 +109,7 @@ const ReportPurchases = () => {
 
                 // this is for displaying errors
                 {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+                {successMessage && <p className="text-green-500">{successMessage}</p>}
                 
             </form>
         </div>
