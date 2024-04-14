@@ -26,7 +26,7 @@ const BillList = () => {
               {/* Add form fields here */}
               <div style={{ fontSize: '1rem' }}>
                 <input type='text' placeholder='Bill Name' className='p-2 border-2 border-black rounded ml-1rem' />
-                <input type='number' placeholder='Amount' className='p-2 border-2 border-black rounded' />
+                <input type='number' placeholder="Amount: $0.00" className='p-2 border-2 border-black rounded' />
                 <button type='submit' className='bg-black text-white p-2 rounded'>
                   Submit
                 </button>
