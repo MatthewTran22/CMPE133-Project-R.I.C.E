@@ -107,12 +107,51 @@ def infoInput():
     #Sets up all the starting info for user
     response = supabase.table('user_info').update({'username': name, 'monthly_income': monthlyIncome, 'total_needs': needs, 'total_wants': wants, 'total_remaining': monthlyIncome, 'total_savings': savingsLeft, 'First_Login' : False}).eq('user_id',id).execute()
     
-    
-
-
-
     return jsonify({"Message": "Done"})
 
+@app.route('/ReportPurchases', methods=['GET', 'POST'])
+def ReportPurchases():
+    data = request.json
+    id = session.get('user_id')
+    moneyChange = data.get('money')
+    
+    if not id:
+        return "Failed to update tables: User not authenticated"
+
+    if data.get('chosenCategory') == 'Needs':
+        response = supabase.table('user_info').select('needs_spent').eq('user_id', id).execute()
+        current_needs_spent = response.data[0]['needs_spent']
+        new_needs_spent = current_needs_spent + float(moneyChange)
+        update_response = supabase.table('user_info').update({'needs_spent': new_needs_spent}).eq('user_id', id).execute()
+
+        response = supabase.table('user_info').select('total_remaining').eq('user_id', id).execute()
+        current_total = response.data[0]['total_remaining']
+        new_total = current_total - float(moneyChange)
+        update_response = supabase.table('user_info').update({'total_remaining': new_total}).eq('user_id', id).execute()
+    elif data.get('chosenCategory') == 'Wants':
+        response = supabase.table('user_info').select('wants_spent').eq('user_id', id).execute()
+        current_wants_spent = response.data[0]['wants_spent']
+        new_wants_spent = current_wants_spent + float(moneyChange)
+        update_response = supabase.table('user_info').update({'wants_spent': new_wants_spent}).eq('user_id', id).execute()
+
+        response = supabase.table('user_info').select('total_remaining').eq('user_id', id).execute()
+        current_total = response.data[0]['total_remaining']
+        new_total = current_total - float(moneyChange)
+        update_response = supabase.table('user_info').update({'total_remaining': new_total}).eq('user_id', id).execute()
+    elif data.get('chosenCategory') == 'Income':
+        response = supabase.table('user_info').select('total_savings').eq('user_id', id).execute()
+        current_savings = response.data[0]['total_savings']
+        new_savings = current_savings + float(moneyChange)
+        update_response = supabase.table('user_info').update({'total_savings': new_savings}).eq('user_id', id).execute()
+
+        response = supabase.table('user_info').select('total_remaining').eq('user_id', id).execute()
+        current_total = response.data[0]['total_remaining']
+        new_total = current_total + float(moneyChange)
+        update_response = supabase.table('user_info').update({'total_remaining': new_total}).eq('user_id', id).execute()
+    else:
+        return "Failed to update tables: Invalid input or something"
+    
+    return "Success"
 
 if __name__ == '__main__':
     app.run(debug=True)
