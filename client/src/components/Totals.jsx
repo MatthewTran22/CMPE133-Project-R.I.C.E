@@ -15,7 +15,7 @@ const TotalNeeds = ({ Category,otherTotals }) => {
 
   return (
     <div className='overflow-hidden' >
-      <div className='flex items-center h-1/2'>
+      <div className='flex items-center h-1/2' >
         <div className='relative'>
           <div
             className='text-white text-5xl rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer'
