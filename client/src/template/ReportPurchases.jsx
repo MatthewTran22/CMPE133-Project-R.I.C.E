@@ -9,7 +9,7 @@ const ReportPurchases = () => {
     useSessionChecker();
     const [formData, setFormData] = useState({
         amount: '', 
-        category: 'Select Catagory'
+        category: ''
     });
 
     // State to manage error message
