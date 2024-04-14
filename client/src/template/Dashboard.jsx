@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Nav1 from '../components/Nav1';
 import LogOutButton from '../components/LogoutButton';
+import BillList from '../components/BillList';
 import Totals from '../components/Totals';
 import '../styles.css';
 import useSessionChecker from '../components/SessionCheck';
@@ -46,10 +47,8 @@ const Dashboard = () => {
         <Nav1 />
         <LogOutButton />
         <Totals Category = "Current Recorded Total" otherTotals={info[0].total_remaining} /> <br/>
-        <Totals Category = "Needs Budget" otherTotals={info[0].total_needs} /> <br/>
-        <div className='text-white text-5xl rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer' style={{ width: '60%' }}>
-          test 
-        </div>
+        <Totals Category = "Needs Budget" otherTotals={info[0].total_needs} /> 
+        <BillList /><br/>
         <Totals Category = "Wants Budget" otherTotals={info[0].total_wants} /> <br/>
         <Totals Category = "Savings Budget" otherTotals={info[0].total_savings} />
       </div>
