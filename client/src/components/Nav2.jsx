@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../assets/img/logo.png';
+import Logo from '../template/images/ricelogo.png';
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from 'react-router-dom';
 

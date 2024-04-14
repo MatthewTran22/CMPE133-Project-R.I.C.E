@@ -4,6 +4,7 @@ import Register from './template/register';
 import Home from './template/Home';
 import InfoInput from './template/input-info';
 import Dashboard from './template/Dashboard'
+import ReportPurchases from './template/ReportPurchases'
 import {
   BrowserRouter as Router,
   Route,
@@ -24,6 +25,7 @@ function App() {
         <Route path="/InfoInput" element={<InfoInput /> } />
         <Route path="/InfoInput" element={<InfoInput /> } />
         <Route path="/Dashboard" element={<Dashboard /> } />
+        <Route path="/ReportPurchases" element={<ReportPurchases /> } />
 
       </Routes>
     </Router>
