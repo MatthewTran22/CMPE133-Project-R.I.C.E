@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Nav1 from '../components/Nav1';
 import Totalbuget from '../components/TotalBuget';
-import TotalNeeds from '../components/TotalNeeds';
+import Totals from '../components/Totals';
 import '../styles.css';
 import useSessionChecker from '../components/SessionCheck';
 import {
@@ -20,12 +20,11 @@ const Dashboard = () => {
       .then(res => res.json())
       .then((info) => {
         setInfo(info);
-        console.log(info);
+        
       });
   }, []);
-  {/*const totalIncome = info[0].total_remaining;
-  console.log(totalIncome);
-  const totalNeeds = info[0].total_needs;*/}
+
+  
     return (
         <div className= "star-bg">
           <div className="w-full h-screen">
@@ -34,8 +33,10 @@ const Dashboard = () => {
           <div id="stars3"></div>
           <div id="title"></div>
             <Nav1 />
-            {/*<Totalbuget totalIncome = {totalIncome}/> <br/>
-            <TotalNeeds totalNeeds={totalNeeds} />*/}
+            <Totals Category = "Current Recorded Total" otherTotals={info[0].total_remaining} /> <br/>
+            <Totals Category = "Budget for Needs" otherTotals={info[0].total_needs} /> <br/>
+            <Totals Category = "Budget for Wants" otherTotals={info[0].total_wants} /> <br/>
+            <Totals Category = "Budget for Savings" otherTotals={info[0].total_savings} />
           </div>
           
           

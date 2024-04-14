@@ -14,9 +14,7 @@ const TotalBudget = ({ totalIncome }) => {
 
     return (
         <div className='overflow-hidden'>
-            <div className="h-24 ml-1 flex w-full items-center relative z-10">
-                <CgProfile size="2.5rem" />
-            </div>
+            
             <div className='flex items-center h-1/2'>
                 <div className='relative'>
                     <div
