@@ -22,9 +22,9 @@ const Dashboard = () => {
         console.log(info);
       });
   }, []);
-  const totalIncome = info[0].total_remaining;
+  {/*const totalIncome = info[0].total_remaining;
   console.log(totalIncome);
-  const totalNeeds = info[0].total_needs;
+  const totalNeeds = info[0].total_needs;*/}
     return (
         <div className= "star-bg">
           <div className="w-full h-screen">
@@ -33,8 +33,8 @@ const Dashboard = () => {
           <div id="stars3"></div>
           <div id="title"></div>
             <Nav1 />
-            <Totalbuget totalIncome = {totalIncome}/> <br/>
-            <TotalNeeds totalNeeds={totalNeeds} />
+            {/*<Totalbuget totalIncome = {totalIncome}/> <br/>
+            <TotalNeeds totalNeeds={totalNeeds} />*/}
           </div>
           
           
