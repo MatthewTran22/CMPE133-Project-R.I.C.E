@@ -9,7 +9,7 @@ const BillList = () => {
 
   return (
     <div>
-      <div className='text-white text-5xl rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer' style={{ width: '50rem' }}>
+      <div className='text-white text-5xl rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer' style={{ width: '50rem', transform: 'translateX(5%)'}}>
         <div className="absolute top-62% right-50% transform -translate-y-1/2" style={{ fontSize: '1rem' }}>
           <div className="h-24 ml-1 flex w-full items-center relative z-10">
             <div className="w-1/2 flex t   sext-white justify-end items-center mr-3 space-x-3">
