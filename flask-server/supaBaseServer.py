@@ -111,6 +111,10 @@ def infoInput():
 
     return jsonify({"Message": "Done"})
 
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_passsword():
+    pass
+
 
 if __name__ == '__main__':
     app.run(debug=True)
