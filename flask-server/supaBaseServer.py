@@ -143,7 +143,7 @@ def ReportPurchases():
 def getTransactions():
     id = session.get('user_id')
     response = supabase.table('transaction_reports').select('*').eq('user_id', id).execute()
-    return jsonify({'Transactions': response.data})
+    return jsonify(response.data)
 
 if __name__ == '__main__':
     app.run(debug=True)

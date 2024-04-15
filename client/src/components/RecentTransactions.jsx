@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const RecentTransactions = () => {
-  const [showForm, setShowForm] = useState(false);
+  const nav = useNavigate();
+  const [transactions, setTransactions] = useState([]);
 
-  const handleToggleForm = () => {
-    setShowForm(!showForm);
+  useEffect(() => {
+    fetch("/getTransactions")
+      .then(res => res.json())
+      .then(data => {
+        setTransactions(data);
+      });
+  }, []);
+
+  const gotoPage = () => {
+    
   };
 
   return (
@@ -13,32 +23,29 @@ const RecentTransactions = () => {
         <div className="absolute top-62% right-50% transform -translate-y-1/2" style={{ fontSize: '1rem' }}>
           <div className="h-24 ml-1 flex w-full items-center relative z-10">
             <div className="w-1/2 flex text-white justify-end items-center mr-3 space-x-3">
-              <div className="text-white border-2 p-3 rounded-3xl h-1/2 flex items-center ease-in duration-300 hover:bg-white hover:text-black" onClick={handleToggleForm} style={{ transform: 'translateX(140%) translateY(600%)' }}> 
+              <div className="text-white border-2 p-3 rounded-3xl h-1/2 flex items-center ease-in duration-300 hover:bg-white hover:text-black" onClick={gotoPage} style={{ transform: 'translateX(140%) translateY(600%)' }}> 
                 <p className="">View All Transactions</p>
               </div>
             </div>
           </div>
         </div>
-        <h3 style={{ fontSize: '2rem', textAlign: 'center' }}>Recent Transactions</h3>
-       
-        {showForm && (
-          <div className='mt-4'>
-            <form style={{ paddingLeft: '1rem' }} >
-              {/* Add form fields here */}
-              <div style={{ fontSize: '1rem' }}>
-                <input type='text' placeholder='Bill Name' className='p-2 border-2 border-black rounded ml-1rem' />
-                <input type='number' placeholder="Amount: $0.00" className='p-2 border-2 border-black rounded' />
-                <button type='submit' className='bg-black text-white p-2 rounded'>
-                  Submit
-                </button>
+        <h3 style={{ fontSize: '2.5rem', textAlign: 'center' }}>Recent Transactions</h3>
+        <ul style={{ listStyleType: 'none', padding: 0, display: 'flex', flexDirection: 'column' }}>
+          {transactions.slice(0, 5).map((transaction, index) => (
+            <li key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div>
+                <strong>Category:</strong> {transaction.category}
+                <br />
+                <strong>Amount:</strong> {transaction.amount}
               </div>
-            </form>
-          </div>
-        )}<br/><br/>
-        <div style={{ fontSize: '2rem' }}>
-            item1
-
-        </div>
+              
+              <div>
+                {transaction.description && <span>{transaction.description}</span>}
+              </div>
+              <br />
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
