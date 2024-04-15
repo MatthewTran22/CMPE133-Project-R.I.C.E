@@ -112,9 +112,28 @@ def infoInput():
     return jsonify({"Message": "Done"})
 
 @app.route('/reset_password', methods=['GET', 'POST'])
-def reset_passsword():
-    pass
+def reset_request():
+    try:
+        email = request.json.get("email")
+        
+        if not email:
+            return jsonify({"error": "Email is required"}), 400
+        
+        response = supabase.table("users").select("*").eq("email", email).execute()
+        user = response.data[0]
+        
+        if user:
+            send_email()
+            return jsonify({"message": "Reset email sent"})
+        
+        else:
+            return jsonify({"error": "User not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e.code)}), 500
+        
 
+def send_email():
+    pass
 
 if __name__ == '__main__':
     app.run(debug=True)
