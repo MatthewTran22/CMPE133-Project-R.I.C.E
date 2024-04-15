@@ -14,6 +14,7 @@ const RecentTransactions = () => {
   }, []);
 
   const gotoPage = () => {
+    nav('/UserTransactions');
     
   };
 
@@ -31,21 +32,24 @@ const RecentTransactions = () => {
         </div>
         <h3 style={{ fontSize: '2.5rem', textAlign: 'center' }}>Recent Transactions</h3>
         <ul style={{ listStyleType: 'none', padding: 0, display: 'flex', flexDirection: 'column' }}>
-          {transactions.slice(0, 5).map((transaction, index) => (
-            <li key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <div>
-                <strong>Category:</strong> {transaction.category}
-                <br />
-                <strong>Amount:</strong> {transaction.amount}
-              </div>
-              
-              <div>
-                {transaction.description && <span>{transaction.description}</span>}
-              </div>
-              <br />
-            </li>
-          ))}
-        </ul>
+            {transactions
+                .filter((transaction) => transaction.date !== null) // ignore transactions with null date
+                .sort((a, b) => new Date(b.date) - new Date(a.date)) // sort transactions by date in descending order
+                .slice(0, 5) // take only the first 5 transactions
+                .map((transaction, index) => (
+                <li key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div>
+                    <strong>Category:</strong> {transaction.category}
+                    <br />
+                    <strong>Amount:</strong> ${transaction.amount}
+                    </div>
+                    <div>
+                    {transaction.description && <span>{transaction.description}</span>}
+                    </div>
+                    <br />
+                </li>
+                ))}
+            </ul>
       </div>
     </div>
   );

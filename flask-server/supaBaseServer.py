@@ -133,8 +133,10 @@ def ReportPurchases():
     current_category_spent = response.data[0][category]
     new_category_spent = current_category_spent + moneyChange
     update_response = supabase.table('user_info').update({category: new_category_spent ,'total_remaining': new_total}).eq('user_id', id).execute()
+    now = datetime.datetime.now()
+    date_str = now.strftime("%Y-%m-%d")
 
-    response = supabase.table('transaction_reports').insert({'user_id':id, 'category':data.get('chosenCategory'), 'amount':moneyChange, 'description': data.get('description')}).execute()
+    response = supabase.table('transaction_reports').insert({'user_id':id, 'category':data.get('chosenCategory'), 'amount':moneyChange, 'description': data.get('description'), 'date': date_str}).execute()
     
     
     return "Success"
