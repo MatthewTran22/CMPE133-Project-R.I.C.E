@@ -5,6 +5,7 @@ import BillList from '../components/BillList';
 import Totals from '../components/Totals';
 import '../styles.css';
 import useSessionChecker from '../components/SessionCheck';
+import RecentTransactions from '../components/RecentTransactions';
 import {
   BrowserRouter as Router,
   Route,
@@ -48,7 +49,9 @@ const Dashboard = () => {
         <LogOutButton />
         <Totals Category = "Current Recorded Total" otherTotals={info[0].total_remaining} /> <br/>
         <Totals Category = "Needs Budget" otherTotals={info[0].total_needs} /> 
-        <BillList /><br/>
+        <BillList />
+        <RecentTransactions />
+        <br/>
         <Totals Category = "Wants Budget" otherTotals={info[0].total_wants} /> <br/>
         <Totals Category = "Savings Budget" otherTotals={info[0].total_savings} />
       </div>
