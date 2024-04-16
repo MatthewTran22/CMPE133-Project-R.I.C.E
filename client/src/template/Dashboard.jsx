@@ -39,7 +39,7 @@ const Dashboard = () => {
 
   return (
    
-      <div className= "star-bg w-full h-screen">
+    <div className= "star-bg">
       <div className="w-full h-screen">
       <div id="stars"></div>
       <div id="stars2"></div>
@@ -57,6 +57,8 @@ const Dashboard = () => {
       </div>
 
     </div>
+   
+     
     
     
   );
