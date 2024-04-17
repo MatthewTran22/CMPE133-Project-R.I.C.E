@@ -20,7 +20,7 @@ const RecentTransactions = () => {
 
   return (
     <div className='text-white'>
-      <div className="sticky top-20 right-20 w-96 h-96 rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer" style={{ transform: 'translateX(0%) translateY(5%)'}}>
+      <div className="top-20 right-20 w-96 h-96 rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer" style={{ transform: 'translateX(72%)'}}>
         <div className="absolute top-62% right-50% transform -translate-y-1/2" style={{ fontSize: '1rem' }}>
           <div className="h-24 ml-1 flex w-full items-center relative z-10">
             <div className="w-1/2 flex text-white justify-end items-center mr-3 space-x-3">
