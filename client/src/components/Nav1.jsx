@@ -34,7 +34,7 @@ const Nav1 = () => {
         <div className="text-white border-2 p-3 rounded-3xl h-1/2 flex items-center ease-in duration-300 hover:bg-white hover:text-black" onClick= {handleLogout}> 
         <p className="">Logout</p>
         </div>
-          <div className="text-white border-2 p-3 rounded-3xl h-1/2 flex items-center ease-in duration-300 hover:bg-white hover:text-black" onClick={() => { navigate("/ReportPurchases") }}> 
+          <div className="text-white border-2 p-3 rounded-3xl h-1/2 flex items-center ease-in duration-300 hover:bg-black hover:text-black" onClick={() => { navigate("/ReportPurchases") }}> 
             <p className="">Report Purchases</p>
           </div>
           <div className="">

@@ -39,12 +39,16 @@ const RecentTransactions = () => {
                 .map((transaction, index) => (
                 <li key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div>
+                   
                     <strong>Category:</strong> {transaction.category}
                     <br />
                     <strong>Amount:</strong> ${transaction.amount}
                     </div>
                     <div>
                     {transaction.description && <span>{transaction.description}</span>}
+                    </div>
+                    <div>
+                    {transaction.date && <span>{transaction.date}</span>}
                     </div>
                     <br />
                 </li>

@@ -50,7 +50,7 @@ const Dashboard = () => {
           <div class="grid grid-cols-2 gap-2">
             <Totals Category="Current Recorded Total" otherTotals={info[0].total_remaining} />
             <RecentTransactions />
-            <div class="grid grid-cols-subgrid gap-4 col-span-3" style={{ transform: 'translatey(-42%)'}}>
+            <div class="grid grid-cols-subgrid gap-4 col-span-3" style={{ transform: 'translatey(-35%)'}}>
               <div class="col-start-1">
               <Totals Category = "Needs Budget" otherTotals={info[0].total_needs} /> 
               <BillList />
