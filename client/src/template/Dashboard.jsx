@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import Nav1 from '../components/Nav1';
-import LogOutButton from '../components/LogoutButton';
 import BillList from '../components/BillList';
 import Totals from '../components/Totals';
 import '../styles.css';
@@ -45,9 +44,13 @@ const Dashboard = () => {
       <div id="stars2"></div>
       <div id="stars3"></div>
       <div id="title"></div>
-        <Nav1 />
-        <LogOutButton />
-        <Totals Category = "Current Recorded Total" otherTotals={info[0].total_remaining} /> <br/>
+      
+          <Nav1 />
+         
+      
+        <div class="grid grid-cols-4 gap-4">
+        <Totals Category="Current Recorded Total" otherTotals={info[0].total_remaining} />
+         </div>
         <Totals Category = "Needs Budget" otherTotals={info[0].total_needs} /> 
         <BillList />
         <RecentTransactions />
