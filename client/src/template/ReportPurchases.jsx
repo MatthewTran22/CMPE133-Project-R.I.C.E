@@ -73,7 +73,7 @@ const ReportPurchases = () => {
     };
 
     return (
-        <div className='text-white'>
+        <div className= "star-bg">
             <div id="stars"></div>
             <div id="stars2"></div>
             <div id="stars3"></div>
@@ -82,11 +82,14 @@ const ReportPurchases = () => {
             <Nav2 />
 
             <form onSubmit={handleSubmit} className="w-full h-screen flex flex-col justify-start items-center" >
-                <div className="mt-32 flex flex-col items-center">
+                
+
+                <div className="mt-52 flex flex-col items-center">
+                <h1 className='text-white text-4xl font-bold mb-12'>Report Purchase</h1>
                     <select
                         name="category"
                         id="category"
-                        className="block w-full mt-4 rounded-md border-0 bg-transparent py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         value={formData.category}
                         onChange={handleChange}
                     >
@@ -115,12 +118,12 @@ const ReportPurchases = () => {
                         value={formData.description}
                         onChange={handleChange}
                     />
-                    <button type="submit" className="hover:bg-white hover:text-black text-black font-bold py-2 px-4 border-2 rounded-lg mt-10 duration-300">
+                    <button type="submit" className="hover:bg-white hover:text-black text-white font-bold py-2 px-4 border-2 rounded-lg mt-10 duration-300">
                         Submit
                     </button>
                 </div>
 
-                // this is for displaying errors
+                
                 {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                 {successMessage && <p className="text-green-500">{successMessage}</p>}
                 
