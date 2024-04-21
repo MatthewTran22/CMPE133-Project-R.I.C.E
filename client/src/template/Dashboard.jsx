@@ -5,15 +5,10 @@ import Totals from '../components/Totals';
 import '../styles.css';
 import useSessionChecker from '../components/SessionCheck';
 import RecentTransactions from '../components/RecentTransactions';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate, 
-  useNavigate
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => { 
+  const nav = useNavigate();
   const[info, setInfo] = useState([]);
   const[billInfo, setBillInfo] = useState([]);
   useSessionChecker();
@@ -48,14 +43,15 @@ const Dashboard = () => {
           <Nav1 />
          
           <div class="grid grid-cols-2">
-            <Totals Category="Current Recorded Total" otherTotals={info[0].total_remaining} />
-            <RecentTransactions />
+            <Totals Category="Current Total" otherTotals={info[0].total_remaining} /> 
+            <RecentTransactions /> 
             <div class="grid grid-cols-subgrid col-span-3" style={{ transform: 'translatey(-42%)'}}>
               <div class="col-start-1 gap-">
-              <Totals Category = "Needs Budget" otherTotals={info[0].total_needs} /> 
-              <BillList />
-              <Totals Category = "Wants Budget" otherTotals={info[0].total_wants} /> 
-              <Totals Category = "Savings Budget" otherTotals={info[0].total_savings} />
+              <br/><br/><br/>
+              <Totals Category = "Needs Budget" otherTotals={info[0].total_needs} /> <br/>
+              <BillList /> <br/>
+              <Totals Category = "Wants Budget" otherTotals={info[0].total_wants} /> <br/>
+              <Totals Category = "Savings Budget" otherTotals={info[0].total_savings} /> <br/>
               </div>
             </div>
           </div>

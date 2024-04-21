@@ -18,7 +18,7 @@ const TotalNeeds = ({ Category,otherTotals }) => {
     className='text-white text-5xl rounded-3xl box-border h-32 p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer' style={{ width: '50rem', transform: 'translateX(5%)' }}
      onClick={handleClick} 
    >
-     {Category}: {otherTotals}
+     {Category}: ${otherTotals}
     
     {/*TODO: re-implement this function for displaying bill input form*/}
     {/*<IoMdArrowDropdown className={`absolute top-0 right-0 transition-transform transform ${isOpen ? 'rotate-180' : ''}`} size="2rem" /> */} 
