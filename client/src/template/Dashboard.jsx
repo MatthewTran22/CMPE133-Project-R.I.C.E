@@ -59,9 +59,10 @@ const Dashboard = () => {
   </div>
   <div class="bg-transparent p-4">
     <RecentTransactions /> <br/>
+    <BillList />
   </div>
 </div>
-          <BillList />
+          
            
             <br/>
             
