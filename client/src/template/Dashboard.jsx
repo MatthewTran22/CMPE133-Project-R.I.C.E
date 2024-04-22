@@ -6,6 +6,7 @@ import '../styles.css';
 import useSessionChecker from '../components/SessionCheck';
 import RecentTransactions from '../components/RecentTransactions';
 import { useNavigate } from "react-router-dom";
+import Chart from '../components/PieChart';
 
 const Dashboard = () => { 
   const nav = useNavigate();
@@ -28,7 +29,16 @@ const Dashboard = () => {
 
 
   if (info.length === 0) {
-    return <div>Loading...</div>;
+    return <div>
+      <div className= "star-bg">
+      <div className="w-full h-screen">
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
+      <div id="title"></div>
+      </div>
+      </div>
+      Loading...</div>;
   }
 
   return (
@@ -42,22 +52,20 @@ const Dashboard = () => {
       
           <Nav1 />
          
-          <div class="grid grid-cols-2">
-            <Totals Category="Current Total" otherTotals={info[0].total_remaining} /> 
-            <RecentTransactions /> 
-            <div class="grid grid-cols-subgrid col-span-3" style={{ transform: 'translatey(-42%)'}}>
-              <div class="col-start-1 gap-">
-              <br/><br/><br/>
-              <Totals Category = "Needs Budget" otherTotals={info[0].total_needs} /> <br/>
-              <BillList /> <br/>
-              <Totals Category = "Wants Budget" otherTotals={info[0].total_wants} /> <br/>
-              <Totals Category = "Savings Budget" otherTotals={info[0].total_savings} /> <br/>
-              </div>
-            </div>
-          </div>
-        <div class="grid grid-cols-4 gap-4">
+          <div class="grid grid-cols-2 gap-4 bg-transparent">
+  <div class="bg-transparent p-4 items-center justify-items-center">
+    <Totals Category="Current Total" otherTotals={info[0].total_remaining} /> <br/>
+    <Chart data = {info}/>
+  </div>
+  <div class="bg-transparent p-4">
+    <RecentTransactions /> <br/>
+  </div>
+</div>
+          <BillList />
+           
+            <br/>
+            
         
-         </div>
        
        
         <br/>
