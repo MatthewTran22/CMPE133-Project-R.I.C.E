@@ -37,7 +37,7 @@ const Chart = ({ data }) => {
 
       return (
         <div className='text-white rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer' style={{ width: '52rem', transform: 'translateX(3%)'}}>
-          <div className = 'text-5xl'>Budget Plan</div><br/>
+          <div className = 'text-5xl'>Budget Plan: {data[0].budget_split} Split</div><br/>
           <div className = 'text-2xl'>Monthly Income: ${data[0].monthly_income}</div>
         <PieChart width={1300} height={800}>
           
