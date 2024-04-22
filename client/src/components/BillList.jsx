@@ -4,7 +4,7 @@ const BillList = () => {
   const [showForm, setShowForm] = useState(false);
 
   const handleToggleForm = () => {
-    setShowForm(!showForm);
+    
   };
 
   return (
@@ -20,20 +20,7 @@ const BillList = () => {
           </div>
         </div>
         Bill List
-        {showForm && (
-          <div className='mt-4'>
-            <form style={{ paddingLeft: '1rem' }} >
-              {/* Add form fields here */}
-              <div style={{ fontSize: '1rem' }}>
-                <input type='text' placeholder='Bill Name' className='p-2 border-2 border-black rounded ml-1rem' />
-                <input type='number' placeholder="Amount: $0.00" className='p-2 border-2 border-black rounded' />
-                <button type='submit' className='bg-black text-white p-2 rounded'>
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
-        )}<br/>
+        <br/>
         <div style={{ fontSize: '2rem' }}>
             item1 <br/>
             item1 <br/>
