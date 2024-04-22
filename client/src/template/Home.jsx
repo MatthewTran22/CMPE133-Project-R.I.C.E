@@ -21,12 +21,14 @@ const Front = () => {
     <div>
       <div className="box">
         <div className="image-container">
-          <img className="bgpng" src={ricePattyImg} alt="Box 1 Image" />
+          {/* <img className="bgpng" src={ricePattyImg} alt="Box 1 Image" /> */}
           <div className="text-overlay">
             <img src={riceLogoImg} alt="Box 1 Image" />
             <b>a lightweight tool to help you budget and save</b>
-            <button onClick={goToLogin}>Go to Login</button>
-            <button onClick={goToRegister}>Go to Register</button>
+            <div className='button-container'>
+              <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40' onClick={goToLogin}>Go to Login</button>
+              <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40' onClick={goToRegister}>Go to Register</button>
+            </div>
           </div>
         </div>
       </div>
