@@ -8,6 +8,7 @@ const RecentTransactions = () => {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const currentMonth = new Date().toLocaleString('default', { month: 'long' });
   const [displayMessage, setDisplayMessage] = useState(false);
+  const [displayGrid, setDisplayGrid] = useState(false);
 
   useEffect(() => {
     fetch("/getTransactions")
@@ -20,6 +21,13 @@ const RecentTransactions = () => {
           new Date(transaction.date).getMonth() === selectedMonth
         );
         setTotalSpent(thisMonthTransactions.reduce((total, transaction) => total + transaction.amount, 0));
+        if (thisMonthTransactions.length === 0) {
+          setDisplayMessage(true);
+          setDisplayGrid(false);
+        } else {
+          setDisplayMessage(false);
+          setDisplayGrid(true);
+        }
       });
   }, [selectedMonth]);
 
@@ -34,20 +42,21 @@ const RecentTransactions = () => {
         <h3 style={{ fontSize: '2.5rem', textAlign: 'center' }}>Transactions</h3>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={{ fontSize: '1.5rem', textAlign: 'center' }}>Total Spent in {months[selectedMonth]}: ${totalSpent.toFixed(2)}</h2>
+         
           <select value={selectedMonth} onChange={(e) => {
             setSelectedMonth(parseInt(e.target.value));
             setDisplayMessage(false);
-          }}>
+          }} className='text-black'>
             {months.map((month, index) => (
               <option key={index} value={index}>{month}</option>
             ))}
           </select>
         </div>
-        <br/>
+       
         {displayMessage && (
-          <p style={{ textAlign: 'center' }}>No reports were made in {currentMonth}.</p>
+          <p style={{ textAlign: 'center' }}>No reports were made in {months[selectedMonth]}.</p>
         )}
-        {transactions.length > 0 && (
+        {displayGrid && (
           <ul style={{ listStyleType: 'none', padding: 0, display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', height: '100%' }}>
             <li className="bg-transparent h-full">
               <div className="grid grid-cols-4 gap-4 place-items-center">
@@ -81,7 +90,7 @@ const RecentTransactions = () => {
                       ${transaction.amount.toFixed(2)}
                     </div>
                     <div>
-                      {transaction.date }
+                      {new Date(transaction.date).toLocaleDateString('default', { month: 'long', day: 'numeric', year: 'numeric' })}
                     </div>
                     
                   </div>
