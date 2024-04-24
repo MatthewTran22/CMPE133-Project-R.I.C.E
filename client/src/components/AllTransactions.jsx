@@ -38,21 +38,21 @@ const RecentTransactions = () => {
 
   return (
     <div className='text-white'>
-      <div className="w-50 h-min-0 h-500 rounded-3xl box-border p-4 ml-5rem border-4 whitespace-nowrap overflow-hidden cursor-pointer">
+      <div className="w-50 h-min-0 h-500 rounded-3xl box-border p-4 ml-5rem border-4 whitespace-nowrap overflow-hidden">
         <h3 style={{ fontSize: '2.5rem', textAlign: 'center' }}>Transactions</h3>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={{ fontSize: '1.5rem', textAlign: 'center' }}>Total Spent in {months[selectedMonth]}: ${totalSpent.toFixed(2)}</h2>
-         
+
           <select value={selectedMonth} onChange={(e) => {
             setSelectedMonth(parseInt(e.target.value));
             setDisplayMessage(false);
-          }} className='text-black'>
+          }} className='text-black cursor-pointer'>
             {months.map((month, index) => (
               <option key={index} value={index}>{month}</option>
             ))}
           </select>
         </div>
-       
+        <br/>
         {displayMessage && (
           <p style={{ textAlign: 'center' }}>No reports were made in {months[selectedMonth]}.</p>
         )}
