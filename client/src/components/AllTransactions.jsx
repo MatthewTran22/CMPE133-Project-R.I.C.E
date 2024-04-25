@@ -46,7 +46,7 @@ const RecentTransactions = () => {
           <select value={selectedMonth} onChange={(e) => {
             setSelectedMonth(parseInt(e.target.value));
             setDisplayMessage(false);
-          }} className='text-black cursor-pointer'>
+          }} className='text-lg rounded-2xl box-border p-3 ml-2rem border-4 cursor-pointer bg-transparent'>
             {months.map((month, index) => (
               <option key={index} value={index}>{month}</option>
             ))}
@@ -59,7 +59,7 @@ const RecentTransactions = () => {
         {displayGrid && (
           <ul style={{ listStyleType: 'none', padding: 0, display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', height: '100%' }}>
             <li className="bg-transparent h-full">
-              <div className="grid grid-cols-4 gap-4 place-items-center">
+              <div className="grid grid-cols-5 gap-4 place-items-center">
                 <div>
                   <strong>Category</strong>
                 </div>
@@ -80,7 +80,7 @@ const RecentTransactions = () => {
               .filter((transaction) => new Date(transaction.date).getMonth() === selectedMonth) // filter transactions by selected month
               .map((transaction, index) => (
                 <li key={index} className="bg-transparent h-full">
-                  <div className="grid grid-cols-4 gap-4 place-items-center">
+                  <div className="grid grid-cols-5 gap-4 place-items-center">
                     <div>
                       {transaction.category}
                     </div>
