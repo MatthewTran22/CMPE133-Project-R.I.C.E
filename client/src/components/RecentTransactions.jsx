@@ -37,18 +37,21 @@ const RecentTransactions = () => {
                 .sort((a, b) => new Date(b.date) - new Date(a.date)) // sort transactions by date in descending order
                 .slice(0, 5) // take only the first 5 transactions
                 .map((transaction, index) => (
-                <li key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div>
+                  <li key={index} className="bg-transparent h-full">
+                <div className="grid grid-cols-3 gap-4 place-items-center">
+                   <div>
+                    {transaction.date}
+                    </div>
                    
-                    <strong>Category:</strong> {transaction.category}
-                    <br />
-                    <strong>Amount:</strong> ${transaction.amount}
-                    </div>
                     <div>
-                    {transaction.description && <span>{transaction.description}</span>}
+                    {transaction.description}
                     </div>
+                   
                     <div>
-                    {transaction.date && <span>{transaction.date}</span>}
+                      ${transaction.amount.toFixed(2)}
+                   </div>
+                   
+                    
                     </div>
                     <br />
                 </li>
