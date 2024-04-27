@@ -6,6 +6,7 @@ import InfoInput from './template/input-info';
 import Dashboard from './template/Dashboard';
 import ReportPurchases from './template/ReportPurchases';
 import UserTransactions from './template/userTransactions';
+import UserSettings from './template/UserSettings'
 import {
   BrowserRouter as Router,
   Route,
@@ -28,6 +29,7 @@ function App() {
         <Route path="/Dashboard" element={<Dashboard /> } />
         <Route path="/ReportPurchases" element={<ReportPurchases /> } />
         <Route path="/UserTransactions" element={<UserTransactions /> } />
+        <Route path="/UserSettings" element={<UserSettings /> } />
 
       </Routes>
     </Router>

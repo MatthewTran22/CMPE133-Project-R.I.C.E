@@ -6,13 +6,18 @@ import ReportBox from '../components/ReportBox';
 
 const ReportPurchases = () => {
     // Default state
-    const nav = useNavigate();
+    const Navigate = useNavigate();
     useSessionChecker();
     const [formData, setFormData] = useState({
         amount: '', 
         category: '',
         description: ''
     });
+
+    const goToSettings = () => {
+        // Navigate to the register page
+        Navigate('/UserSettings');
+    };
 
     // State to manage error message
     const [errorMessage, setErrorMessage] = useState('');
@@ -85,7 +90,7 @@ const ReportPurchases = () => {
                 
 
                 <div className="mt-52 flex flex-col items-center">
-                <h1 className='text-white text-4xl font-bold mb-12'>Report Purchase</h1>
+                <h1 className='text-white text-4xl font-bold mb-12'>Report Transactions</h1>
                     <select
                         name="category"
                         id="category"
@@ -129,6 +134,7 @@ const ReportPurchases = () => {
                 
             </form>
             <br/>
+            <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40 hover:bg-white hover:text-black cursor-pointer' onClick={goToSettings}>Go to User Settings</button>
            
         </div>
     );

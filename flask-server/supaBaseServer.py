@@ -141,6 +141,50 @@ def ReportPurchases():
     
     return "Success"
 
+@app.route('/UserSettings', methods=['GET', 'POST'])
+def UserSettings():
+    data = request.json
+    id = session.get('user_id')
+    if not id:
+        return "Failed to update tables: User not authenticated"
+    
+    newUsername = data.get('username')
+    monthlyIncome = data.get('monthlyIncome')
+    newSavingsBudget = data.get('savingsBudget')
+    newWantsBudget = data.get('wantsBudget')
+    newNeedsBudget = data.get('needsBudget')
+
+    if monthlyIncome == '':
+        response = supabase.table('user_info').select('monthly_income').eq('user_id', id).execute()
+        monthlyIncome = response.data[0]['monthly_income']
+    else:
+        monthlyIncome = float(monthlyIncome)
+        update_response = supabase.table('user_info').update({'monthly_income': monthlyIncome}).eq('user_id', id).execute()
+
+    if not newUsername == '':
+        update_response = supabase.table('user_info').update({'username': newUsername}).eq('user_id', id).execute()
+
+    if not(newSavingsBudget == '' or newWantsBudget == '' or newNeedsBudget == ''):
+        if int(newSavingsBudget) + int(newNeedsBudget) + int(newWantsBudget) == 100:
+            budgetPlan = newNeedsBudget + "/" + newSavingsBudget + "/" + newWantsBudget
+            newTotalNeeds = round(monthlyIncome * int(newNeedsBudget) * 0.01, 2)
+            newTotalWants = round(monthlyIncome * int(newWantsBudget) * 0.01, 2)
+            newTotalSavings = round(monthlyIncome * int(newSavingsBudget) * 0.01, 2)
+            update_response = supabase.table('user_info').update({'budget_split': budgetPlan, 'total_needs': newTotalNeeds, 'total_wants': newTotalWants, 'total_savings': newTotalSavings}).eq('user_id', id).execute()
+        else:
+            return "Failed to update tables: Invalid budget split"
+    else:
+        response = supabase.table('user_info').select('budget_split').eq('user_id', id).execute()
+        budgetPlan = response.data[0]['budget_split']
+        percents = [int(part) for part in budgetPlan.split("/")]
+        newTotalNeeds = round(monthlyIncome * int(percents[0]) * 0.01, 2)
+        newTotalSavings = round(monthlyIncome * int(percents[1]) * 0.01, 2)
+        newTotalWants = round(monthlyIncome * int(percents[2]) * 0.01, 2)
+        update_response = supabase.table('user_info').update({'total_needs': newTotalNeeds, 'total_wants': newTotalWants, 'total_savings': newTotalSavings}).eq('user_id', id).execute()
+
+
+    return "Success"
+
 @app.route('/getTransactions')
 def getTransactions():
     id = session.get('user_id')
