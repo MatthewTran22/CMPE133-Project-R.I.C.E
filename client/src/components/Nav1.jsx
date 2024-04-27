@@ -38,11 +38,7 @@ const Nav1 = () => {
             <p className="">Report Transactions</p>
           </div>
 
-          <div className="text-white border-2 p-3 rounded-3xl h-1/2 flex items-center ease-in duration-300 hover:bg-white hover:text-black" onClick={() => { navigate("/UserSettings") }}> 
-            <p className="">User Settings</p>
-          </div>
-
-          <div className="text-white">
+          <div className="text-white" onClick={() => { navigate("/UserSettings") }}>
             <CgProfile size="2.5rem" />
           </div>
         </div>
