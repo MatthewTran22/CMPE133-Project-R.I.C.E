@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { TiDeleteOutline } from "react-icons/ti";
 
 function ForgotPwd() {
     
@@ -39,9 +40,23 @@ function ForgotPwd() {
 
   return (
     <div>
+      {message && ( success ? 
+            <div >
+            <p>{message}</p>
+            <button onClick={() => setMessage('')} className="ml-auto">
+              <TiDeleteOutline className="text-green-500" size={20} />
+            </button>
+          </div>
+           : <div >
+              <p>{message}</p>
+              <button onClick={() => setMessage('')} className="ml-auto">
+                <TiDeleteOutline className="text-red-500" size={20} />
+              </button>
+            </div>
+          )}
       <h1>Forgot Password</h1>
       <p>Enter your email address to reset your password</p>
-      <form>
+      <form onSubmit={ handleSubmit }>
         <input 
         type="email"
         placeholder="Email" 

@@ -105,13 +105,12 @@ def infoInput():
     #Sets up all the starting info for user
     response = supabase.table('user_info').update({'username': name, 'monthly_income': monthlyIncome, 'total_needs': needs, 'total_wants': wants, 'total_remaining': monthlyIncome, 'total_savings': savingsLeft, 'First_Login' : False}).eq('user_id',id).execute()
     
-    
-
-
 
     return jsonify({"Message": "Done"})
 
-@app.route('/reset_password', methods=['GET', 'POST'])
+
+
+@app.route('/reset_request', methods=['GET','POST'])
 def reset_request():
     try:
         email = request.json.get("email")
@@ -123,16 +122,18 @@ def reset_request():
         user = response.data[0]
         
         if user:
-            send_email()
-            return jsonify({"message": "Reset email sent"})
+            # send_email()
+            return jsonify({"message": "Reset email sent"}), 200
         
         else:
             return jsonify({"error": "User not found"}), 404
     except Exception as e:
-        return jsonify({"error": str(e.code)}), 500
-        
+        return jsonify({"error": "An unexpected error occurred"}), 500
 
 def send_email():
+    pass
+
+def get_reset_token():
     pass
 
 if __name__ == '__main__':
