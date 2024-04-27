@@ -133,9 +133,6 @@ const ReportPurchases = () => {
                 {successMessage && <p className="text-green-500">{successMessage}</p>}
                 
             </form>
-            <br/>
-            <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40 hover:bg-white hover:text-black cursor-pointer' onClick={goToSettings}>Go to User Settings</button>
-           
         </div>
     );
 };
