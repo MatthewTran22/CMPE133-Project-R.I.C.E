@@ -198,15 +198,30 @@ def updateTransaction():
     transaction_id = data.get('id')
     id = session.get('user_id')
    
-    oldAmount = supabase.table('transaction_reports').select('amount').eq('transaction_id', transaction_id).execute()
-    oldAmount = float(oldAmount.first.amount)
+    response = supabase.table('transaction_reports').select('amount').eq('transaction_id', transaction_id).execute()
+    oldAmount = response.data[0]['amount']
     newAmount = float(newAmount)
     difference = oldAmount - newAmount
-    net_total = supabase.table('user_info').select('total_remaining').eq('user_id', id).execute() + difference
+    response = supabase.table('transaction_reports').select('category').eq('transaction_id', transaction_id).execute()
+    category = response.data[0]['category']
+
+    if category != 'Income':
+        category = category.lower() + "_spent" #gets either the wants or needs category
+        response = supabase.table('user_info').select(category).eq('user_id', id).execute()   
+        new_spent = response.data[0][category] - difference
+        response = supabase.table('user_info').update({category: new_spent}).eq('user_id', id).execute()
+        response = supabase.table('user_info').select('total_remaining').eq('user_id', id).execute()
+        net_total = response.data[0]['total_remaining'] + difference
+    else:
+        response = supabase.table('user_info').select('total_remaining').eq('user_id', id).execute()
+        net_total = response.data[0]['total_remaining'] - difference
+
     response = supabase.table('user_info').update({'total_remaining': net_total}).eq('user_id', id).execute()
-    response = supabase.table('transaction_reports').update({'amount': newAmount, 'description': data.get('description'), 'date': data.get('date')}).eq('user_id', id).execute()
+    response = supabase.table('transaction_reports').update({'amount': newAmount, 'description': data.get('description'), 'date': data.get('date')}).eq('transaction_id', transaction_id).execute()
 
     return "Success"
+
+
 
 
     
