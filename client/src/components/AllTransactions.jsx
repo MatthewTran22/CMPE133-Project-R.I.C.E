@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Modal from './Modal';
 
 const RecentTransactions = () => {
   const nav = useNavigate();
@@ -9,6 +10,10 @@ const RecentTransactions = () => {
   const currentMonth = new Date().toLocaleString('default', { month: 'long' });
   const [displayMessage, setDisplayMessage] = useState(false);
   const [displayGrid, setDisplayGrid] = useState(false);
+  const [showModal, setShowModal] = React.useState(false);
+  const [selectedTransaction, setSelectedTransaction] = React.useState(null);
+
+  
 
   useEffect(() => {
     fetch("/getTransactions")
@@ -31,6 +36,11 @@ const RecentTransactions = () => {
       });
   }, [selectedMonth]);
 
+  const handleOnClick = (transaction) => {
+    setShowModal(true);
+    setSelectedTransaction(transaction);
+  };
+
   const months = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -44,12 +54,12 @@ const RecentTransactions = () => {
           <h2 style={{ fontSize: '1.5rem', textAlign: 'center' }}>Total Spent in {months[selectedMonth]}: ${totalSpent.toFixed(2)}</h2>
 
           <select value={selectedMonth} onChange={(e) => {
-            setSelectedMonth(parseInt(e.target.value));
-            setDisplayMessage(false);
-          }} className='text-lg rounded-2xl box-border p-3 ml-2rem border-4 cursor-pointer bg-transparent'>
-            {months.map((month, index) => (
-              <option key={index} value={index}>{month}</option>
-            ))}
+              setSelectedMonth(parseInt(e.target.value));
+              setDisplayMessage(false);
+            }} className='text-lg rounded-2xl box-border p-3 ml-2rem border-4 cursor-pointer bg-transparent'>
+              {months.map((month, index) => (
+                <option key={index} value={index}>{month}</option>
+              ))}
           </select>
         </div>
         <br/>
@@ -84,7 +94,7 @@ const RecentTransactions = () => {
                     <div>
                       {transaction.category}
                     </div>
-                <div>{transaction.description }
+                    <div>{transaction.description }
                     </div>
                     <div>
                       ${transaction.amount.toFixed(2)}
@@ -93,13 +103,19 @@ const RecentTransactions = () => {
                       {new Date(transaction.date).toLocaleDateString('default', { month: 'long', day: 'numeric', year: 'numeric' })}
                     </div>
                     <div>
-                    <button className="bg-sky-950 hover:bg-sky-900 font-bold py-1 px-2 rounded">
-                      Edit
-                    </button>
+                      {selectedMonth === new Date().getMonth() && (
+                        <button className="bg-sky-950 hover:bg-sky-900 font-bold py-1 px-2 rounded" onClick={() => handleOnClick(transaction, selectedMonth)}>
+                          Edit
+                        </button>
+                      )}
                     </div>
                   </div>
                 </li>
               ))}
+
+            {showModal && (
+              <Modal transaction={selectedTransaction} onClose={() => setShowModal(false)} />
+            )}
           </ul>
         )}
         
