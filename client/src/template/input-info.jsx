@@ -154,9 +154,9 @@ const InputInfo = () => {
             </form>
               </div>
               <div className="flex justify-center items-center">
-                <div className="w-48 h-48 bg-slate-200 p-5 rounded-lg"> {/*change bg-slate to 100 to see the "border"*/}
+                <div className="h-72 w-64 bg-slate-200 p-5 rounded-lg"> {/*change bg-slate to 100 to see the "border"*/}
                   <ResponsiveContainer width="100%" height="100%">
-                    <PieChart width={1300} height={800}>
+                    <PieChart width={1000} height={800}>
                       <Pie
                         dataKey="value"
                         data={budgetPlanData[budgetPlan]}
