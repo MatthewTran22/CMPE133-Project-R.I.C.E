@@ -191,6 +191,26 @@ def getTransactions():
     response = supabase.table('transaction_reports').select('*').eq('user_id', id).execute()
     return jsonify(response.data)
 
+@app.route('/updateTransaction', methods=['GET', 'POST'])
+def updateTransaction():
+    data =  request.get_json()
+    newAmount = data.get('amount')
+    transaction_id = data.get('id')
+    id = session.get('user_id')
+   
+    oldAmount = supabase.table('transaction_reports').select('amount').eq('transaction_id', transaction_id).execute()
+    oldAmount = float(oldAmount.first.amount)
+    newAmount = float(newAmount)
+    difference = oldAmount - newAmount
+    net_total = supabase.table('user_info').select('total_remaining').eq('user_id', id).execute() + difference
+    response = supabase.table('user_info').update({'total_remaining': net_total}).eq('user_id', id).execute()
+    response = supabase.table('transaction_reports').update({'amount': newAmount, 'description': data.get('description'), 'date': data.get('date')}).eq('user_id', id).execute()
+
+    return "Success"
+
+
+    
+
 if __name__ == '__main__':
     app.run(debug=True)
 
