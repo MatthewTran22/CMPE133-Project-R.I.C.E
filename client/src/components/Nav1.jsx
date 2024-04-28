@@ -27,8 +27,8 @@ const Nav1 = () => {
   return (
     <div className="relative">
       <div className="h-24 ml-1 flex w-full items-center relative z-10">
-        <div className="w-1/2 cursor-pointer"  onClick={() => { navigate("/Dashboard") }}>
-          <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo"  />
+        <div className="w-1/2"  >
+          <img src={Logo} style={{ width: '200px', height: 'auto', cursor:'pointer'}} alt="Logo"  onClick={() => { navigate("/Dashboard") }} />
         </div>
         <div className="w-1/2 flex t   justify-end items-center mr-3 space-x-3">
         <div className="text-white border-2 p-3 rounded-3xl h-1/2 flex items-center ease-in duration-300 hover:bg-white hover:text-black cursor-pointer" onClick= {handleLogout}> 
