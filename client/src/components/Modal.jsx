@@ -10,6 +10,10 @@ const Modal = ({ transaction, onClose }) => {
     date: transaction.date,
   });
 
+  const [descriptionError, setDescriptionError] = React.useState(false);
+  const [amountError, setAmountError] = React.useState(false);
+  const [formInvalid, setFormInvalid] = React.useState(false);
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -17,10 +21,48 @@ const Modal = ({ transaction, onClose }) => {
     });
   };
 
+  const handleDescriptionChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+
+    if (event.target.value.trim() === '') {
+      setDescriptionError(true);
+    } else {
+      setDescriptionError(false);
+    }
+
+    if (event.target.value.trim() === '' || formData.amount.trim() === '') {
+      setFormInvalid(true);
+    } else {
+      setFormInvalid(false);
+    }
+  };
+
+  const handleAmountChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+
+    if (event.target.value.trim() === '') {
+      setAmountError(true);
+    } else {
+      setAmountError(false);
+    }
+
+    if (event.target.value.trim() === '' || formData.description.trim() === '') {
+      setFormInvalid(true);
+    } else {
+      setFormInvalid(false);
+    }
+  };
+
   const handleSubmit = (event, transactionId) => {
     event.preventDefault();
     console.log('Changes:', formData); // Log the changes
-  
+
     // Make a fetch request to update the transaction
     try {
       const updatedData = { ...formData, id: transactionId };
@@ -32,19 +74,27 @@ const Modal = ({ transaction, onClose }) => {
         },
         body: JSON.stringify(updatedData)
       });
-  
+
       if (response.ok) {
         console.log('Transaction updated');
       }
-  
+
       // Handle success or display any error messages
     } catch (error) {
       console.error('Error:', error);
       // Set error message
       return;
     }
-  
+
     onClose();
+  };
+
+  const handleIncomeChange = (e) => {
+    const value = e.target.value;
+    if (!value.match(/^\d*\.?\d*$/)) {
+      return;
+    }
+    handleChange(e);
   };
 
   const handleDelete = async (transaction) => {
@@ -58,18 +108,18 @@ const Modal = ({ transaction, onClose }) => {
         },
         body: JSON.stringify({ id: transaction.transaction_id })
       });
-  
+
       if (response.ok) {
         console.log('Transaction deleted');
       }
-  
+
       // Handle success or display any error messages
     } catch (error) {
       console.error('Error:', error);
       // Set error message
       return;
     }
-  
+
     onClose();
   };
 
@@ -85,7 +135,7 @@ const Modal = ({ transaction, onClose }) => {
           <div className="flex flex-col justify-center items-center">
             <h2 className="mb-5 text-left text-4xl font-bold leading-9 tracking-tight text-black">Edit Transaction</h2>
             
-            <h5 className="mb-5 text-left text-xl font-bold leading-9 tracking-tight text-black">Category: {formData.category}</h5>
+            <h5 className="mb-5 text-left text-xl font-bold leading-9 tracking-tight text-black">Category:{formData.category}</h5>
             <form onSubmit={handleSubmit}>
               <div className="space-y-1">
                 <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
@@ -96,8 +146,9 @@ const Modal = ({ transaction, onClose }) => {
                   className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                   name="description"
                   value={formData.description}
-                  onChange={handleChange}
+                  onChange={handleDescriptionChange}
                 />
+                {descriptionError && <div className="text-red-500">This field is required</div>}
               </div>
 
               <div className="space-y-1">
@@ -109,8 +160,9 @@ const Modal = ({ transaction, onClose }) => {
                   className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                   name="amount"
                   value={formData.amount}
-                  onChange={handleChange}
+                  onChange={handleAmountChange}
                 />
+                {amountError && <div className="text-red-500">This field is required</div>}
               </div>
 
               <div className="space-y-1">
@@ -129,9 +181,10 @@ const Modal = ({ transaction, onClose }) => {
 
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600
-                hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out"
+                className={`w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600
+                hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out ${formInvalid ? 'opacity-50 cursor-not-allowed' : ''}`}
                 onClick={(event) => handleSubmit(event, transaction.transaction_id)}
+                disabled={formInvalid}
                 >
                 Save Changes
                 </button>
