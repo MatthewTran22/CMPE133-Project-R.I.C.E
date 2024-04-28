@@ -17,14 +17,58 @@ const Modal = ({ transaction, onClose }) => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event, transactionId) => {
     event.preventDefault();
-    // Add code here to update the transaction with the new form data
+    console.log('Changes:', formData); // Log the changes
+  
+    // Make a fetch request to update the transaction
+    try {
+      const updatedData = { ...formData, id: transactionId };
+      console.log(updatedData);
+      const response = fetch('/updateTransaction', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedData)
+      });
+  
+      if (response.ok) {
+        console.log('Transaction updated');
+      }
+  
+      // Handle success or display any error messages
+    } catch (error) {
+      console.error('Error:', error);
+      // Set error message
+      return;
+    }
+  
     onClose();
   };
 
-  const handleDelete = () => {
-    // Add code here to delete the transaction
+  const handleDelete = async () => {
+    // Make a fetch request to delete the transaction
+    try {
+      const response = await fetch('/deleteTransaction', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: transaction.id })
+      });
+
+      if (response.ok) {
+        console.log('Transaction deleted');
+      }
+
+      // Handle success or display any error messages
+    } catch (error) {
+      console.error('Error:', error);
+      // Set error message
+      return;
+    }
+
     onClose();
   };
 
@@ -39,20 +83,9 @@ const Modal = ({ transaction, onClose }) => {
         <div className="flex justify-center items-center space-x-10">
           <div className="flex flex-col justify-center items-center">
             <h2 className="mb-5 text-left text-4xl font-bold leading-9 tracking-tight text-black">Edit Transaction</h2>
+            
+            <h5 className="mb-5 text-left text-xl font-bold leading-9 tracking-tight text-black">Category: {formData.category}</h5>
             <form onSubmit={handleSubmit}>
-              <div className="space-y-1">
-                <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
-                <input
-                  id="category"
-                  type="text"
-                  autoComplete="category"
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  name="category"
-                  value={formData.category}
-                  onChange={handleChange}
-                />
-              </div>
-
               <div className="space-y-1">
                 <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
                 <input
@@ -97,9 +130,10 @@ const Modal = ({ transaction, onClose }) => {
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600
                 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out"
-              >
+                onClick={(event) => handleSubmit(event, transaction.transaction_id)}
+                >
                 Save Changes
-              </button>
+                </button>
               <button
                 type="button"
                 className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600
