@@ -53,7 +53,6 @@ const Register = () => {
     setErrMsg('');
   }, [email, pwd, matchPwd]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     //to prevent JS hack
@@ -107,8 +106,8 @@ const Register = () => {
   }
 
   return (
-    <div className="star-bg">
-      <section className="flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="star-bg flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8">
+      {/* <section className="flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8"> */}
         <div id="stars"></div>
         <div id="stars2"></div>
         <div id="stars3"></div>
@@ -122,7 +121,7 @@ const Register = () => {
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-200 p-5 flex flex-col justify-center" style={{ minHeight: "300px", minWidth: "500px" }}>
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-100 p-5 flex flex-col justify-center" style={{minWidth: "500px" }}>
           <form onSubmit={handleSubmit}>
             <p ref={errRef} className={`text-center ${errMsg ? "text-red-600" : "hidden"}`} aria-live="assertive">{errMsg}</p>
             <div className="mb-6">
@@ -151,22 +150,22 @@ const Register = () => {
                 id="password"
                 onChange={(e) => setPwd(e.target.value)}
                 required
-                aria-invalid={validPwd ? "false" : "true"}
                 aria-describedby="pwdnote"
                 onFocus={() => setPwdFocus(true)}
                 onBlur={() => setPwdFocus(false)}
                 className="w-full rounded-md shadow-sm"
               />
-              {/* Display password conditions */}
-              <div className="text-sm text-gray-600 mt-1">
-                <ul>
-                  <li className={`${pwd.length >= 8 ? 'text-green-500' : 'text-grey'}`}>At least 8 characters</li>
-                  <li className={`${/[!@#$%]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one number</li>
-                  <li className={`${/[a-z]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one lowercase letter</li>
-                  <li className={`${/[A-Z]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one uppercase letter</li>
-                  <li className={`${/[0-9]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one special character</li>
-                </ul>
-              </div>
+              {pwdFocus && (
+                <div className="text-sm text-gray-600 mt-1">
+                  <ul>
+                    <li className={`${pwd.length >= 8 ? 'text-green-500' : 'text-grey'}`}>At least 8 characters</li>
+                    <li className={`${/[!@#$%]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one number</li>
+                    <li className={`${/[a-z]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one lowercase letter</li>
+                    <li className={`${/[A-Z]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one uppercase letter</li>
+                    <li className={`${/[0-9]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one special character</li>
+                  </ul>
+                </div>
+              )}
             </div>
 
             <div className="mb-6">
@@ -181,7 +180,6 @@ const Register = () => {
                   setConfirmPwdFinished(true); // Set confirm password finished when user finishes inputting
                 }}
                 required
-                aria-invalid={validMatch ? "false" : "true"}
                 aria-describedby="confirmnote"
                 onFocus={() => setMatchFocus(true)}
                 onBlur={() => {
@@ -218,7 +216,7 @@ const Register = () => {
             </div>
           </form>
         </div>
-      </section>
+      {/* </section> */}
     </div>
   );
 

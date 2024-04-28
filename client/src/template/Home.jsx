@@ -4,6 +4,7 @@ import ricePattyImg from './images/ricepatty.png';
 import riceLogoImg from './images/ricelogo.png';
 import piggyBankImg from './images/piggybank.png';
 import '../homepage.css';
+
 const Front = () => {
   const Navigate = useNavigate();
 
@@ -17,11 +18,18 @@ const Front = () => {
     Navigate('/register');
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Smooth scrolling animation
+    });
+  };
+
   return (
     <div>
       <div className="box">
         <div className="image-container">
-          {/* <img className="bgpng" src={ricePattyImg} alt="Box 1 Image" /> */} 
+          {/* <img className="bgpng" src={ricePattyImg} alt="Box 1 Image" /> */}
           <div className="text-overlay">
             <img src={riceLogoImg} alt="Box 1 Image" />
             <b>a lightweight tool to help you budget and save</b>
@@ -54,11 +62,11 @@ const Front = () => {
         Copyright © 2024 RICE
       </div>
 
-      <div className="scroll-to-top">
+      <div className="scroll-to-top" onClick={scrollToTop}>
         <div className="circle"></div>
-      </div>       
+      </div>
     </div>
-  );  
-};  
+  );
+};
 
 export default Front;

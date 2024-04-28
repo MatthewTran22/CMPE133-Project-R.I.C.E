@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Nav1 from '../components/Nav1';
 import BillList from '../components/BillList';
 import Totals from '../components/Totals';
@@ -10,74 +10,60 @@ import Chart from '../components/PieChart';
 
 const Dashboard = () => { 
   const nav = useNavigate();
-  const[info, setInfo] = useState([]);
-  const[billInfo, setBillInfo] = useState([]);
+  const [info, setInfo] = useState([]);
+  const [userName, setUserName] = useState('');
   useSessionChecker();
 
   useEffect(() => {
-   
-      fetch("/getInfo")
+    fetch("/getInfo")
       .then(res => res.json())
       .then((info) => {
         setInfo(info);
         console.log(info);
-        
+        if (info.length > 0) {
+          setUserName(info[0].username); // Assuming the user's name is available in the first object of the info array
+        }
       });
-    
-    
   }, []);
 
-
   if (info.length === 0) {
-    return <div>
+    return (
       <div className= "star-bg">
-      <div className="w-full h-screen">
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
-     
+        <div className="w-full h-screen">
+          <div id="stars"></div>
+          <div id="stars2"></div>
+          <div id="stars3"></div>
+          <div id="title"></div>
+        </div>
+        Loading...
       </div>
-      </div>
-      Loading...</div>;
+    );
   }
 
   return (
-   
     <div className= "star-bg">
       <div className="w-full h-screen">
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
-      
-      
-          <Nav1 />
-         
-          <div class="grid grid-cols-2 gap-4 bg-transparent relative">
-  <div class="bg-transparent p-4 items-center justify-items-center">
-    <Totals Category="Current Total" otherTotals={info[0].total_remaining} /> <br/>
-    <Chart data = {info}/>
-  </div>
-  <div class="bg-transparent p-4">
-    <RecentTransactions /> <br/>
-    <BillList />
-  </div>
-</div>
-          
-           
-            <br/>
-            
-        
-       
-       
-        <br/>
-        
-      </div>
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        <div id="title"></div>
+        <Nav1 />
+        <div class="grid grid-cols-2 gap-4 bg-transparent">
+          <div class="bg-transparent p-4 items-center justify-items-center">
 
+            <h2 className="text-slate-300 text-left" style={{fontSize: '2rem', transform: 'translateX(8%) translateY(-30%)' }}>Welcome back, {userName}.</h2>
+
+            <Totals Category="Current Total" otherTotals={info[0].total_remaining} /> <br/>
+            <Chart data={info} />
+          </div>
+          <div class="bg-transparent p-4">
+            <RecentTransactions /> <br/>
+            <BillList />
+          </div>
+        </div>
+        <br/>
+      </div>
     </div>
-   
-     
-    
-    
   );
 }
 
