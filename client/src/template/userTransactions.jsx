@@ -13,15 +13,16 @@ const Dashboard = () => {
    
     <div className= "star-bg">
       <div className="w-full h-screen">
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
-      <div id="title"></div>
       
+      <div>
           <Nav1 />
           <br/>
           <AllTransactions/>
-        
+      </div>
+          
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
       </div>
 
     </div>

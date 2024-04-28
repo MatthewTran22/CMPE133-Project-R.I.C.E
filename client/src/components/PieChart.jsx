@@ -14,7 +14,7 @@ const Chart = ({ data }) => {
       const data02 = [
         { name: 'Needs spent', value: data[0].needs_spent },
         { name: 'Wants spent', value: data[0].wants_spent },
-        { name: 'Unspent', value: data[0].monthly_income - (data[0].needs_spent + data[0].wants_spent) },
+        { name: 'Unspent', value: Math.max(0, data[0].monthly_income - (data[0].needs_spent + data[0].wants_spent)) }
         
       ];
 
