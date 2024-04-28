@@ -12,17 +12,21 @@ const Dashboard = () => {
   return (
    
     <div className= "star-bg">
-      <div className="w-full h-screen">
+      <div className='z-1'>
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+      </div>
       
-      <div>
-          <Nav1 />
+      <div className="w-full h-screen">
+       <Nav1 />
+      <div className='z-4 relative' style={{zIndex: 0}}>
+         
           <br/>
           <AllTransactions/>
       </div>
           
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
+     
       </div>
 
     </div>

@@ -37,8 +37,8 @@ const RecentTransactions = () => {
   ];
 
   return (
-    <div className='text-white bg-dark-blue'>
-      <div className="w-50 h-min-0 h-500 rounded-3xl box-border p-4 ml-5rem border-4 whitespace-nowrap overflow-hidden">
+    <div className='text-white '>
+      <div className="w-45 h-min-0 h-500 rounded-3xl box-border p-4 ml-5rem border-4 whitespace-nowrap overflow-hidden bg-dark-blue">
         <h3 style={{ fontSize: '2.5rem', textAlign: 'center' }}>Transactions</h3>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={{ fontSize: '1.5rem', textAlign: 'center' }}>Total Spent in {months[selectedMonth]}: ${totalSpent.toFixed(2)}</h2>

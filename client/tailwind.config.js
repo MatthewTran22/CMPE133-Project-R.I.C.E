@@ -5,11 +5,10 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors:{
+      backgroundImage: {
         'dark-blue': 'radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)',
       }
     },
   },
   plugins: [],
 }
-
