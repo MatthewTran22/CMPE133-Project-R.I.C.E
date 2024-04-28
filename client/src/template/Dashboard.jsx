@@ -52,7 +52,7 @@ const Dashboard = () => {
       
           <Nav1 />
          
-          <div class="grid grid-cols-2 gap-4 bg-transparent">
+          <div class="grid grid-cols-2 gap-4 bg-transparent relative">
   <div class="bg-transparent p-4 items-center justify-items-center">
     <Totals Category="Current Total" otherTotals={info[0].total_remaining} /> <br/>
     <Chart data = {info}/>

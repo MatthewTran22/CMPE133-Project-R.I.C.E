@@ -36,7 +36,8 @@ const Chart = ({ data }) => {
       
 
       return (
-        <div className='text-white rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer' style={{ width: '55rem', transform: 'translateX(3%)'}}>
+        <ResponsiveContainer width = "100%" height="100%">
+           <div className='text-white rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer bg-dark-blue' style={{ width: '55rem', transform: 'translateX(3%)'}}>
           <div className = 'text-5xl'>Budget Plan: {data[0].budget_split} Split</div><br/>
           <div className = 'text-2xl'>Monthly Income: ${data[0].monthly_income}</div>
         <PieChart width={1300} height={800}>
@@ -72,6 +73,8 @@ const Chart = ({ data }) => {
             </Pie>
         </PieChart>
       </div>
+        </ResponsiveContainer>
+       
       );
 }
 

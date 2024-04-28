@@ -13,6 +13,9 @@ const InputInfo = () => {
   const [errMsg, setErrMsg] = useState('');
   const [nameError, setNameError] = useState('');
 
+
+
+  
   useEffect(() => {
     if (formIsValid) {
       nav('/results', { state: { name, income, budgetPlan } });
@@ -93,9 +96,11 @@ const InputInfo = () => {
 
       <div className="w-full h-screen flex justify-center items-center">
         <div className="flex justify-center items-center space-x-10">
-          <div className="flex flex-col justify-center items-center bg-slate-200 p-5 rounded-lg" style={{ minHeight: "600px", minWidth: "700px" }}>
-            <h2 className="mt-10 mb-5 text-left text-4xl font-bold leading-9 tracking-tight text-black">Let's Get Started</h2>
-            <form className="space-y-10" onSubmit={handleSubmit}>
+          <div className="flex flex-col justify-center items-center bg-slate-200 p-5 rounded-lg relative" style={{ minHeight: "600px", minWidth: "700px" }}>
+            <h2 className="mb-5 text-left text-4xl font-bold leading-9 tracking-tight text-black">Let's Get Started</h2>
+            <div class="grid grid-cols-2 gap-20 bg-transparent relative">
+              <div>
+              <form className="space-y-10" onSubmit={handleSubmit}>
               <div className="space-y-1">
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                 <input
@@ -140,18 +145,24 @@ const InputInfo = () => {
                   <option value="70/20/10">70/20/10</option>
                 </select>
               </div>
-
-
+            <button
+              type="submit"
+              className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600
+               hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
+              Submit
+            </button>
+            </form>
+              </div>
               <div className="flex justify-center items-center">
                 <div className="w-48 h-48 bg-slate-200 p-5 rounded-lg"> {/*change bg-slate to 100 to see the "border"*/}
                   <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
+                    <PieChart width={1300} height={800}>
                       <Pie
                         dataKey="value"
                         data={budgetPlanData[budgetPlan]}
                         cx="50%"
                         cy="50%"
-                        outerRadius={40}
+                        outerRadius={80}
                         fill="#8884d8"
                         label
                       >
@@ -164,14 +175,9 @@ const InputInfo = () => {
                 </div>
             </div>
 
-            <button
-              type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600
-               hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
-              Submit
-            </button>
+        
+            </div>
             
-            </form>
           </div>
         </div>
       </div>
