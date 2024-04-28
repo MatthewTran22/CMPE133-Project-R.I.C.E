@@ -35,7 +35,7 @@ const Dashboard = () => {
       <div id="stars"></div>
       <div id="stars2"></div>
       <div id="stars3"></div>
-      <div id="title"></div>
+     
       </div>
       </div>
       Loading...</div>;
@@ -48,7 +48,7 @@ const Dashboard = () => {
       <div id="stars"></div>
       <div id="stars2"></div>
       <div id="stars3"></div>
-      <div id="title"></div>
+      
       
           <Nav1 />
          

@@ -37,7 +37,7 @@ const RecentTransactions = () => {
   ];
 
   return (
-    <div className='text-white'>
+    <div className='text-white bg-dark-blue'>
       <div className="w-50 h-min-0 h-500 rounded-3xl box-border p-4 ml-5rem border-4 whitespace-nowrap overflow-hidden">
         <h3 style={{ fontSize: '2.5rem', textAlign: 'center' }}>Transactions</h3>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -92,7 +92,11 @@ const RecentTransactions = () => {
                     <div>
                       {new Date(transaction.date).toLocaleDateString('default', { month: 'long', day: 'numeric', year: 'numeric' })}
                     </div>
-                    
+                    <div>
+                    <button className="bg-sky-950 hover:bg-sky-900 font-bold py-1 px-2 rounded">
+                      Edit
+                    </button>
+                    </div>
                   </div>
                 </li>
               ))}
