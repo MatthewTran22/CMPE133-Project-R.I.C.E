@@ -44,7 +44,7 @@ const RecentTransactions = () => {
                     </div>
                    
                     <div>
-                    {transaction.description}
+                    {transaction.category}
                     </div>
                    
                     <div>
