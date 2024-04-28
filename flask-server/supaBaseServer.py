@@ -221,7 +221,38 @@ def updateTransaction():
 
     return "Success"
 
+@app.route('/deleteTransaction', methods=['GET', 'POST'])
+def deleteTransaction():
+    data = request.get_json()
+    uid = session.get('user_id')
+    id = data.get('id')
+    response = supabase.table('transaction_reports').select('amount').eq('transaction_id', id).execute()
+    amount = response.data[0]['amount']
+    response = supabase.table('transaction_reports').select('category').eq('transaction_id', id).execute()
+    category = response.data[0]['category']
 
+    if category == 'Income':
+        response = supabase.table('user_info').select('total_remaining').eq('usuer_id', uid).execute()   
+        total = response.data[0]['total_remaining']
+        total = total - amount
+        response = supabase.table('user_info').update({'total_remaining': total}).eq('user_id', uid).execute()
+
+    else:
+        category = category.lower() + "_spent"
+        response = supabase.table('user_info').select(category).eq('user_id', uid).execute()   
+        spent = response.data[0][category]
+        spent = spent - amount
+        response = supabase.table('user_info').update({category: spent}).eq('user_id', uid).execute()
+        response = supabase.table('user_info').select('total_remaining').eq('user_id', uid).execute()   
+        total = response.data[0]['total_remaining']
+        total = total + amount
+        response = supabase.table('user_info').update({'total_remaining': total}).eq('user_id', uid).execute()
+
+    
+    
+   
+    response = supabase.table('transaction_reports').delete().eq('transaction_id', id).execute()
+    return "Success"
 
 
     
