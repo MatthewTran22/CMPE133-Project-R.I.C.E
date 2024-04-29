@@ -4,9 +4,19 @@ from supabase import Client
 import os
 import uuid
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask_mail import Mail, Message
+
 
 app = Flask(__name__)
 app.secret_key = "so secret"
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'riceservice.dmmj@gmail.com'
+app.config['MAIL_PASSWORD'] = 'temporary@123'
+
+mail = Mail(app)
 
 load_dotenv("supa.env")
 URL = os.getenv("SUPABASE_URL")
@@ -105,8 +115,7 @@ def infoInput():
 
     #Sets up all the starting info for user
     response = supabase.table('user_info').update({'username': name, 'monthly_income': monthlyIncome, 'total_needs': needs, 'total_wants': wants, 'total_remaining': monthlyIncome, 'total_savings': savingsLeft, 'First_Login' : False}).eq('user_id',id).execute()
-    
-
+   
     return jsonify({"Message": "Done"})
 
 
@@ -123,7 +132,8 @@ def reset_request():
         user = response.data[0]
         
         if user:
-            send_email(email)
+            token = get_reset_token(email)
+            send_email(email, token)
             return jsonify({"message": "Reset email sent"}), 200
         
         else:
@@ -149,8 +159,17 @@ def reset_password(token):
     except Exception as e:
         return jsonify({"error": "An unexpected error occurred"}), 500
 
-def send_email(email):
-    pass
+def send_email(email, token):
+    msg = Message()
+    msg.subject = "Password Reset Request"
+    msg.recipients = [email]
+    msg.html = f'''
+    <h1>Password Reset Request</h1>
+    <p>Click the link below to reset your password</p>
+    <a href="http://localhost:3000/reset/{token}">Reset Password</a>
+    '''
+    mail.send(msg)
+    
 
 def get_reset_token(email, expire_time = 3600):
     s = Serializer(app.secret_key, expire_time)
@@ -174,13 +193,7 @@ def get_user_by_email(email):
     except Exception as e:
         return None
     
-def get_user_by_id(id):
-    try:
-        response = supabase.table("users").select("*").eq("user_id", id).execute()
-        user = response.data[0]
-        return user
-    except Exception as e:
-        return None
+
 
 if __name__ == '__main__':
     app.run(debug=True)
