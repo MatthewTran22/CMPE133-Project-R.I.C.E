@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const BillList = () => {
   const [showForm, setShowForm] = useState(false);
+  const nav = useNavigate();
 
   const handleToggleForm = () => {
-    
+    nav('/EditBills')
   };
 
   return (
-    <div className = 'w-96 min-h-0 h-200 rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-auto cursor-pointer bg-dark-blue' style={{transform: 'translateX(72%)'}}>
+    <div className = 'w-96 min-h-96 h-200 rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-auto cursor-pointer bg-dark-blue' style={{transform: 'translateX(72%)'}}>
       <div className='text-white text-5xl'>
       <div className="absolute top-62% right-50% transform -translate-y-1/2" style={{ fontSize: '1rem' }}>
           <div className="h-24 ml-1 flex w-full items-center relative z-10">
@@ -22,17 +24,7 @@ const BillList = () => {
         Bill List
         <br/>
         <div style={{ fontSize: '2rem' }}>
-            item1 <br/>
-            item1 <br/>
-            item1 <br/>
-            item1 <br/>
-            item1 <br/>
-            item1 <br/>
-            item1 <br/>
-            item1 <br/>
-            item1 <br/>
-             item1 <br/>
-             item1 <br/>
+          
 
 
 

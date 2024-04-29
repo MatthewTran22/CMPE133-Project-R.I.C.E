@@ -34,6 +34,13 @@ const Chart = ({ data }) => {
         );
       };
       
+      const renderLabel = ({ name, value }) => {
+        if (value === 0) {
+          return null;
+        }
+      
+        return `${name}: ${value}`;
+      };
 
       return (
         <ResponsiveContainer width = "100%" height="100%">
@@ -56,19 +63,19 @@ const Chart = ({ data }) => {
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-          <Pie
-            data={data02}
-            dataKey="value"
-            cx="31%"
-            cy="50%"
-            innerRadius={225}
-            outerRadius={250}
-            fill="#82ca9d"
-            label={({ name, value }) => `${name}: ${value}`}
-          >
-            {data02.map((entry, index) => (
+            <Pie
+              data={data02}
+              dataKey="value"
+              cx="31%"
+              cy="50%"
+              labelLine={false}
+              innerRadius={225}
+              outerRadius={250}
+              fill="#82ca9d"
+              label={renderLabel}
+            >
+              {data02.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                
               ))}
             </Pie>
         </PieChart>
