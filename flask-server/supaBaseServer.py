@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request, session
 from supabase import Client
 import os
 import uuid
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
 from flask_mail import Mail, Message
 
 
