@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from './Modal';
+import { FaArrowLeft } from "react-icons/fa";
 
-const RecentTransactions = () => {
+const AllBills = () => {
   const nav = useNavigate();
-  const [transactions, setTransactions] = useState([]);
+  const [bills, setBills] = useState([]);
   const [totalSpent, setTotalSpent] = useState(0);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const currentMonth = new Date().toLocaleString('default', { month: 'long' });
@@ -14,24 +15,12 @@ const RecentTransactions = () => {
   const [selectedTransaction, setSelectedTransaction] = React.useState(null);
 
   useEffect(() => {
-    fetch("/getTransactions")
+    fetch("/getBills")
       .then(res => res.json())
       .then(data => {
-        setTransactions(data);
+        setBills(data);
         console.log(data);
-        const thisMonthTransactions = data.filter(transaction => 
-          transaction.date !== null &&
-          ["Wants", "Needs"].includes(transaction.category) &&
-          new Date(transaction.date).getMonth() === selectedMonth
-        );
-        setTotalSpent(thisMonthTransactions.reduce((total, transaction) => total + transaction.amount, 0));
-        if (thisMonthTransactions.length === 0) {
-          setDisplayMessage(true);
-          setDisplayGrid(false);
-        } else {
-          setDisplayMessage(false);
-          setDisplayGrid(true);
-        }
+        
       });
   }, [selectedMonth]);
 
@@ -53,28 +42,26 @@ const RecentTransactions = () => {
   return (
     <div className='text-white '>
       <div className="w-45 h-min-0 h-500 rounded-3xl box-border p-4 ml-5rem border-4 whitespace-nowrap overflow-hidden bg-dark-blue">
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <h3 style={{ fontSize: '2.5rem' }}>Transactions</h3>
+      <div className="grid grid-cols-3 gap-9">
+      <div className="place-items-start">
+        <button className="relative text-lg  p-2.5 cursor-pointer bg-transparent w-36 duration-300" onClick={() => { nav("/Dashboard") }}>
+          <FaArrowLeft size='1.5rem' />
+        </button>
+      </div>
+        <div className="text-center">
+          <h3 style={{ fontSize: '2.5rem' }}>Bills for {months[selectedMonth]}</h3>
+        </div>
+        
+        
       </div>
       <br/>
       
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={{ fontSize: '1.5rem', textAlign: 'center' }}>Total Spent in {months[selectedMonth]}: ${totalSpent.toFixed(2)}</h2>
-          <select value={selectedMonth} onChange={(e) => {
-              setSelectedMonth(parseInt(e.target.value));
-              setDisplayMessage(false);
-            }} className='text-lg rounded-2xl box-border p-3 ml-2rem border-4 cursor-pointer bg-transparent duration-300 hover:bg-slate-200 hover:text-black'>
-              {months.map((month, index) => (
-                <option key={index} value={index}>{month}</option>
-              ))}
-          </select>
+         
         </div>
         
-        <div style={{ transform: 'translateX(90%) translateY(-240%)' }}>
-          <button className="text-lg rounded-2xl box-border p-2.5 border-4 cursor-pointer bg-transparent w-36 duration-300 hover:bg-slate-200 hover:text-black" onClick={() => { nav("/Dashboard") }}>
-            Back
-          </button>
-        </div>
+       
         {displayMessage && (
           <p style={{ textAlign: 'center' }}>No reports were made in {months[selectedMonth]}.</p>
         )}
@@ -95,30 +82,7 @@ const RecentTransactions = () => {
                 
               </div>
             </li>
-            {transactions
-              .filter((transaction)=> transaction.date !== null) // ignore transactions with null date
-              .sort((a, b) => new Date(b.date) - new Date(a.date)) // sort transactions by date in descending order
-              .filter((transaction) => new Date(transaction.date).getMonth() === selectedMonth) // filter transactions by selected month
-              .map((transaction, index) => (
-                <li key={index} className="bg-transparent h-full">
-                  <div className="grid grid-cols-4 gap-4 place-items-center">
-                    <div>
-                      {transaction.category}
-                    </div>
-                    <div>
-                      ${transaction.amount.toFixed(2)}
-                    </div>
-                    <div></div>
-                    <div>
-                      {selectedMonth === new Date().getMonth() && (
-                        <button className="bg-sky-950 hover:bg-sky-900 font-bold py-1 px-2 rounded" onClick={() => handleOnClick(transaction, selectedMonth)}>
-                          Edit
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </li>
-              ))}
+           
 
             {showModal && (
               <Modal transaction={selectedTransaction} onClose={handleClose} />
@@ -132,4 +96,4 @@ const RecentTransactions = () => {
   );
 };
 
-export default RecentTransactions;
+export default AllBills;

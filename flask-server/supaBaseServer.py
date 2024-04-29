@@ -254,7 +254,11 @@ def deleteTransaction():
     response = supabase.table('transaction_reports').delete().eq('transaction_id', id).execute()
     return "Success"
 
-
+@app.route('/getBills')
+def getBills():
+    id = session.get('user_id')
+    response = supabase.table("bills").select("*").eq('user_id', id).execute()
+    return jsonify(response.data)
     
 
 if __name__ == '__main__':
