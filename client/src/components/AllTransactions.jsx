@@ -13,13 +13,12 @@ const RecentTransactions = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [selectedTransaction, setSelectedTransaction] = React.useState(null);
 
-  
-
   useEffect(() => {
     fetch("/getTransactions")
       .then(res => res.json())
       .then(data => {
         setTransactions(data);
+        console.log(data);
         const thisMonthTransactions = data.filter(transaction => 
           transaction.date !== null &&
           ["Wants", "Needs"].includes(transaction.category) &&
@@ -40,6 +39,11 @@ const RecentTransactions = () => {
     setShowModal(true);
     setSelectedTransaction(transaction);
   };
+
+  function handleClose(){
+    setShowModal(false);
+    window.location.reload();
+  }
 
   const months = [
     "January", "February", "March", "April", "May", "June",
@@ -104,7 +108,7 @@ const RecentTransactions = () => {
                     </div>
                     <div>{transaction.description }
                     </div>
-                    <div>
+                    <div className={`${transaction.category === 'Income' ? 'text-green-500' : 'text-red-500'}`}>
                       ${transaction.amount.toFixed(2)}
                     </div>
                     <div>
@@ -122,7 +126,7 @@ const RecentTransactions = () => {
               ))}
 
             {showModal && (
-              <Modal transaction={selectedTransaction} onClose={() => setShowModal(false)} />
+              <Modal transaction={selectedTransaction} onClose={handleClose} />
             )}
           </ul>
         )}
