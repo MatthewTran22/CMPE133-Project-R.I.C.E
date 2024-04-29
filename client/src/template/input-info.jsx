@@ -47,7 +47,7 @@ const InputInfo = () => {
     setTimeout(() => {
       setChartData(budgetPlanData[budgetPlan]);
       setLoading(false); // Set loading state to false when data is fetched
-    }, 170); // Adjust the delay time as needed
+    }, 200); // Adjust the delay time as needed
   };
 
   useEffect(() => {
