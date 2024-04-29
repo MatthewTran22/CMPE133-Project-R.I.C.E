@@ -51,8 +51,6 @@ const Dashboard = () => {
         <div class="grid grid-cols-2 gap-4 bg-transparent">
           <div class="bg-transparent p-4 items-center justify-items-center">
 
-            <h2 className="text-slate-300 text-left" style={{fontSize: '2rem', transform: 'translateX(8%) translateY(-30%)' }}>Welcome back, {userName}.</h2>
-
             <Totals Category="Current Total" otherTotals={info[0].total_remaining} /> <br/>
             <Chart data={info} />
           </div>
