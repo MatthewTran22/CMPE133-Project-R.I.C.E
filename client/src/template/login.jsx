@@ -122,7 +122,7 @@ const Login = () => {
               />
             </div>
             <a
-                href="#"
+                href="./forgotpwd"
                 className="text-sm font-medium leading-5 text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150"
               >
                 Forgot your password?
