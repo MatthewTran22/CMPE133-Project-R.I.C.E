@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request, session
 from supabase import Client
 import os
 import uuid
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 app = Flask(__name__)
 app.secret_key = "so secret"
@@ -122,19 +123,64 @@ def reset_request():
         user = response.data[0]
         
         if user:
-            # send_email()
+            send_email(email)
             return jsonify({"message": "Reset email sent"}), 200
         
         else:
             return jsonify({"error": "User not found"}), 404
     except Exception as e:
         return jsonify({"error": "An unexpected error occurred"}), 500
+    
+@app.route('/reset_password/<token>', methods=['GET','POST'])
+def reset_password(token):
+    try:
+        user = verify_reset_token(token)
+        if not user:
+            return jsonify({"error": "Invalid or expired token"}), 400
+        
+        password = request.json.get("password")
+        
+        if not password:
+            return jsonify({"error": "Password is required"}), 400
+        
+        response = supabase.table("users").update({"password": password}).eq("user_id", user["user_id"]).execute()
+        
+        return jsonify({"message": "Password reset successful"}), 200
+    except Exception as e:
+        return jsonify({"error": "An unexpected error occurred"}), 500
 
-def send_email():
+def send_email(email):
     pass
 
-def get_reset_token():
-    pass
+def get_reset_token(email, expire_time = 3600):
+    s = Serializer(app.secret_key, expire_time)
+    token = s.dumps({'email': email}).decode('utf-8') 
+    return token
+
+def verify_reset_token(token):
+    s = Serializer(app.secret_key)
+    try:
+        email = s.loads(token)['email']
+    except:
+        return None
+    return get_user_by_email(email)
+    
+
+def get_user_by_email(email):
+    try:
+        response = supabase.table("users").select("*").eq("email", email).execute()
+        user = response.data[0]
+        return user
+    except Exception as e:
+        return None
+    
+def get_user_by_id(id):
+    try:
+        response = supabase.table("users").select("*").eq("user_id", id).execute()
+        user = response.data[0]
+        return user
+    except Exception as e:
+        return None
 
 if __name__ == '__main__':
     app.run(debug=True)

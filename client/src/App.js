@@ -26,6 +26,7 @@ function App() {
         <Route path="/InfoInput" element={<InfoInput /> } />
         <Route path="/Dashboard" element={<Dashboard /> } />
         <Route path="/ForgotPwd" element={<ForgotPwd /> } />
+        <Route path="/reset/:token" element={<ResetPwd />} />
 
       </Routes>
     </Router>
