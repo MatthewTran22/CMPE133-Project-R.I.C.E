@@ -1,30 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Nav1 from '../components/Nav1';
-import Totalbuget from '../components/TotalBuget';
+import BillList from '../components/BillList';
+import Totals from '../components/Totals';
 import '../styles.css';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate, 
-  useNavigate
-} from "react-router-dom";
+import useSessionChecker from '../components/SessionCheck';
+import RecentTransactions from '../components/RecentTransactions';
+import { useNavigate } from "react-router-dom";
+import Chart from '../components/PieChart';
 
-const Login = () => { 
+const Dashboard = () => { 
+  const nav = useNavigate();
+  const [info, setInfo] = useState([]);
+  const [userName, setUserName] = useState('');
+  useSessionChecker();
+
+  useEffect(() => {
+    fetch("/getInfo")
+      .then(res => res.json())
+      .then((info) => {
+        setInfo(info);
+        console.log(info);
+        if (info.length > 0) {
+          setUserName(info[0].username); // Assuming the user's name is available in the first object of the info array
+        }
+      });
+  }, []);
+
+  if (info.length === 0) {
     return (
-        <div className= "star-bg">
-          <div className="w-full h-screen">
+      <div className= "star-bg">
+        <div className="w-full h-screen">
           <div id="stars"></div>
           <div id="stars2"></div>
           <div id="stars3"></div>
           <div id="title"></div>
-            <Nav1 />
-            <Totalbuget />
-          </div>
-          
-          
         </div>
+        Loading...
+      </div>
     );
+  }
+
+  return (
+    <div className= "star-bg">
+      <div className="w-full h-screen">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        <div id="title"></div>
+        <Nav1 />
+        <div class="grid grid-cols-2 gap-4 bg-transparent">
+          <div class="bg-transparent p-4 items-center justify-items-center">
+
+            <h2 className="text-slate-300 text-left" style={{fontSize: '2rem', transform: 'translateX(8%) translateY(-30%)' }}>Welcome back, {userName}.</h2>
+
+            <Totals Category="Current Total" otherTotals={info[0].total_remaining} /> <br/>
+            <Chart data={info} />
+          </div>
+          <div class="bg-transparent p-4">
+            <RecentTransactions /> <br/>
+            <BillList />
+          </div>
+        </div>
+        <br/>
+      </div>
+    </div>
+  );
 }
 
-export default Login;
+export default Dashboard;

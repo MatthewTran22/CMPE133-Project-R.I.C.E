@@ -18,7 +18,7 @@ font-family: Helvetica;
 justify-content: center;
 align-items: center;
 font-size: 2em;
-background-color: rgba(32,41,58,255);
+background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)
 }
 
 .footer {
@@ -77,3 +77,25 @@ content: "↑";
 color: black;
 font-size: 20px;
 }
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .button {
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    color: white; /* Set text color to contrast with the background */
+    border: none; /* Remove default button border */
+  }
+  
+  /* Adjust button styles as needed */
+  .button-container button {
+    margin-right: 60px;
+  }
+  
+  /* Remove the right margin from the last button to avoid extra space */
+  .button-container button:last-child {
+    margin-right: 0;
+  }

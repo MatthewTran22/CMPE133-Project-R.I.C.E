@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../assets/img/logo.png';
+import Logo from '../template/images/ricelogo.png';
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ const Nav2 = () => {
   return (
     <div className="relative">
       <div className="h-24 ml-1 flex w-full items-center relative z-10">
-        <div className="w-1/2"  onClick={() => { navigate("/") }}>
+        <div className="w-1/2"  onClick={() => { navigate("/Dashboard") }}>
           <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo"  />
         </div>
         <div className="w-1/2 flex text-white justify-end items-center mr-3 space-x-3">
