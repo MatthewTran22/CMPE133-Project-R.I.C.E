@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from './Modal';
+import { FaArrowLeft } from "react-icons/fa";
 
 const RecentTransactions = () => {
   const nav = useNavigate();
@@ -51,13 +52,26 @@ const RecentTransactions = () => {
   ];
 
   return (
-    <div className='text-white '>
+    <div className='text-white'>
+       
       <div className="w-45 h-min-0 h-500 rounded-3xl box-border p-4 ml-5rem border-4 whitespace-nowrap overflow-hidden bg-dark-blue">
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <h3 style={{ fontSize: '2.5rem' }}>Transactions</h3>
-      </div>
-      <br/>
       
+      <div className="grid grid-cols-3 gap-9">
+      <div className="place-items-start">
+        <button className="relative text-lg  p-2.5 cursor-pointer bg-transparent w-36 duration-300" onClick={() => { nav("/Dashboard") }}>
+          <FaArrowLeft size='1.5rem' />
+        </button>
+      </div>
+        <div className="text-center">
+          <h3 style={{ fontSize: '2.5rem' }}>Transactions</h3>
+        </div>
+        
+        <div className = ''>
+        
+        </div>
+      </div>
+      
+        <br/>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={{ fontSize: '1.5rem', textAlign: 'center' }}>Total Spent in {months[selectedMonth]}: ${totalSpent.toFixed(2)}</h2>
           <select value={selectedMonth} onChange={(e) => {
@@ -70,11 +84,7 @@ const RecentTransactions = () => {
           </select>
         </div>
         
-        <div style={{ transform: 'translateX(90%) translateY(-240%)' }}>
-          <button className="text-lg rounded-2xl box-border p-2.5 border-4 cursor-pointer bg-transparent w-36 duration-300 hover:bg-slate-200 hover:text-black" onClick={() => { nav("/Dashboard") }}>
-            Back
-          </button>
-        </div>
+        
         {displayMessage && (
           <p style={{ textAlign: 'center' }}>No reports were made in {months[selectedMonth]}.</p>
         )}
