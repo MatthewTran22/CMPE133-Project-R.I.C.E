@@ -4,9 +4,20 @@ from supabase import Client
 import os
 import uuid
 import datetime
+from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
+from flask_mail import Mail, Message
+
 
 app = Flask(__name__)
 app.secret_key = "so secret"
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'riceservice.dmmj@gmail.com'
+app.config['MAIL_PASSWORD'] = 'temporary@123'
+
+mail = Mail(app)
 
 load_dotenv("supa.env")
 URL = os.getenv("SUPABASE_URL")
@@ -259,6 +270,80 @@ def getBills():
     id = session.get('user_id')
     response = supabase.table("bills").select("*").eq('user_id', id).execute()
     return jsonify(response.data)
+    
+    
+@app.route('/reset_request', methods=['GET','POST'])
+def reset_request():
+    try:
+        email = request.json.get("email")
+        
+        if not email:
+            return jsonify({"error": "Email is required"}), 400
+        
+        response = supabase.table("users").select("*").eq("email", email).execute()
+        user = response.data[0]
+        
+        if user:
+            token = get_reset_token(email)
+            send_email(email, token)
+            return jsonify({"message": "Reset email sent"}), 200
+        
+        else:
+            return jsonify({"error": "User not found"}), 404
+    except Exception as e:
+        return jsonify({"error": "An unexpected error occurred"}), 500
+    
+@app.route('/reset_password/<token>', methods=['GET','POST'])
+def reset_password(token):
+    try:
+        user = verify_reset_token(token)
+        if not user:
+            return jsonify({"error": "Invalid or expired token"}), 400
+        
+        password = request.json.get("password")
+        
+        if not password:
+            return jsonify({"error": "Password is required"}), 400
+        
+        response = supabase.table("users").update({"password": password}).eq("user_id", user["user_id"]).execute()
+        
+        return jsonify({"message": "Password reset successful"}), 200
+    except Exception as e:
+        return jsonify({"error": "An unexpected error occurred"}), 500
+
+def send_email(email, token):
+    msg = Message()
+    msg.subject = "Password Reset Request"
+    msg.recipients = [email]
+    msg.html = f'''
+    <h1>Password Reset Request</h1>
+    <p>Click the link below to reset your password</p>
+    <a href="http://localhost:3000/reset/{token}">Reset Password</a>
+    '''
+    mail.send(msg)
+    
+
+def get_reset_token(email, expire_time = 3600):
+    s = Serializer(app.secret_key, expire_time)
+    token = s.dumps({'email': email}).decode('utf-8') 
+    return token
+
+def verify_reset_token(token):
+    s = Serializer(app.secret_key)
+    try:
+        email = s.loads(token)['email']
+    except:
+        return None
+    return get_user_by_email(email)
+    
+
+def get_user_by_email(email):
+    try:
+        response = supabase.table("users").select("*").eq("email", email).execute()
+        user = response.data[0]
+        return user
+    except Exception as e:
+        return None
     
 
 if __name__ == '__main__':
