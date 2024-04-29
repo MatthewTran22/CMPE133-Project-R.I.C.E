@@ -11,7 +11,7 @@ const AllBills = () => {
   const [showFormModal, setShowFormModal] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [displayMessage, setDisplayMessage] = useState(false);
-  const [displayGrid, setDisplayGrid] = useState(true);
+  const [displayGrid, setDisplayGrid] = useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [selectedTransaction, setSelectedTransaction] = React.useState(null);
 
@@ -22,7 +22,7 @@ const AllBills = () => {
   const handleCloseFormModal = () => {
     setShowFormModal(false);
   };
-  
+
   useEffect(() => {
     fetch("/getBills")
       .then(res => res.json())
