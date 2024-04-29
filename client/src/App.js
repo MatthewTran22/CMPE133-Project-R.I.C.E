@@ -5,6 +5,7 @@ import Home from './template/Home';
 import InfoInput from './template/input-info';
 import Dashboard from './template/Dashboard'
 import ForgotPwd from './template/forgotpwd';
+import ResetPwd from './template/resetpwd';
 import {
   BrowserRouter as Router,
   Route,
