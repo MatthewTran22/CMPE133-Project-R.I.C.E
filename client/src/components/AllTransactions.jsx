@@ -66,24 +66,23 @@ const RecentTransactions = () => {
           <h3 style={{ fontSize: '2.5rem' }}>Transactions</h3>
         </div>
         
-        <div className = ''>
-        
+        <div className = 'text-end'>
+          <select value={selectedMonth} onChange={(e) => {
+                setSelectedMonth(parseInt(e.target.value));
+                setDisplayMessage(false);
+              }} className='text-lg rounded-2xl box-border p-3 ml-2rem border-4 cursor-pointer bg-transparent duration-300 hover:bg-slate-200 hover:text-black'>
+                {months.map((month, index) => (
+                  <option key={index} value={index}>{month}</option>
+                ))}
+            </select>
         </div>
       </div>
       
         <br/>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={{ fontSize: '1.5rem', textAlign: 'center' }}>Total Spent in {months[selectedMonth]}: ${totalSpent.toFixed(2)}</h2>
-          <select value={selectedMonth} onChange={(e) => {
-              setSelectedMonth(parseInt(e.target.value));
-              setDisplayMessage(false);
-            }} className='text-lg rounded-2xl box-border p-3 ml-2rem border-4 cursor-pointer bg-transparent duration-300 hover:bg-slate-200 hover:text-black'>
-              {months.map((month, index) => (
-                <option key={index} value={index}>{month}</option>
-              ))}
-          </select>
         </div>
-        
+        <br/>
         
         {displayMessage && (
           <p style={{ textAlign: 'center' }}>No reports were made in {months[selectedMonth]}.</p>
