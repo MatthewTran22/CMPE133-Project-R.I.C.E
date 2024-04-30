@@ -26,26 +26,26 @@ const Front = () => {
   };
 
   return (
-    <div>
-      <div className="box">
+    <div className=''>
+      <div className="box font-gruppo font-bold">
         <div className="image-container">
           {/* <img className="bgpng" src={ricePattyImg} alt="Box 1 Image" /> */}
           <div className="text-overlay">
             <img src={riceLogoImg} alt="Box 1 Image" />
-            <b>a lightweight tool to help you budget and save</b>
+            <b className='font-gruppo'>A lightweight tool to help you budget and save</b>
             <div className='button-container'>
-              <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40 hover:bg-white hover:text-black cursor-pointer' onClick={goToLogin}>Go to Login</button>
-              <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40 hover:bg-white hover:text-black cursor-pointer' onClick={goToRegister}>Go to Register</button>
+              <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40 hover:bg-white hover:text-black cursor-pointer duration-300' onClick={goToLogin}>Login</button>
+              <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40 hover:bg-white hover:text-black cursor-pointer duration-300' onClick={goToRegister}>Create Account</button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="box">
+      <div className="box font-gruppo">
         <b>Meet the team</b>
       </div>
 
-      <div className="box">
+      <div className="box font-gruppo">
         <div className="image-container">
           <img className="bgpng" src={piggyBankImg} alt="Box 1 Image" />
           <div className="text-overlay">
@@ -54,7 +54,7 @@ const Front = () => {
         </div>
       </div>
 
-      <div className="box">
+      <div className="box font-gruppo">
         <b>banana</b>
       </div>
 

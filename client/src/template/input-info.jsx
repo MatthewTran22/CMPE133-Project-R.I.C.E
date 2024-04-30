@@ -58,7 +58,7 @@ const InputInfo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name.match(/^[A-Za-z]+$/)) {
+    if (!name.match(/^[A-Za-z\s]+$/)) {
       setNameError('Name should only contain letters');
       return;
     }

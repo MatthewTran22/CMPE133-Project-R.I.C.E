@@ -59,7 +59,7 @@ const Login = () => {
             <div id="stars3"></div>
             <div id="title"></div>
       
-    <div className="flex min-h-full h-screen flex-col justify-center px-6 pb-12 lg:px-8">
+    <div className="flex min-h-full h-screen flex-col justify-center px-6 pb-12 lg:px-8 relative">
       
     {errMsg && (
             <div className="absolute top-10 left-0 right-0 bg-red-100 border border-red-400 text-red-700 px-4 py-1 rounded mx-auto w-1/2 flex items-center">
