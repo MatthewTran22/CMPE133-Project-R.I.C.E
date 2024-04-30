@@ -99,3 +99,7 @@ font-size: 20px;
   .button-container button:last-child {
     margin-right: 0;
   }
+
+  .font-gruppo {
+    font-family: 'Gruppo', 'sans-serif';
+  }
