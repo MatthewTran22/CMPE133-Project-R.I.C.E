@@ -351,7 +351,13 @@ def AddBill():
     id = session.get('user_id')
     response = supabase.table('bills').insert({'user_id':id, 'description':data.get('description'), 'amount':data.get('amount'), 'paid': False}).execute()
     return 'Success'
-    
+
+@app.route('/DeleteBill', methods=['GET','POST'])
+def DeleteBill():
+    data = request.get_json()
+    bill_id = data.get('id')
+    response = supabase.table('bills').delete().eq('bill_id', bill_id).execute()
+    return 'Success'
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -4,6 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { CiSquarePlus } from "react-icons/ci";
 import FormModal from './FormModal'; // Import the FormModal component
 import { FaCheck, FaTimes } from 'react-icons/fa';
+import { FaRegTrashCan } from "react-icons/fa6";
 
 const AllBills = () => {
   const nav = useNavigate();
@@ -20,6 +21,30 @@ const AllBills = () => {
     setShowFormModal(true);
   };
 
+  const handleDelete = async (bill_id) => {
+    // Make a fetch request to delete the transaction
+    console.log(bill_id);
+    try {
+      const response = await fetch('/DeleteBill', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: bill_id })
+      });
+
+      if (response.ok) {
+        console.log('Transaction deleted');
+      }
+
+      // Handle success or display any error messages
+    } catch (error) {
+      console.error('Error:', error);
+      // Set error message
+      
+    }
+     handleClose();
+  };
 
   useEffect(() => {
     fetch("/getBills")
@@ -27,7 +52,7 @@ const AllBills = () => {
       .then(data => {
         setBills(data);
         console.log(data);
-        
+
         // Calculate total spent
         const total = data.reduce((acc, bill) => {
           return acc + parseFloat(bill.amount);
@@ -116,8 +141,8 @@ const AllBills = () => {
                       {bill.paid ? <FaCheck color="green" size="1.5rem"/> : <FaTimes color="red" size="1.5rem"/>}
                     </div>
                     <div>
-                    <button className="bg-sky-950 hover:bg-sky-900 font-bold py-1 px-2 rounded">
-                          Edit
+                    <button className="hover:bg-sky-900 font-bold py-1 px-2 rounded" onClick={() => handleDelete(bill.bill_id)}>
+                           < FaRegTrashCan size = "1.3rem"/>
                         </button>
                     </div>
                   </div>
@@ -131,7 +156,7 @@ const AllBills = () => {
       </div>
       
     </div>
-  );
+ );
 };
 
 export default AllBills;
