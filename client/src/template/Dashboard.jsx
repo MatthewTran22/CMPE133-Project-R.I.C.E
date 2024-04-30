@@ -7,6 +7,7 @@ import useSessionChecker from '../components/SessionCheck';
 import RecentTransactions from '../components/RecentTransactions';
 import { useNavigate } from "react-router-dom";
 import Chart from '../components/PieChart';
+import FourStep from '../components/FourStep';
 
 const Dashboard = () => { 
   const nav = useNavigate();
@@ -56,7 +57,8 @@ const Dashboard = () => {
           </div>
           <div class="bg-transparent p-4">
             <RecentTransactions /> <br/>
-            <BillList />
+            <BillList /> <br/>
+            <FourStep />
           </div>
         </div>
         <br/>
