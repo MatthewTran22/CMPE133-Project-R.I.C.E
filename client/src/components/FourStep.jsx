@@ -28,7 +28,7 @@ const BillList = () => {
 
   
   return (
-    <div className = 'w-96 h-72 rounded-3xl box-border p-4 border-4 whitespace-nowrap bg-dark-blue' style={{transform: 'translateX(72%)'}}>
+    <div className = 'w-96 rounded-3xl box-border p-4 border-4 whitespace-nowrap bg-dark-blue' style={{transform: 'translateX(72%)', height: '17.5rem'}}>
       <div className='text-white text-3xl text-center'>
         4 Step Plan
       </div>
@@ -39,14 +39,12 @@ const BillList = () => {
           <li className="bg-transparent h-full">
               <div className="grid grid-cols-4 gap-4 place-items-center">
                 <div>
-                  <strong>Step 1</strong>
+                  
                 </div>
                 
-                <div>
-                  <strong>Amount</strong>
+                <div >
               </div>
               <div>
-                  <strong>Payment Status</strong>
               </div>
                 
               </div>
