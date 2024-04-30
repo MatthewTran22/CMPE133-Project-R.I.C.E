@@ -344,6 +344,13 @@ def get_user_by_email(email):
         return user
     except Exception as e:
         return None
+
+@app.route('/AddBill', methods=['GET','POST'])
+def AddBill():
+    data = request.get_json()
+    id = session.get('user_id')
+    response = supabase.table('bills').insert({'user_id':id, 'description':data.get('description'), 'amount':data.get('amount'), 'paid': False}).execute()
+    return 'Success'
     
 
 if __name__ == '__main__':

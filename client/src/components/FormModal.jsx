@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaTimes } from "react-icons/fa";
 
-const FormModal = ({ onClose }) => {
+const NewBill = ({ onClose }) => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
@@ -23,6 +23,7 @@ const FormModal = ({ onClose }) => {
     .catch((error) => {
       console.error(error); // handle error
     });
+    onClose();
   };
 
   const handleDescriptionChange = (e) => {
@@ -102,4 +103,4 @@ const FormModal = ({ onClose }) => {
   );
 };
 
-export default FormModal;
+export default NewBill;
