@@ -138,9 +138,10 @@ def ReportPurchases():
     else:
         category = category + "_spent" #gets either the wants or needs category
         new_total = current_total - moneyChange #subtracts money since we are using from our budget
+        response = supabase.table('user_info').select(category).eq('user_id', id).execute()
         
 
-    response = supabase.table('user_info').select(category).eq('user_id', id).execute()
+    
     current_category_spent = response.data[0][category]
     new_category_spent = current_category_spent + moneyChange
     update_response = supabase.table('user_info').update({category: new_category_spent ,'total_remaining': new_total}).eq('user_id', id).execute()
