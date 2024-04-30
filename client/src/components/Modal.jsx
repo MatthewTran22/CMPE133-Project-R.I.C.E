@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoExitOutline } from "react-icons/io5";
+import { FaTimes } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 
 const Modal = ({ transaction, onClose }) => {
@@ -127,18 +127,18 @@ const Modal = ({ transaction, onClose }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="text-white bg-slate-200 p-5 rounded-lg relative" style={{ minHeight: "450px", minWidth: "700px" }}>
         <div className="absolute top-0 left-0 m-3">
-          <div className="text-black" onClick={onClose}>
-            <IoExitOutline size="2.5rem"/>
-          </div>
+        <button className="text-gray-500 hover:text-gray-700 focus:outline-none" onClick={onClose}>
+              <FaTimes size={20} />
+            </button>
         </div>
         <div className="flex justify-center items-center space-x-10">
           <div className="flex flex-col justify-center items-center">
             <h2 className="mb-5 text-left text-4xl font-bold leading-9 tracking-tight text-black">Edit Transaction</h2>
             
-            <h5 className="mb-5 text-left text-xl font-bold leading-9 tracking-tight text-black">Category:{formData.category}</h5>
+            <h5 className="mb-5 text-left text-xl font-bold leading-9 tracking-tight text-black">Category: {formData.category}</h5>
             <form onSubmit={handleSubmit}>
               <div className="space-y-1">
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+                <label htmlFor="description" className="block text-gray-700 font-semibold mb-1">Description</label>
                 <input
                   id="description"
                   type="text"
@@ -152,7 +152,7 @@ const Modal = ({ transaction, onClose }) => {
               </div>
 
               <div className="space-y-1">
-                <label htmlFor="amount" className="block text-sm font-medium text-gray-700">Amount</label>
+                <label htmlFor="amount" className="block text-gray-700 font-semibold mb-1">Amount</label>
                 <input
                   id="amount"
                   type="number"
@@ -165,18 +165,7 @@ const Modal = ({ transaction, onClose }) => {
                 {amountError && <div className="text-red-500">This field is required</div>}
               </div>
 
-              <div className="space-y-1">
-                <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
-                <input
-                  id="date"
-                  type="date"
-                  autoComplete="date"
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                />
-              </div><br/>
+             <br/>
               <div className="grid grid-cols-2 gap-4 place-items-center">
 
               <button
