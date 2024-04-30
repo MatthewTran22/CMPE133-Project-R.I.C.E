@@ -28,7 +28,7 @@ const Chart = ({ data }) => {
         return (
             <text x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" fontSize={20}>
             {data01[index].name}:   
-            ${(data01[index].value).toFixed(0)}
+            ${(data01[index].value).toFixed(2)}
           </text>
           
         );
