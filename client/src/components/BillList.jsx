@@ -1,9 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { FaCheck, FaTimes } from 'react-icons/fa';
+
 
 const BillList = () => {
-  const [showForm, setShowForm] = useState(false);
+  const [bills, setBills] = useState([]);
+  const [displayGrid, setDisplayGrid] = useState(false);
+
   const nav = useNavigate();
+
+  useEffect(() => {
+    fetch("/getBills")
+      .then(res => res.json())
+      .then(data => {
+        setBills(data);
+        console.log(data);
+
+        // Check if there are any bills
+        if (data.length === 0) {
+          setDisplayGrid(false);
+        } else {
+          setDisplayGrid(true);
+        }
+      });
+  }, []);
+
 
   const handleToggleForm = () => {
     nav('/EditBills')
@@ -22,14 +43,38 @@ const BillList = () => {
           </div>
         </div>
         Bill List
-        <br/>
-        <div style={{ fontSize: '2rem' }}>
-          
+        
+       
+      </div>
+      <br/>
+      <div className='text-white'>
+        {displayGrid && (
+          <ul style={{ listStyleType: 'none', padding: 0, display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', height: '100%' }}>
+          {bills
+            .map((bill, index) => {
+              const description = bill.description.length > 15 ? bill.description.substring(0, 12) + '...' : bill.description;
+              return (
+                <li key={index} className="bg-transparent h-full">
+                  <div className="grid grid-cols-3 gap-4 place-items-center">
+                    <div>
+                      {description}
+                    </div>
+                    <div>
+                      ${bill.amount.toFixed(2)}
+                    </div>
+                    <div>
+                      {bill.paid ? <FaCheck color="green" size="1.5rem"/> : <FaTimes color="red" size="1.5rem"/>}
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+        </ul>
+        )}
 
 
 
         </div>
-      </div>
     </div>
   );
 };

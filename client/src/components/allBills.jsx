@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
 import { CiSquarePlus } from "react-icons/ci";
 import FormModal from './FormModal'; // Import the FormModal component
+import { FaCheck, FaTimes } from 'react-icons/fa';
 
 const AllBills = () => {
   const nav = useNavigate();
@@ -19,9 +20,6 @@ const AllBills = () => {
     setShowFormModal(true);
   };
 
-  const handleCloseFormModal = () => {
-    setShowFormModal(false);
-  };
 
   useEffect(() => {
     fetch("/getBills")
@@ -47,11 +45,7 @@ const AllBills = () => {
       });
   }, [selectedMonth]);
 
-  const handleOnClick = (transaction) => {
-    setShowModal(true);
-    setSelectedTransaction(transaction);
-  };
-
+  
   function handleClose(){
     setShowModal(false);
     window.location.reload();
@@ -79,14 +73,13 @@ const AllBills = () => {
             <CiSquarePlus size="3rem"/>
           </button>
         </div>
-        {showFormModal && <FormModal onClose={handleCloseFormModal} />} {/* Show the FormModal */}
+        {showFormModal && <FormModal onClose={handleClose} />} {/* Show the FormModal */}
       </div>
       <br/>
       
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={{ fontSize: '1.5rem', textAlign: 'center' }}>Expected total in  {months[selectedMonth]}: ${totalSpent.toFixed(2)}</h2>
-         
-        </div>
+        </div><br/>
         
        
         {displayMessage && (
@@ -101,7 +94,7 @@ const AllBills = () => {
                 </div>
                 
                 <div>
-<strong>Amount</strong>
+                  <strong>Amount</strong>
               </div>
               <div>
                   <strong>Payment Status</strong>
@@ -109,7 +102,27 @@ const AllBills = () => {
                 
               </div>
             </li>
-           
+            {bills
+              .map((bill, index) => (
+                <li key={index} className="bg-transparent h-full">
+                  <div className="grid grid-cols-4 gap-4 place-items-center">
+                    <div>
+                      {bill.description }
+                    </div>
+                    <div>
+                      ${bill.amount.toFixed(2)}
+                    </div>
+                    <div>
+                      {bill.paid ? <FaCheck color="green" size="1.5rem"/> : <FaTimes color="red" size="1.5rem"/>}
+                    </div>
+                    <div>
+                    <button className="bg-sky-950 hover:bg-sky-900 font-bold py-1 px-2 rounded">
+                          Edit
+                        </button>
+                    </div>
+                  </div>
+                </li>
+              ))}
 
             
           </ul>
