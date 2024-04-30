@@ -31,7 +31,7 @@ const BillList = () => {
   };
 
   return (
-    <div className = 'w-96 min-h-96 h-200 rounded-3xl box-border p-4 border-4 whitespace-nowrap overflow-auto  bg-dark-blue' style={{transform: 'translateX(72%)'}}>
+    <div className = 'w-96 h-96 rounded-3xl box-border p-4 border-4 whitespace-nowrap bg-dark-blue' style={{transform: 'translateX(72%)'}}>
       <div className='text-white text-5xl'>
       <div className="absolute top-62% right-50% transform -translate-y-1/2" style={{ fontSize: '1rem' }}>
           <div className="h-24 ml-1 flex w-full items-center relative z-10">
@@ -46,8 +46,8 @@ const BillList = () => {
         
        
       </div>
-      <br/>
-      <div className='text-white'>
+      
+      <div className = 'w-50 h-72 text-white rounded-3xl box-border p-4 border-0 overflow-auto whitespace-nowrap bg-transparent'>
         {displayGrid && (
           <ul style={{ listStyleType: 'none', padding: 0, display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', height: '100%' }}>
           {bills
