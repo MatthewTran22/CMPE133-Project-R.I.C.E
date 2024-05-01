@@ -126,7 +126,7 @@ const ReportPurchases = () => {
                     <button type="submit" className="hover:bg-white hover:text-black text-white font-bold py-2 px-4 border-2 rounded-lg mt-10 duration-300" onClick={() => {
     setTimeout(() => {
         Navigate("/Dashboard");
-    }, 3000); // 2 seconds delay
+    }, 3000); // 3 seconds delay
 }}>
     Submit
 </button>
