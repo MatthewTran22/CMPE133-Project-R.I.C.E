@@ -27,12 +27,12 @@ const Front = () => {
 
   return (
     <div className=''>
-      <div className="box font-gruppo font-bold">
-        <div className="image-container">
+      <div className="box font-gruppo">
+        <div className="image-container justify-items-start">
           {/* <img className="bgpng" src={ricePattyImg} alt="Box 1 Image" /> */}
           <div className="text-overlay">
             <img src={riceLogoImg} alt="Box 1 Image" />
-            <b className='font-gruppo'>A lightweight tool to help you budget and save</b>
+            <b className='font-gruppo text-left'>A lightweight tool to help you budget and save</b>
             <div className='button-container'>
               <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40 hover:bg-white hover:text-black cursor-pointer duration-300' onClick={goToLogin}>Login</button>
               <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40 hover:bg-white hover:text-black cursor-pointer duration-300' onClick={goToRegister}>Create Account</button>
