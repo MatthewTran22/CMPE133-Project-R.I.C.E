@@ -39,7 +39,7 @@ const Chart = ({ data }) => {
           return null;
         }
       
-        return `${name}: ${value}`;
+        return `${name}: $${value.toFixed(2)}`;
       };
 
       return (
@@ -60,10 +60,11 @@ const Chart = ({ data }) => {
             
           >
             {data01.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} style={{outline: 'none'}}/>
               ))}
             </Pie>
             <Pie
+              outline = 'none'
               data={data02}
               dataKey="value"
               cx="31%"
@@ -75,7 +76,7 @@ const Chart = ({ data }) => {
               label={renderLabel}
             >
               {data02.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} style={{outline: 'none'}}/>
               ))}
             </Pie>
         </PieChart>
