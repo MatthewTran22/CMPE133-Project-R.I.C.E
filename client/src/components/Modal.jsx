@@ -97,16 +97,16 @@ const Modal = ({ transaction, onClose }) => {
     handleChange(e);
   };
 
-  const handleDelete = async (transaction) => {
+  const handleDelete = async (id) => {
     // Make a fetch request to delete the transaction
-    console.log(transaction);
+    console.log(id);
     try {
       const response = await fetch('/deleteTransaction', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id: transaction.transaction_id })
+        body: JSON.stringify({ id: id })
       });
 
       if (response.ok) {
@@ -181,7 +181,7 @@ const Modal = ({ transaction, onClose }) => {
                   type="button"
                   className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600
                   hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out"
-                  onClick={() => handleDelete(transaction)}
+                  onClick={() => handleDelete(transaction.transaction_id)}
                 >
                   <FaRegTrashCan />
                 </button>
