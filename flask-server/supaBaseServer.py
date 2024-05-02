@@ -362,6 +362,37 @@ def DeleteBill():
     response = supabase.table('bills').delete().eq('bill_id', bill_id).execute()
     return 'Success'
 
+@app.route('/getDebts')
+def getDebts():
+    id = session.get('user_id')
+    response = supabase.table("user_debts").select("*").eq('user_id', id).execute()
+    return jsonify(response.data)
+    
+
+@app.route('/AddDebt', methods=['GET','POST'])
+def AddDebt():
+    data = request.get_json()
+    id = session.get('user_id')
+    response = supabase.table('user_debts').insert({'user_id':id, 'description':data.get('description'), 'total_amount':data.get('amount')}).execute()
+    return 'Success'
+
+@app.route('/updateDebt', methods=['GET', 'POST'])
+def updateDebt():
+    data =  request.get_json()
+    newAmount = data.get('amount')
+    debt_id = data.get('id')
+    response = supabase.table('user_debts').update({'total_amount': newAmount, 'description': data.get('description')}).eq('debt_key', debt_id).execute()
+
+    return "Success"
+
+@app.route('/deleteDebt', methods=['GET', 'POST'])
+def deleteDebt():
+    data = request.get_json()
+    uid = session.get('user_id')
+    id = data.get('id')
+    response = supabase.table('user_debts').delete().eq('debt_key', id).execute()
+    return "Success"
+
 if __name__ == '__main__':
     app.run(debug=True)
 
