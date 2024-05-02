@@ -106,13 +106,15 @@ const Register = () => {
   }
 
   return (
-    <div className="star-bg  flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8">
-      {/* <section className="flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8"> */}
+    <div className="star-bg1 h-lvh overflow-hidden relative">
+      
         <div id="stars"></div>
         <div id="stars2"></div>
         <div id="stars3"></div>
         <div id="title"></div>
+        <section className="flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8">
         <div className='relative'>
+          
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
           <div onClick={() => { nav("/") }}>
             <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo" />
@@ -218,7 +220,7 @@ const Register = () => {
           </form>
         </div>
         </div>
-      {/* </section> */}
+      </section>
     </div>
   );
 

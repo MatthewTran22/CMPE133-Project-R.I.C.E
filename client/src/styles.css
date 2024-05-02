@@ -1,7 +1,11 @@
 /* styles.css */
 .star-bg {
-  height: 100vh;
+  height: lvh;
   overflow-y: scroll;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+.star-bg1 {
+  height: lvh;
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
 }
 
