@@ -7,6 +7,7 @@ import useSessionChecker from '../components/SessionCheck';
 import RecentTransactions from '../components/RecentTransactions';
 import { useNavigate } from "react-router-dom";
 import Chart from '../components/PieChart';
+import Bar from '../components/ThreeStepProgress';
 
 const Dashboard = () => { 
   const nav = useNavigate();
@@ -59,7 +60,12 @@ const Dashboard = () => {
             <BillList /> <br/>
           </div>
         </div>
-        <br/>
+        <div className="flex items-center justify-center">
+          <div className='justify-content-center'>
+            <Bar/>
+          </div>
+        </div><br/>
+        
       </div>
     </div>
   );
