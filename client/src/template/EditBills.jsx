@@ -20,7 +20,7 @@ const Bills = () => {
       
       <div className="w-full h-screen">
        <Nav1 />
-       <div class="relative grid grid-cols-2 gap-4 bg-transparent">
+       <div class="relative grid grid-cols-2 gap-10 bg-transparent">
           <div className = 'grid place-items-end'>
             <AllBills/>
           </div>

@@ -5,6 +5,7 @@ import { FaCheck, FaTimes } from 'react-icons/fa';
 
 const BillList = () => {
   const [bills, setBills] = useState([]);
+  const [debts, setDebts] = useState([]);
   const [displayGrid, setDisplayGrid] = useState(false);
   const [displayDebts, setDisplayDebts] = useState(false);
 
@@ -22,6 +23,22 @@ const BillList = () => {
           setDisplayGrid(false);
         } else {
           setDisplayGrid(true);
+        }
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("/getDebts")
+      .then(res => res.json())
+      .then(data => {
+        setDebts(data);
+        console.log(data);
+
+        // Check if there are any debts
+        if (data.length === 0) {
+          setDisplayDebts(false);
+        } else {
+          setDisplayDebts(true);
         }
       });
   }, []);
@@ -75,12 +92,12 @@ const BillList = () => {
         <div className='text-white text-5xl'>
         Unpaid Debts
       </div><br/>
-      <div className = 'w-50 h-64 text-white rounded-3xl box-border p-4 border-0 overflow-auto whitespace-nowrap bg-transparent'>
+      <div class="text-white rounded-3xl box-border p-4 border-0 overflow-auto whitespace-nowrap bg-transparent max-h-[40rem] max-w-[42rem]">
         {displayDebts && (
           <ul style={{ listStyleType: 'none', padding: 0, display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', height: '100%' }}>
-          {bills
-            .map((bill, index) => {
-              const description = bill.description.length > 15 ? bill.description.substring(0, 12) + '...' : bill.description;
+          {debts
+            .map((debt, index) => {
+              const description = debt.description.length > 15 ? debt.description.substring(0, 12) + '...' : debt.description;
               return (
                 <li key={index} className="bg-transparent h-full">
                   <div className="grid grid-cols-3 gap-4 place-items-center">
@@ -89,8 +106,8 @@ const BillList = () => {
                     </div>
                     <div>
                     </div>
-                    <div className={`${bill.paid === true ? 'text-green-500' : 'text-red-500'}`}>
-                     ${bill.amount.toFixed(2)}
+                    <div className={`${debt.total_amount === 0 ? 'text-green-500' : 'text-red-500'}`}>
+                     ${debt.total_amount.toFixed(2)}
                     </div>
                   </div>
                 </li>
