@@ -92,7 +92,7 @@ const BillList = () => {
         <div className='text-white text-5xl'>
         Unpaid Debts
       </div><br/>
-      <div class="text-white rounded-3xl box-border p-4 border-0 overflow-auto whitespace-nowrap bg-transparent max-h-[40rem] max-w-[42rem]">
+      <div class="text-white rounded-3xl box-border p-4 border-0 overflow-auto whitespace-nowrap bg-transparent max-h-[15rem] max-w-[42rem]">
         {displayDebts && (
           <ul style={{ listStyleType: 'none', padding: 0, display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', height: '100%' }}>
           {debts
