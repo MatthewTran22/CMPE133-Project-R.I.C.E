@@ -106,12 +106,15 @@ const Register = () => {
   }
 
   return (
-    <div className="star-bg flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8">
-      {/* <section className="flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8"> */}
+    <div className="star-bg1 h-lvh overflow-hidden relative">
+      
         <div id="stars"></div>
         <div id="stars2"></div>
         <div id="stars3"></div>
         <div id="title"></div>
+        <section className="flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8">
+        <div className='relative'>
+          
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
           <div onClick={() => { nav("/") }}>
             <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo" />
@@ -121,7 +124,7 @@ const Register = () => {
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-100 p-5 flex flex-col justify-center" style={{minWidth: "500px" }}>
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-100 p-6 flex flex-col justify-center" style={{minWidth: "500px" }}>
           <form onSubmit={handleSubmit}>
             <p ref={errRef} className={`text-center ${errMsg ? "text-red-600" : "hidden"}`} aria-live="assertive">{errMsg}</p>
             <div className="mb-6">
@@ -137,7 +140,7 @@ const Register = () => {
                 aria-describedby="uidnote"
                 onFocus={() => setEmailFocus(true)}
                 onBlur={() => setEmailFocus(false)}
-                className={`w-full rounded-md shadow-sm ${emailError ? 'border-red-500' : ''}`} // Add border color if email is invalid
+                className={`px-2 w-full rounded-md shadow-sm ${emailError ? 'border-red-500' : ''}`} // Add border color if email is invalid
               />
               {emailFocus && emailError && <p className="text-red-500 text-sm mt-1">Please enter a valid email address.</p>} {/* Show error message if email is invalid */}
             </div>
@@ -153,16 +156,16 @@ const Register = () => {
                 aria-describedby="pwdnote"
                 onFocus={() => setPwdFocus(true)}
                 onBlur={() => setPwdFocus(false)}
-                className="w-full rounded-md shadow-sm"
+                className="px-2 w-full rounded-md shadow-sm"
               />
               {pwdFocus && (
                 <div className="text-sm text-gray-600 mt-1">
                   <ul>
                     <li className={`${pwd.length >= 8 ? 'text-green-500' : 'text-grey'}`}>At least 8 characters</li>
-                    <li className={`${/[!@#$%]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one number</li>
+                    <li className={`${/[0-9]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one number</li>
                     <li className={`${/[a-z]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one lowercase letter</li>
                     <li className={`${/[A-Z]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one uppercase letter</li>
-                    <li className={`${/[0-9]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one special character</li>
+                    <li className={`${/[!@#$%]/.test(pwd) ? 'text-green-500' : 'text-gray-500'}`}>At least one special character '!@#$%'</li>
                   </ul>
                 </div>
               )}
@@ -186,7 +189,7 @@ const Register = () => {
                   setMatchFocus(false);
                   setConfirmPwdFinished(false); // Reset confirm password finished when user leaves the field
                 }}
-                className={`w-full rounded-md shadow-sm ${!validMatch && matchFocus ? 'border-red-500' : ''}`} // Add border color if confirm password does not match
+                className={`px-2 w-full rounded-md shadow-sm ${!validMatch && matchFocus ? 'border-red-500' : ''}`} // Add border color if confirm password does not match
               />
               {matchFocus && !validMatch && <p className="text-red-500 text-sm mt-1">Passwords do not match</p>} {/* Show error message if confirm password does not match */}
             </div>
@@ -204,19 +207,20 @@ const Register = () => {
                 <button
                   disabled={!validEmail || !validPwd || !validMatch ? true : false}
                   type="submit"
-                  className={`w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md ${
+                  className={`w-full flex justify-center py-2 px-5 border border-transparent text-sm font-medium rounded-md ${
                     !validEmail || !validPwd || !validMatch
                       ? 'bg-blue-300 text-white hover:bg-disabled focus:bg-disabled'
                       : 'bg-blue-600 text-white hover:bg-blue-500 focus:bg-blue-500'
                   }`}
                 >
-                  Create an Account
+                  Create Account
             </button>
               </span>
             </div>
           </form>
         </div>
-      {/* </section> */}
+        </div>
+      </section>
     </div>
   );
 

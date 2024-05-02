@@ -1,7 +1,11 @@
 /* styles.css */
 .star-bg {
-  height: 100vh;
+  height: lvh;
   overflow-y: scroll;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+.star-bg1 {
+  height: lvh;
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
 }
 
@@ -42,6 +46,7 @@
 #stars3 {
   width: 3px;
   height: 3px;
+
   background: transparent;
   box-shadow: 1703px 1208px #FFF , 381px 207px #FFF , 1516px 1990px #FFF , 1960px 982px #FFF , 922px 1278px #FFF , 689px 1766px #FFF , 538px 554px #FFF , 802px 1529px #FFF , 871px 1805px #FFF , 228px 1830px #FFF , 353px 186px #FFF , 1873px 1154px #FFF , 494px 1244px #FFF , 1415px 261px #FFF , 1020px 1990px #FFF , 1924px 1169px #FFF , 1205px 464px #FFF , 596px 830px #FFF , 1319px 504px #FFF , 953px 1850px #FFF , 408px 1360px #FFF , 569px 1704px #FFF , 1367px 729px #FFF , 807px 1845px #FFF , 572px 825px #FFF , 523px 1089px #FFF , 1405px 1622px #FFF , 1352px 423px #FFF , 1247px 1758px #FFF , 1117px 920px #FFF , 983px 352px #FFF , 175px 1351px #FFF , 962px 260px #FFF , 918px 1530px #FFF , 1184px 935px #FFF , 201px 473px #FFF , 90px 1759px #FFF , 211px 933px #FFF , 1887px 171px #FFF , 177px 101px #FFF , 844px 346px #FFF , 283px 1821px #FFF , 1236px 1225px #FFF , 173px 1875px #FFF , 24px 1776px #FFF , 277px 804px #FFF , 1714px 715px #FFF , 937px 1882px #FFF , 1708px 1405px #FFF , 173px 1847px #FFF , 1902px 1160px #FFF , 1725px 1270px #FFF , 36px 18px #FFF , 1612px 1467px #FFF , 1390px 1733px #FFF , 927px 1315px #FFF , 1907px 1337px #FFF , 1855px 1454px #FFF , 1033px 1425px #FFF , 1450px 1359px #FFF , 1422px 771px #FFF , 256px 343px #FFF , 1581px 340px #FFF , 1180px 247px #FFF , 191px 882px #FFF , 372px 1171px #FFF , 1509px 937px #FFF , 1018px 1829px #FFF , 121px 152px #FFF , 327px 767px #FFF , 1438px 1421px #FFF , 321px 905px #FFF , 616px 245px #FFF , 1957px 1520px #FFF , 1811px 1924px #FFF , 1454px 1778px #FFF , 1507px 822px #FFF , 649px 218px #FFF , 362px 1567px #FFF , 1637px 145px #FFF , 115px 466px #FFF , 345px 935px #FFF , 112px 1019px #FFF , 1440px 1910px #FFF , 1280px 1367px #FFF , 1505px 890px #FFF , 788px 927px #FFF , 753px 1273px #FFF , 1924px 1714px #FFF , 495px 1149px #FFF , 267px 1851px #FFF , 1293px 1431px #FFF , 1159px 433px #FFF , 1725px 1170px #FFF , 1067px 296px #FFF , 746px 463px #FFF , 412px 349px #FFF , 1193px 1421px #FFF , 564px 455px #FFF , 1675px 589px #FFF;
   animation: animStar 150s linear infinite;

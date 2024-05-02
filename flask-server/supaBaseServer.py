@@ -136,15 +136,16 @@ def ReportPurchases():
     if category == 'income':
         category = "total_savings"
         new_total = current_total + moneyChange #adds to current total since we are adding money to our budget
+        update_response = supabase.table('user_info').update({'total_remaining': new_total}).eq('user_id', id).execute()
+
     else:
         category = category + "_spent" #gets either the wants or needs category
         new_total = current_total - moneyChange #subtracts money since we are using from our budget
-        
-
-    response = supabase.table('user_info').select(category).eq('user_id', id).execute()
-    current_category_spent = response.data[0][category]
-    new_category_spent = current_category_spent + moneyChange
-    update_response = supabase.table('user_info').update({category: new_category_spent ,'total_remaining': new_total}).eq('user_id', id).execute()
+        response = supabase.table('user_info').select(category).eq('user_id', id).execute()
+        current_category_spent = response.data[0][category]
+        new_category_spent = current_category_spent + moneyChange
+        update_response = supabase.table('user_info').update({category: new_category_spent ,'total_remaining': new_total}).eq('user_id', id).execute()
+    
     now = datetime.datetime.now()
     date_str = now.strftime("%Y-%m-%d")
 
@@ -244,10 +245,12 @@ def deleteTransaction():
     category = response.data[0]['category']
 
     if category == 'Income':
-        response = supabase.table('user_info').select('total_remaining').eq('usuer_id', uid).execute()   
+        response = supabase.table('user_info').select('total_remaining').eq('user_id', uid).execute()   
         total = response.data[0]['total_remaining']
         total = total - amount
         response = supabase.table('user_info').update({'total_remaining': total}).eq('user_id', uid).execute()
+        response = supabase.table('transaction_reports').delete().eq('transaction_id', id).execute()
+
 
     else:
         category = category.lower() + "_spent"
@@ -348,7 +351,51 @@ def get_user_by_email(email):
         return user
     except Exception as e:
         return None
+
+@app.route('/AddBill', methods=['GET','POST'])
+def AddBill():
+    data = request.get_json()
+    id = session.get('user_id')
+    response = supabase.table('bills').insert({'user_id':id, 'description':data.get('description'), 'amount':data.get('amount'), 'paid': False}).execute()
+    return 'Success'
+
+@app.route('/DeleteBill', methods=['GET','POST'])
+def DeleteBill():
+    data = request.get_json()
+    bill_id = data.get('id')
+    response = supabase.table('bills').delete().eq('bill_id', bill_id).execute()
+    return 'Success'
+
+@app.route('/getDebts')
+def getDebts():
+    id = session.get('user_id')
+    response = supabase.table("user_debts").select("*").eq('user_id', id).execute()
+    return jsonify(response.data)
     
+
+@app.route('/AddDebt', methods=['GET','POST'])
+def AddDebt():
+    data = request.get_json()
+    id = session.get('user_id')
+    response = supabase.table('user_debts').insert({'user_id':id, 'description':data.get('description'), 'total_amount':data.get('amount')}).execute()
+    return 'Success'
+
+@app.route('/updateDebt', methods=['GET', 'POST'])
+def updateDebt():
+    data =  request.get_json()
+    newAmount = data.get('amount')
+    debt_id = data.get('id')
+    response = supabase.table('user_debts').update({'total_amount': newAmount, 'description': data.get('description')}).eq('debt_key', debt_id).execute()
+
+    return "Success"
+
+@app.route('/deleteDebt', methods=['GET', 'POST'])
+def deleteDebt():
+    data = request.get_json()
+    uid = session.get('user_id')
+    id = data.get('id')
+    response = supabase.table('user_debts').delete().eq('debt_key', id).execute()
+    return "Success"
 
 if __name__ == '__main__':
     app.run(debug=True)

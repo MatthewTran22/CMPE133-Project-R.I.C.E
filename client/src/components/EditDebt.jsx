@@ -2,12 +2,10 @@ import React from 'react';
 import { FaTimes } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 
-const Modal = ({ transaction, onClose }) => {
+const Modal = ({ debt, onClose }) => {
   const [formData, setFormData] = React.useState({
-    category: transaction.category,
-    description: transaction.description,
-    amount: transaction.amount,
-    date: transaction.date,
+    description: debt.description,
+    amount: debt.total_amount,
   });
 
   const [descriptionError, setDescriptionError] = React.useState(false);
@@ -59,15 +57,15 @@ const Modal = ({ transaction, onClose }) => {
     }
   };
 
-  const handleSubmit = (event, transactionId) => {
+  const handleSubmit = (event, debtId) => {
     event.preventDefault();
     console.log('Changes:', formData); // Log the changes
 
-    // Make a fetch request to update the transaction
+    // Make a fetch request to update the debt
     try {
-      const updatedData = { ...formData, id: transactionId };
+      const updatedData = { ...formData, id: debtId };
       console.log(updatedData);
-      const response = fetch('/updateTransaction', {
+      const response = fetch('/updateDebt', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -76,7 +74,7 @@ const Modal = ({ transaction, onClose }) => {
       });
 
       if (response.ok) {
-        console.log('Transaction updated');
+        console.log('Debt updated');
       }
 
       // Handle success or display any error messages
@@ -98,10 +96,10 @@ const Modal = ({ transaction, onClose }) => {
   };
 
   const handleDelete = async (id) => {
-    // Make a fetch request to delete the transaction
+    // Make a fetch request to delete the recorded debt
     console.log(id);
     try {
-      const response = await fetch('/deleteTransaction', {
+      const response = await fetch('/deleteDebt', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -110,7 +108,7 @@ const Modal = ({ transaction, onClose }) => {
       });
 
       if (response.ok) {
-        console.log('Transaction deleted');
+        console.log('Reported debt deleted');
       }
 
       // Handle success or display any error messages
@@ -133,9 +131,9 @@ const Modal = ({ transaction, onClose }) => {
         </div>
         <div className="flex justify-center items-center space-x-10">
           <div className="flex flex-col justify-center items-center">
-            <h2 className="mb-5 text-left text-4xl font-bold leading-9 tracking-tight text-black">Edit Transaction</h2>
+            <h2 className="mb-5 text-left text-4xl font-bold leading-9 tracking-tight text-black">Edit Debt</h2>
             
-            <h5 className="mb-5 text-left text-xl font-bold leading-9 tracking-tight text-black">Category: {formData.category}</h5>
+            
             <form onSubmit={handleSubmit}>
               <div className="space-y-1">
                 <label htmlFor="description" className="block text-gray-700 font-semibold mb-1">Description</label>
@@ -172,7 +170,7 @@ const Modal = ({ transaction, onClose }) => {
                 type="submit"
                 className={`w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600
                 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out ${formInvalid ? 'opacity-50 cursor-not-allowed' : ''}`}
-                onClick={(event) => handleSubmit(event, transaction.transaction_id)}
+                onClick={(event) => handleSubmit(event, debt.debt_key)}
                 disabled={formInvalid}
                 >
                 Save Changes
@@ -181,7 +179,7 @@ const Modal = ({ transaction, onClose }) => {
                   type="button"
                   className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600
                   hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out"
-                  onClick={() => handleDelete(transaction.transaction_id)}
+                  onClick={() => handleDelete(debt.debt_key)}
                 >
                   <FaRegTrashCan />
                 </button>

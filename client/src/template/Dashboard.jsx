@@ -7,6 +7,7 @@ import useSessionChecker from '../components/SessionCheck';
 import RecentTransactions from '../components/RecentTransactions';
 import { useNavigate } from "react-router-dom";
 import Chart from '../components/PieChart';
+import Bar from '../components/ThreeStepProgress';
 
 const Dashboard = () => { 
   const nav = useNavigate();
@@ -51,17 +52,20 @@ const Dashboard = () => {
         <div class="grid grid-cols-2 gap-4 bg-transparent">
           <div class="bg-transparent p-4 items-center justify-items-center">
 
-            <h2 className="text-slate-300 text-left" style={{fontSize: '2rem', transform: 'translateX(8%) translateY(-30%)' }}>Welcome back, {userName}.</h2>
-
             <Totals Category="Current Total" otherTotals={info[0].total_remaining} /> <br/>
             <Chart data={info} />
           </div>
           <div class="bg-transparent p-4">
             <RecentTransactions /> <br/>
-            <BillList />
+            <BillList /> <br/>
           </div>
         </div>
-        <br/>
+        <div className="flex items-center justify-center">
+          <div className='justify-content-center'>
+            <Bar/>
+          </div>
+        </div><br/>
+        
       </div>
     </div>
   );
