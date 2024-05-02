@@ -4,18 +4,19 @@ from supabase import Client
 import os
 import uuid
 import datetime
-from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_mail import Mail, Message
 
 
 app = Flask(__name__)
 app.secret_key = "so secret"
 
+
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'riceservice.dmmj@gmail.com'
-app.config['MAIL_PASSWORD'] = 'temporary@123'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'jaysuunh@gmail.com'
+app.config['MAIL_PASSWORD'] = 'zcok wkzw hvpw yoag'
 
 mail = Mail(app)
 
@@ -281,16 +282,20 @@ def reset_request():
             return jsonify({"error": "Email is required"}), 400
         
         response = supabase.table("users").select("*").eq("email", email).execute()
-        user = response.data[0]
+        users = response.data
         
-        if user:
-            token = get_reset_token(email)
-            send_email(email, token)
-            return jsonify({"message": "Reset email sent"}), 200
+        if users:
+            user= users[0]
+            if user:
+
+                token = get_reset_token(email)
+                send_email(email, token)
+                return jsonify({"message": "Reset email sent"}), 200
         
         else:
             return jsonify({"error": "User not found"}), 404
     except Exception as e:
+        print(e)
         return jsonify({"error": "An unexpected error occurred"}), 500
     
 @app.route('/reset_password/<token>', methods=['GET','POST'])
@@ -309,12 +314,11 @@ def reset_password(token):
         
         return jsonify({"message": "Password reset successful"}), 200
     except Exception as e:
+        print(e)
         return jsonify({"error": "An unexpected error occurred"}), 500
 
 def send_email(email, token):
-    msg = Message()
-    msg.subject = "Password Reset Request"
-    msg.recipients = [email]
+    msg = Message("Password Reset Request", sender="jaysuunh@gmail.com", recipients=[email])
     msg.html = f'''
     <h1>Password Reset Request</h1>
     <p>Click the link below to reset your password</p>
