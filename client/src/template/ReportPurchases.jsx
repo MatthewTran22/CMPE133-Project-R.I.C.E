@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Nav2 from '../components/Nav2';
 import useSessionChecker from '../components/SessionCheck';
@@ -13,6 +13,26 @@ const ReportPurchases = () => {
         category: '',
         description: ''
     });
+
+    const [bills, setBills] = useState([]);
+    
+
+    // get the bills 
+    useEffect(() => {
+        const getBills = async () => {
+            const billsFromServer = await fetchBills();
+            setBills(billsFromServer);
+        }
+
+        getBills();
+    }, []);
+
+    const fetchBills = async () => {
+        const res = await fetch('/getBills');
+        const data = await res.json();
+
+        return data;
+    }
 
     const goToSettings = () => {
         // Navigate to the register page
@@ -71,14 +91,26 @@ const ReportPurchases = () => {
 
     // Function to handle input changes
     const handleChange = (event) => {
-        setFormData({
-            ...formData,
-            [event.target.name]: event.target.value
-        });
+        const { name, value } = event.target;
+
+        if (name === 'bills') {
+            const bill = bills.find(bill => bill.bill_id === value);
+            setFormData({
+                ...formData,
+                amount: parseFloat(bill.amount).toFixed(2),
+                description: bill.description
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
+        
     };
 
     return (
-        <div className= "star-bg">
+        <div className= "star-bg w-full h-lvh">
             <div id="stars"></div>
             <div id="stars2"></div>
             <div id="stars3"></div>
@@ -86,11 +118,14 @@ const ReportPurchases = () => {
 
             <Nav2 />
 
-            <form onSubmit={handleSubmit} className="w-full h-screen flex flex-col justify-start items-center" >
+            <h1 className='text-white text-5xl font-bold text-center mt-24'>Report Transactions</h1>
+
+            <form onSubmit={handleSubmit} className=" flex flex-col justify-start items-center" >
                 
 
-                <div className="mt-52 flex flex-col items-center">
-                <h1 className='text-white text-4xl font-bold mb-12'>Report Transactions</h1>
+                <div className="flex flex-col mt-20 items-center justify-center border-2 rounded-lg p-16">
+
+                    <label htmlFor="category" className="block text-sm font-medium leading-6 text-white">Category</label>
                     <select
                         name="category"
                         id="category"
@@ -103,41 +138,62 @@ const ReportPurchases = () => {
                         <option value="Wants">Wants</option>
                         <option value="Income">Income</option>
                     </select>
+                    
+                    <label htmlFor="bills" className="block text-sm font-medium leading-6 mt-4 text-white">Bill (optional)</label>
+                    <select
+                        name="bills"
+                        id="bills"
+                        className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        value={formData.bills}
+                        onChange={handleChange}
+                    >
+                        <option value="">Select Bill</option>
+                        {bills.map((bill) => (
+                            <option key={bill.bill_id} value={bill.bill_id}>{bill.description}</option>
+                        ))}
+                    </select>
+                    
+                    
+                    <label htmlFor="amount" className="block text-sm font-medium leading-6 text-white mt-4">Amount</label>
                     <input
                         type="number"
                         step="0.01"
                         name="amount"
                         id="amount"
                         min="0.01"
-                        className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder="$0.00"
                         value={formData.amount}
                         onChange={handleChange}
                     />
+
+                    
+                    
+                    <label htmlFor="description" className="block text-sm font-medium leading-6 text-white mt-4">Description</label>
                     <input
                         type="text"
                         name="description"
                         id="description"
-                        className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder="Description"
                         value={formData.description}
                         onChange={handleChange}
                     />
-                    <button type="submit" className="hover:bg-white hover:text-black text-white font-bold py-2 px-4 border-2 rounded-lg mt-10 duration-300" onClick={() => {
-    setTimeout(() => {
-        Navigate("/Dashboard");
-    }, 3000); // 3 seconds delay
-}}>
-    Submit
-</button>
+                    <button type="submit" className="hover:bg-white hover:text-black text-white font-bold py-2 px-4 border-2 rounded-lg mt-10 duration-300" 
+                    onClick={() => {
+                        setTimeout(() => {
+                            Navigate("/Dashboard");
+                        }, 3000); // 3 seconds delay
+                    }}>
+                        Submit
+                    </button>
 
                 </div>
-
-                
-                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-                {successMessage && <p className="text-green-500">{successMessage}</p>}
                 
             </form>
+            
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            {successMessage && <p className="text-green-500">{successMessage}</p>}
         </div>
     );
 };
