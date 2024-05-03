@@ -47,6 +47,11 @@ const Dashboard = () => {
         <div id="stars"></div>
         <div id="stars2"></div>
         <div id="stars3"></div>
+        <div style={{transform:'translateX(75%)'}}>
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        </div>
         <div id="title"></div>
         <Nav1 />
         <div class="grid grid-cols-2 gap-4 bg-transparent">
