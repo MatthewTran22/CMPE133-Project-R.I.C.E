@@ -377,7 +377,7 @@ def getDebts():
 def AddDebt():
     data = request.get_json()
     id = session.get('user_id')
-    response = supabase.table('user_debts').insert({'user_id':id, 'description':data.get('description'), 'total_amount':data.get('amount')}).execute()
+    response = supabase.table('user_debts').insert({'user_id':id, 'description':data.get('description'), 'total_amount':data.get('amount'), 'debt_paid': 0}).execute()
     return 'Success'
 
 @app.route('/updateDebt', methods=['GET', 'POST'])
@@ -396,6 +396,72 @@ def deleteDebt():
     id = data.get('id')
     response = supabase.table('user_debts').delete().eq('debt_key', id).execute()
     return "Success"
+
+@app.route('/getProgress')
+def getProgress():
+    id = session.get('user_id')
+    percent = 0
+    stepOne = False
+    stepTwo = False
+    stepThree = False
+    #Step 1: make a starting emergency fund
+    #Goal: total remaining should be at least $1,000
+    
+    response = supabase.table('user_info').select('total_remaining').eq('user_id', id).execute()
+    total = response.data[0]['total_remaining']
+    if total >= 1000:
+        stepOne = True
+        percent = 33
+    else:
+        percent = int(total/100)
+
+    if not stepOne:
+        return jsonify({'percent':percent})
+    #Step 2: pay off all loans/debts
+    #Goal: total debt amount = 0
+    response =  response = supabase.table('user_debts').select('total_amount').eq('user_id', id).execute()
+    if not response:
+        percent = 66
+        stepTwo = True
+    else:
+        arr = response.data
+        debtTotal = 0
+        for debt in arr:
+            debtTotal = debtTotal + debt['total_amount']
+        response =  response = supabase.table('user_debts').select('debt_paid').eq('user_id', id).execute()
+        arr = response.data
+        paidTotal = 0
+        for paid in arr:
+            paidTotal = paidTotal + paid['debt_paid']
+        
+    
+    if debtTotal == 0:
+        stepTwo = True
+        percent = 66
+    else:
+        percent = int(percent + ((paidTotal/debtTotal) * 100))
+
+    if not stepTwo:
+        return jsonify({'percent':percent})
+    
+    #Step 3: Save 6 months of monthly income into emergency savings
+    #Goal: whatever the remaining_total is before step 3 + (monthly_income*6)
+    response =  response = supabase.table('user_info').select('step_three_data').eq('user_id', id).execute()
+    #Holds the data that was initially stored once entering step 3
+    initialTotal = response.data[0]['step_three_data']
+    response =  response = supabase.table('user_info').select('total_remaining').eq('user_id', id).execute()
+    #Holds value in total_remaining
+    currentTotal = response.data[0]['total_remaining']
+    if initialTotal == 0: #if this is user's first time entering step 3, set initial total to current total 
+        initialTotal = currentTotal
+        response =  response = supabase.table('user_info').update({'step_three_data': initialTotal}).eq('user_id', id).execute()
+    
+    #get monthly income so we can multiply by 6
+    response =  response = supabase.table('user_info').select('monthly_income').eq('user_id', id).execute()
+    monthly = response.data[0]['monthly_income'] * 6
+    goal = monthly + initialTotal
+    percent = min(int(percent + (currentTotal / goal * 100)), 100)
+    return jsonify({'percent':percent})
 
 if __name__ == '__main__':
     app.run(debug=True)
