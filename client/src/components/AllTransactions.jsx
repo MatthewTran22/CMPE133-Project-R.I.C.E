@@ -20,16 +20,18 @@ const RecentTransactions = () => {
       .then(data => {
         setTransactions(data);
         console.log(data);
+        
         const thisMonthTransactions = data.filter(transaction => 
           transaction.date !== null &&
           ["Wants", "Needs"].includes(transaction.category) &&
-          new Date(transaction.date).getMonth() === selectedMonth
+          new Date(new Date(transaction.date).setDate(new Date(transaction.date).getDate() + 1)).getMonth() === selectedMonth
         );
+        
         setTotalSpent(thisMonthTransactions.reduce((total, transaction) => total + transaction.amount, 0));
         if (thisMonthTransactions.length === 0) {
           setDisplayMessage(true);
           setDisplayGrid(false);
-        } else {
+  } else {
           setDisplayMessage(false);
           setDisplayGrid(true);
         }
@@ -108,7 +110,7 @@ const RecentTransactions = () => {
             {transactions
               .filter((transaction)=> transaction.date !== null) // ignore transactions with null date
               .sort((a, b) => new Date(b.date) - new Date(a.date)) // sort transactions by date in descending order
-              .filter((transaction) => new Date(transaction.date).getMonth() === selectedMonth) // filter transactions by selected month
+              .filter((transaction) => new Date(new Date(transaction.date).setDate(new Date(transaction.date).getDate() + 1)).getMonth() === selectedMonth) // filter transactions by selected month
               .map((transaction, index) => (
                 <li key={index} className="bg-transparent h-full">
                   <div className="grid grid-cols-5 gap-4 place-items-center">
@@ -121,7 +123,7 @@ const RecentTransactions = () => {
                       ${transaction.amount.toFixed(2)}
                     </div>
                     <div>
-                      {new Date(transaction.date).toLocaleDateString('default', { month: 'long', day: 'numeric', year: 'numeric' })}
+                    {new Date(new Date(transaction.date).setDate(new Date(transaction.date).getDate() + 1)).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                     </div>
                     <div>
                       {selectedMonth === new Date().getMonth() && (
