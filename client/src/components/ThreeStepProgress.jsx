@@ -5,7 +5,17 @@ import { RxQuestionMarkCircled } from "react-icons/rx";
 
 const BAR_WIDTH = 20
 const Bar = () => {
-    const [progress, setProgress] = useState(99);
+    const [progress, setProgress] = useState(0);
+    useEffect(() => {
+      fetch("/getProgress")
+        .then(res => res.json())
+        .then((data) => {
+          setProgress(data);
+          console.log(progress.percent);
+          
+        });
+    }, []);
+    
     
 
   return (
@@ -20,7 +30,7 @@ const Bar = () => {
     <div className='absolute inset-0' style={{ borderBottom: '1px solid white' }}></div>
     <div className='absolute inset-0' style={{ borderLeft: '1px solid white', left: '33%' }}></div>
     <div className='absolute inset-0' style={{ borderLeft: '1px solid white', left: '66%' }}></div>
-    <div className={`bg-green-600 h-full p-0.5 text-right`} style={{ width: `${progress}%`}}>{progress}%</div>
+    <div className={`bg-green-600 h-full p-0.5 text-right`} style={{ width: `${progress.percent}%`}}>{progress.percent}%</div>
     </div>
 </div>
   );
