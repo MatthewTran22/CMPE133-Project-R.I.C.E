@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ricePattyImg from './images/ricepatty.png';
 import riceLogoImg from './images/ricelogo.png';
-import piggyBankImg from './images/piggybank.png';
 import imac from './images/imac-screen.png';
-import Cards from '../components/scrollingCard';
+import Cards from '../components/theTeam';
 
 import '../homepage.css'; // Import your CSS file
 
@@ -30,6 +28,7 @@ const Front = () => {
 
   // State to track if the user has scrolled
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [showCopyright, setShowCopyright] = useState(false);
 
   // Ref for the first section
   const firstSectionRef = useRef(null);
@@ -40,8 +39,10 @@ const Front = () => {
   
       if (window.scrollY > 0) {
         setHasScrolled(true);
+        setShowCopyright(true); // Show copyright when scrolled
       } else {
         setHasScrolled(false);
+        setShowCopyright(false); // Hide copyright when scrolled to top
       }
   
       // Prevent scrolling past the top
@@ -57,6 +58,14 @@ const Front = () => {
     };
   }, []);
   
+  // Apply overflow-x: hidden to the body when the component mounts
+  useEffect(() => {
+    document.body.style.overflowX = 'hidden';
+    // Cleanup when the component unmounts
+    return () => {
+      document.body.style.overflowX = '';
+    };
+  }, []);
 
   return (
     <div>
@@ -99,8 +108,11 @@ const Front = () => {
       </div>
 
       {/* Third Section */}
-      <div style={{ height: '100vh', display: 'flex', color: 'white', fontFamily: 'Gruppo', justifyContent: 'center', alignItems: 'center', fontSize: '2em', background: 'radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)' }}>
-        <Cards/>
+      <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', color: 'white', justifyContent: 'center', alignItems: 'center', fontSize: '2em', background: 'radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)' }}>
+        <h1 style={{ marginBottom: '40px', fontFamily: 'gruppo', fontSize: '1.75em' }}>Meet the team</h1>
+        <div>
+          <Cards />
+        </div>
       </div>
 
       {/* Fourth Section */}
@@ -109,7 +121,7 @@ const Front = () => {
       </div>
 
       {/* Footer */}
-      <div className="footer">
+      <div className={`footer ${hasScrolled ? 'show' : ''}`}>
         Copyright © 2024 RICE
       </div>
 
