@@ -9,10 +9,29 @@
   }
 }
 
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(10%);
+  }
+}
+
 .fade-in-right {
   animation: fadeInRight 1.6s ease-in-out forwards;
   opacity: 0;
 }
+
+.fade-in-left {
+  animation: fadeInLeft 1.6s ease-in-out forwards;
+  opacity: 0;
+  position: flex;
+}
+
+
 * {
   margin: 0;
   padding: 0;

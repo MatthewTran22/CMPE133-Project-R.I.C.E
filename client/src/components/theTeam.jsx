@@ -14,7 +14,7 @@ function LandscapeCard() {
           <img src={matt} alt="image" className="card__img" />
           <div className="card__data">
             <span style={{ fontFamily: 'Russo One'}} className="card__title">Matthew Tran</span>
-            <h2 style={{ fontFamily: 'Gruppo', fontWeight: 'bold' }} className="card__description">Fun fact: I clear 30 plates at kbbq</h2>
+            <h2 style={{ fontFamily: 'Gruppo', fontWeight: 'bold' }} className="card__description">Fun fact: Clear 30 plates at kbbq</h2>
           </div>
         </article>
 
@@ -22,7 +22,7 @@ function LandscapeCard() {
           <img src={daniel} alt="image" className="card__img" />
           <div className="card__data">
             <span style={{ fontFamily: 'Russo One'}} className="card__title">Daniel Lee</span>
-            <h2 style={{ fontFamily: 'Gruppo', fontWeight: 'bold'}} className="card__description">Fun fact: I bench 2 plates</h2>
+            <h2 style={{ fontFamily: 'Gruppo', fontWeight: 'bold'}} className="card__description">Fun fact: Bench 2 plates</h2>
           </div>
         </article>
 
@@ -30,7 +30,7 @@ function LandscapeCard() {
           <img src={jason} alt="image" className="card__img" />
           <div className="card__data">
             <span style={{ fontFamily: 'Russo One'}} className="card__title">Jason Huynh</span>
-            <h2 style={{ fontFamily: 'Gruppo', fontWeight: 'bold'}} className="card__description">Fun fact: I like to cook in my free time</h2>
+            <h2 style={{ fontFamily: 'Gruppo', fontWeight: 'bold'}} className="card__description">Fun fact: Like to cook in free time</h2>
           </div>
         </article>
 
@@ -38,7 +38,7 @@ function LandscapeCard() {
           <img src={martin} alt="image" className="card__img" />
           <div className="card__data">
             <span style={{ fontFamily: 'Russo One'}} className="card__title">Martin Tran</span>
-            <h2 style={{ fontFamily: 'Gruppo', fontWeight: 'bold'}} className="card__description">Fun fact: I can do cartwheel</h2>
+            <h2 style={{ fontFamily: 'Gruppo', fontWeight: 'bold'}} className="card__description">Fun fact: Can do cartwheel</h2>
           </div>
         </article>
       </div>
