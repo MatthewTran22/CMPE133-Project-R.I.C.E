@@ -114,7 +114,7 @@ const Front = () => {
         <div className='space-x-0' style={{ maxWidth: 'calc(60% - 200px)', overflow: 'hidden', textAlign: 'left', display: 'inline-block', verticalAlign: 'top' }}>
           <b style={{ fontFamily: 'Gruppo', marginLeft: '200px', display: 'inline-block' }}>New revolutionary budgeting app kjasldjkf jhasdhfl jhkasdfjkla jahksdfk asdhals dfasjhd fal</b>
         </div>
-        <div className={`size-96 ${hasScrolled ? 'fade-in-right' : ''}`} style={{ marginLeft: 'auto', marginRight: '150px', transition: 'opacity 1s ease-in-out' }}>
+        <div className={`${hasScrolled ? 'fade-in-right' : ''}`} style={{position: 'absolute', top: '127%', right: '10%', transform: 'translate(-50%, -50%)', maxWidth: '33%', maxHeight: '30%', width: 'auto', height: 'auto' }}>
           <img src={imac} alt="Box 1 Image" />
         </div>
       </div>
@@ -127,41 +127,40 @@ const Front = () => {
         </div>
       </div>
 
-{/* Fourth Section */}
-<div
-  ref={fourthSectionRef}
-  style={{
-    height: '100vh',
-    display: 'flex',
-    color: 'white',
-    fontFamily: 'Helvetica',
-    alignItems: 'center', // Align items in the center vertically
-    justifyContent: 'center', // Center items horizontally
-    fontSize: '2em',
-    background: 'radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)'
-  }}
->
-<div
-  className={`size-full ${showSuccessImage ? 'fade-in-left' : ''}`}
-  style={{ position: 'relative', transition: 'opacity 1s ease-in-out' }}
->
-  <img src={success} alt="Box 1 Image" 
-  style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '80%', maxHeight: '80%', width: 'auto', height: 'auto' }} 
-  className='rounded-lg'
-  />
-</div>
+      {/* Fourth Section */}
+      <div
+        ref={fourthSectionRef}
+        style={{
+          height: '100vh',
+          display: 'flex',
+          color: 'white',
+          fontFamily: 'Helvetica',
+          alignItems: 'center', // Align items in the center vertically
+          justifyContent: 'center', // Center items horizontally
+          fontSize: '2em',
+          background: 'radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)'
+        }}
+      >
+      <div
+        className={`size-full ${showSuccessImage ? 'fade-in-left' : ''}`}
+        style={{ position: 'relative', transition: 'opacity 1s ease-in-out' }}
+      >
+        <img src={success} alt="Box 1 Image" 
+        style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '80%', maxHeight: '80%', width: 'auto', height: 'auto' }} 
+        className='rounded-lg'
+        />
+      </div>
 
-  <div className='space-x-0 space-y-6 ml-16' style={{ maxWidth: 'calc(60% - 200px)', overflow: 'hidden', textAlign: 'right', display: 'inline-block', verticalAlign: 'top' }}>
-    <b style={{ fontFamily: 'Gruppo', marginRight: '180px', display: 'inline-block' }}>Start today and have full control of your finance!</b>
-    <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40 hover:bg-white hover:text-black cursor-pointer duration-300' 
-            style={{ fontFamily: 'Russo One', marginRight: '180px', display: 'inline-block' }} 
-            onClick={goToRegister}> 
-            
-            Get started
-    </button>
-  </div>
-</div>
-
+        <div className='space-x-0 space-y-6 ml-16' style={{ maxWidth: 'calc(60% - 200px)', overflow: 'hidden', textAlign: 'right', display: 'inline-block', verticalAlign: 'top' }}>
+          <b style={{ fontFamily: 'Gruppo', marginRight: '180px', display: 'inline-block' }}>Start today and have full control of your finance!</b>
+          <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40 hover:bg-white hover:text-black cursor-pointer duration-300' 
+                  style={{ fontFamily: 'Russo One', marginRight: '180px', display: 'inline-block' }} 
+                  onClick={goToRegister}> 
+                  
+                  Get started
+          </button>
+        </div>
+      </div>
 
 
 
