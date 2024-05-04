@@ -44,10 +44,17 @@ const Dashboard = () => {
   return (
     <div className= "star-bg">
       <div className="w-full h-screen">
-        <div id="stars"></div>
-        <div id="stars2"></div>
-        <div id="stars3"></div>
-        <div id="title"></div>
+          <div id="stars"></div>
+          <div id="stars2"></div>
+          <div id="stars3"></div>
+          <div id="title"></div>
+        <div className='ml-[50rem]'>
+          <div id="stars"></div>
+          <div id="stars2"></div>
+          <div id="stars3"></div>
+          <div id="title"></div>
+        </div>
+        
         <Nav1 />
        
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-80rem mt-4">
