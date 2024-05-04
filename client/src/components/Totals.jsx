@@ -15,7 +15,7 @@ const TotalNeeds = ({ Category,otherTotals }) => {
 
   return (
     <div
-    className='text-white text-5xl rounded-3xl box-border h-32 p-8 border-4 whitespace-nowrap overflow-hidden cursor-pointer bg-dark-blue' style={{ width: '55rem', transform: 'translateX(3%)' }}
+    className='relative text-white text-5xl rounded-3xl box-border h-32 p-8 border-4 whitespace-nowrap overflow-hidden cursor-pointer bg-dark-blue' style={{ width: '55rem'}}
      onClick={handleClick} 
    >
      {Category}: ${otherTotals}

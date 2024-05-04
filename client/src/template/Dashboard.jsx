@@ -49,13 +49,13 @@ const Dashboard = () => {
         <div id="stars3"></div>
         <div id="title"></div>
         <Nav1 />
-        <div class="grid grid-cols-2 gap-4 bg-transparent">
-          <div class="bg-transparent p-4 items-center justify-items-center">
+        <div class="pl-[10rem] relative grid grid-cols-2 gap-[15rem] bg-transparent">
+          <div class=" relative bg-transparent p-4 grid place-items-end">
 
             <Totals Category="Current Total" otherTotals={info[0].total_remaining} /> <br/>
             <Chart data={info} />
           </div>
-          <div class="bg-transparent p-4">
+          <div class="relative bg-transparent p-4">
             <RecentTransactions /> <br/>
             <BillList /> <br/>
           </div>
