@@ -1,9 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Nav1 from '../components/Nav1';
 import useSessionChecker from '../components/SessionCheck';
 
 const UserSettings = () => {
+    // Error Messages
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+
+    const [errorMessageUsernamePassword, setErrorMessageUP] = useState('');
+    const [successMessageUsernamePassword, setSuccessMessageUP] = useState('');
+
+    const [errorMessageMonthlyIncome, setErrorMessageMI] = useState('');
+    const [successMessageMonthlyIncome, setSuccessMessageMI] = useState('');
+
+    const [errorMessageBudgetSplit, setErrorMessageBS] = useState('');
+    const [successMessageBudgetSplit, setSuccessMessageBS] = useState('');
+
+    const [inputVisible, setInputVisible] = useState({
+        username: false,
+        password: false,
+        monthlyIncome: false,
+        needsBudget: false,
+        savingsBudget: false,
+        wantsBudget: false
+    });
+
     // Default state
     const Navigate = useNavigate();
     useSessionChecker();
@@ -17,18 +39,29 @@ const UserSettings = () => {
         wantsBudget: ''
     });
 
-    // State to manage error message
-    const [errorMessage, setErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+    const [info, setInfo] = useState([]);
+    useEffect(() => {
+        fetch("/getInfo")
+            .then(res => res.json())
+            .then((info) => {
+                setInfo(info);
+                console.log(info);
+            });
+    }, []);
 
-    const [errorMessageUsernamePassword, setErrorMessageUP] = useState('');
-    const [successMessageUsernamePassword, setSuccessMessageUP] = useState('');
-
-    const [errorMessageMonthlyIncome, setErrorMessageMI] = useState('');
-    const [successMessageMonthlyIncome, setSuccessMessageMI] = useState('');
-
-    const [errorMessageBudgetSplit, setErrorMessageBS] = useState('');
-    const [successMessageBudgetSplit, setSuccessMessageBS] = useState('');
+    if (info.length === 0) {
+        return (
+          <div className= "star-bg">
+            <div className="w-full h-screen">
+              <div id="stars"></div>
+              <div id="stars2"></div>
+              <div id="stars3"></div>
+              <div id="title"></div>
+            </div>
+            Loading...
+          </div>
+        );
+      }
 
     // Function to handle form submission
     const handleSubmit = async (event) => {
@@ -124,6 +157,7 @@ const UserSettings = () => {
 
         if (!formData.username && (!formData.password || !formData.newPassword)) {
             setErrorMessageUP("Please enter both your password and new password.");
+            return;
         }
 
         console.log("Form submitted with data:", formData);
@@ -252,15 +286,6 @@ const UserSettings = () => {
         });
     };
 
-    const [inputVisible, setInputVisible] = useState({
-        username: false,
-        password: false,
-        monthlyIncome: false,
-        needsBudget: false,
-        savingsBudget: false,
-        wantsBudget: false
-    });
-
     const toggleInput = (fieldName) => {
         setInputVisible({
             ...inputVisible,
@@ -300,7 +325,7 @@ const UserSettings = () => {
                                     onChange={handleChange}
                                 />
                             ) : (
-                                <span>current username</span>
+                                <span>{info[0].username}</span>
                             )}
                             <br></br>
                             <br></br>
@@ -366,6 +391,7 @@ const UserSettings = () => {
                                         name="monthlyIncome"
                                         id="monthlyIncome"
                                         min="0.01"
+                                        placeholder='New Monthly Income'
                                         max="999999999999.99"
                                         onChange={handleChange}
                                     />
@@ -373,7 +399,7 @@ const UserSettings = () => {
                                 </div>
                             ) : (
                                 <div>
-                                    <span>current monthly income here</span>
+                                    <span>${info[0].monthly_income}</span>
                                 </div>
                             )}
                             <div className="flex items-center justify-center">
@@ -399,54 +425,47 @@ const UserSettings = () => {
                                 <span className="text-blue-500 cursor-pointer" onClick={() => toggleInput('budgetSplit')}>Edit</span>
                             </div>
                             {inputVisible.budgetSplit ? (
-                                <input
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="needsBudget"
-                                    name="needsBudget"
-                                    type="number"
-                                    placeholder="Needs Budget Split"
-                                    onChange={handleChange}
-                                />
+                                <div>
+                                    <input
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="needsBudget"
+                                        name="needsBudget"
+                                        type="number"
+                                        placeholder="Needs Budget Split"
+                                        onChange={handleChange}
+                                    />
+                                    <br></br>
+                                    <br></br>
+                                    <div className="mb-4 flex justify-between items-center">
+                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="savingsBudget">
+                                            Savings Budget Split
+                                        </label>
+                                    </div>
+                                    <input
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="savingsBudget"
+                                        name="savingsBudget"
+                                        type="number"
+                                        placeholder="Savings Budget Split"
+                                        onChange={handleChange}
+                                    />
+                                    <br></br>
+                                    <br></br>
+                                    <div className="mb-6 flex justify-between items-center">
+                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="wantsBudget">
+                                            Wants Budget Split
+                                        </label>
+                                    </div>
+                                    <input
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="wantsBudget"
+                                        name="wantsBudget"
+                                        type="number"
+                                        placeholder="Wants Budget Split"
+                                        onChange={handleChange}
+                                    /> </div>
                             ) : (
-                                <span>old needs budget</span>
-                            )}
-                            <br></br>
-                            <br></br>
-                            <div className="mb-4 flex justify-between items-center">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="savingsBudget">
-                                    Savings Budget Split
-                                </label>
-                            </div>
-                            {inputVisible.budgetSplit ? (
-                                <input
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="savingsBudget"
-                                    name="savingsBudget"
-                                    type="number"
-                                    placeholder="Savings Budget Split"
-                                    onChange={handleChange}
-                                />
-                            ) : (
-                                <span>old savings budget</span>
-                            )}
-                            <br></br>
-                            <br></br>
-                            <div className="mb-6 flex justify-between items-center">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="wantsBudget">
-                                    Wants Budget Split
-                                </label>
-                            </div>
-                            {inputVisible.budgetSplit ? (
-                                <input
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="wantsBudget"
-                                    name="wantsBudget"
-                                    type="number"
-                                    placeholder="Wants Budget Split"
-                                    onChange={handleChange}
-                                />
-                            ) : (
-                                <span>old wants budget</span>
+                                <span>Current Split: {info[0].budget_split}</span>
                             )}
                             <br></br>
                             <br></br>
