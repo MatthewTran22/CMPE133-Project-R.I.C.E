@@ -110,7 +110,8 @@ def check_time():
     data3 = response3.data
     if not data[0]['last_login'] == None:
         oldMonth = int(data[0]['last_login'].split('-')[1])
-        if datetime.datetime.now().date().month != oldMonth:
+        oldYear = int(data[0]['last_login'].split('-')[0])
+        if (datetime.datetime.now().date().month != oldMonth) or (datetime.datetime.now().date().year != oldYear):
             newTotal = float(data2[0]['total_remaining']) + float(data3[0]['monthly_income'])
             update_response = supabase.table('user_info').update({'total_remaining': newTotal, 'needs_spent': 0, 'wants_spent': 0}).eq('user_id', id).execute()
     now = datetime.datetime.now()
