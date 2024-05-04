@@ -162,6 +162,8 @@ def UserSettings():
         return "Failed to update tables: User not authenticated"
     
     newUsername = data.get('username')
+    oldPassword = data.get('password')
+    newPassword = data.get('newPassword')
     monthlyIncome = data.get('monthlyIncome')
     newSavingsBudget = data.get('savingsBudget')
     newWantsBudget = data.get('wantsBudget')
@@ -176,6 +178,14 @@ def UserSettings():
 
     if not newUsername == '':
         update_response = supabase.table('user_info').update({'username': newUsername}).eq('user_id', id).execute()
+        
+
+    if not newPassword == '':
+        response = supabase.table('users').select('password').eq('user_id', id).execute()
+        if oldPassword == response.data[0]['password']:
+            update_response = supabase.table('users').update({'password': newPassword}).eq('user_id', id).execute()
+            return "Success"
+            
 
     if not(newSavingsBudget == '' or newWantsBudget == '' or newNeedsBudget == ''):
         if int(newSavingsBudget) + int(newNeedsBudget) + int(newWantsBudget) == 100:
@@ -184,6 +194,7 @@ def UserSettings():
             newTotalWants = round(monthlyIncome * int(newWantsBudget) * 0.01, 2)
             newTotalSavings = round(monthlyIncome * int(newSavingsBudget) * 0.01, 2)
             update_response = supabase.table('user_info').update({'budget_split': budgetPlan, 'total_needs': newTotalNeeds, 'total_wants': newTotalWants, 'total_savings': newTotalSavings}).eq('user_id', id).execute()
+            return "Success"
         else:
             return "Failed to update tables: Invalid budget split"
     else:
@@ -194,9 +205,9 @@ def UserSettings():
         newTotalSavings = round(monthlyIncome * int(percents[1]) * 0.01, 2)
         newTotalWants = round(monthlyIncome * int(percents[2]) * 0.01, 2)
         update_response = supabase.table('user_info').update({'total_needs': newTotalNeeds, 'total_wants': newTotalWants, 'total_savings': newTotalSavings}).eq('user_id', id).execute()
+        return "Success"
 
-
-    return "Success"
+    return "Nothing was changed"
 
 @app.route('/getTransactions')
 def getTransactions():
