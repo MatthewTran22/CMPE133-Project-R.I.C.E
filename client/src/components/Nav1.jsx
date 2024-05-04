@@ -58,7 +58,7 @@ const Nav1 = () => {
             <p className="">Report Transactions</p>
           </div>
           <div className="text-white" onClick={() => { navigate("/UserSettings") }}>
-            <CgProfile size="2.5rem" />
+            <CgProfile size="2.5rem" title="User Settings"/>
           </div>
         </div>
       </div>

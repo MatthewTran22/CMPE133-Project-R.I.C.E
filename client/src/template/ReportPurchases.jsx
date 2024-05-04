@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Nav2 from '../components/Nav2';
+import Nav1 from '../components/Nav1';
 import useSessionChecker from '../components/SessionCheck';
 import ReportBox from '../components/ReportBox';
 
@@ -116,7 +116,7 @@ const ReportPurchases = () => {
             <div id="stars3"></div>
             <div id="title"></div>
 
-            <Nav2 />
+            <Nav1 />
 
             <h1 className='text-white text-5xl font-bold text-center mt-24'>Report Transactions</h1>
 
