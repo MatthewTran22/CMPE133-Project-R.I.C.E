@@ -8,6 +8,7 @@ const useSessionChecker = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
+    fetch("/check_time")
     fetch("/check_session")
       .then(res => {
         if (!res.ok) {

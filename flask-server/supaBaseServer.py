@@ -98,6 +98,25 @@ def check_session():
         return jsonify({'Login': True})
     else:
          return jsonify({"error": "Session not found"}), 404
+
+@app.route('/check_time')
+def check_time():
+    id = session.get('user_id')
+    response = supabase.table('user_info').select('last_login').eq('user_id', id).execute()
+    data = response.data
+    response2 = supabase.table('user_info').select('total_remaining').eq('user_id', id).execute()
+    data2 = response2.data
+    response3 = supabase.table('user_info').select('monthly_income').eq('user_id', id).execute()
+    data3 = response3.data
+    if not data[0]['last_login'] == None:
+        oldMonth = int(data[0]['last_login'].split('-')[1])
+        if datetime.datetime.now().date().month != oldMonth:
+            newTotal = float(data2[0]['total_remaining']) + float(data3[0]['monthly_income'])
+            update_response = supabase.table('user_info').update({'total_remaining': newTotal, 'needs_spent': 0, 'wants_spent': 0}).eq('user_id', id).execute()
+    now = datetime.datetime.now()
+    date_str = now.strftime("%Y-%m-%d")
+    update_response = supabase.table('user_info').update({'last_login': date_str}).eq('user_id', id).execute()
+    return jsonify(message='updated')
     
 @app.route('/logout', methods=['POST'])
 def logout():
