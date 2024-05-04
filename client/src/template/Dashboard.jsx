@@ -49,25 +49,26 @@ const Dashboard = () => {
         <div id="stars3"></div>
         <div id="title"></div>
         <Nav1 />
-        <div class="grid grid-cols-2 gap-4 bg-transparent">
-          <div class="bg-transparent p-4 items-center justify-items-center">
+       
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-80rem mt-4">
+          <div className="relative bg-transparent p-4 flex flex-col items-center">
 
             <Totals Category="Current Total" otherTotals={info[0].total_remaining} /> <br/>
             <Chart data={info} />
           </div>
-          <div class="bg-transparent p-4">
+         
+          <div className="relative bg-transparent p-4 flex flex-col items-center">
             <RecentTransactions /> <br/>
             <BillList /> <br/>
           </div>
         </div>
-        <div className="flex items-center justify-center">
-          <div className='justify-content-center'>
-            <Bar/>
-          </div>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-80rem mt-4">
+          <Bar/>
+        </div>
         </div><br/>
         
       </div>
-    </div>
+  
   );
 }
 
