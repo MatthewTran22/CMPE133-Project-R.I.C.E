@@ -34,6 +34,13 @@ def getInfo():
     response = supabase.table("user_info").select("*").eq('user_id', id).execute()
     return jsonify(response.data)
 
+
+@app.route('/getRemainingTotal')
+def getRemainingTotal():
+    id = session.get('user_id')
+    response = supabase.table('user_info').select('total_remaining').eq('user_id', id).execute()
+    return jsonify(response.data[0])
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     try:

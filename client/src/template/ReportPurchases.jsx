@@ -15,7 +15,16 @@ const ReportPurchases = () => {
     });
 
     const [bills, setBills] = useState([]);
+    const [showSecondGrid, setShowSecondGrid] = useState(false);
+    const [income, setIncome] = useState(0);
     
+
+    useEffect(() => {
+        const { amount, category, description } = formData;
+        if (amount && category && description) {
+            setShowSecondGrid(true);
+        }
+    }, [formData]);
 
     // get the bills 
     useEffect(() => {
@@ -23,6 +32,8 @@ const ReportPurchases = () => {
             const billsFromServer = await fetchBills();
             setBills(billsFromServer);
         }
+
+        fetchRemainingTotal();
 
         getBills();
     }, []);
@@ -33,6 +44,17 @@ const ReportPurchases = () => {
 
         return data;
     }
+
+    const fetchRemainingTotal = async () => {
+        try {
+            const res = await fetch('/getRemainingTotal');
+            const data = await res.json();
+            setIncome(data.total_remaining);
+        } catch (error) {
+            console.error('Error fetching info:', error);
+        }
+    };
+    
 
     const goToSettings = () => {
         // Navigate to the register page
@@ -118,14 +140,18 @@ const ReportPurchases = () => {
 
             <Nav1 />
 
+            <div className="flex flex-col justify-center items-center">
+
             <h1 className='text-white text-5xl font-bold text-center mt-24'>Report Transactions</h1>
 
-            <form onSubmit={handleSubmit} className=" flex flex-col justify-start items-center" >
+            <div className={`${showSecondGrid ? 'grid grid-cols-2 grid-rows-5 gap-5' : ''}`}>
+                <div className={` ${showSecondGrid ? 'row-span-5' : ''}`}>
+                <form onSubmit={handleSubmit} className=" flex flex-col justify-start items-center" >
                 
 
-                <div className="flex flex-col mt-20 items-center justify-center border-2 rounded-lg p-16">
+                <div className="mt-20 border-2 rounded-lg px-14 py-7 bg-slate-200">
 
-                    <label htmlFor="category" className="block text-sm font-medium leading-6 text-white">Category</label>
+                    <label htmlFor="category" className="block text-sm font-medium leading-6 text-stone-800">Category</label>
                     <select
                         name="category"
                         id="category"
@@ -136,10 +162,10 @@ const ReportPurchases = () => {
                         <option value="">Select Category</option>
                         <option value="Needs">Needs</option>
                         <option value="Wants">Wants</option>
-                        <option value="Income">Income</option>
+                        <option value="Deposit">Deposit</option>
                     </select>
                     
-                    <label htmlFor="bills" className="block text-sm font-medium leading-6 mt-4 text-white">Bill (optional)</label>
+                    <label htmlFor="bills" className="block text-sm font-medium leading-6 mt-4 text-stone-800">Bill (optional)</label>
                     <select
                         name="bills"
                         id="bills"
@@ -154,7 +180,7 @@ const ReportPurchases = () => {
                     </select>
                     
                     
-                    <label htmlFor="amount" className="block text-sm font-medium leading-6 text-white mt-4">Amount</label>
+                    <label htmlFor="amount" className="block text-sm font-medium leading-6 text-stone-800 mt-4">Amount</label>
                     <input
                         type="number"
                         step="0.01"
@@ -169,7 +195,7 @@ const ReportPurchases = () => {
 
                     
                     
-                    <label htmlFor="description" className="block text-sm font-medium leading-6 text-white mt-4">Description</label>
+                    <label htmlFor="description" className="block text-sm font-medium leading-6 text-stone-800 mt-4">Description</label>
                     <input
                         type="text"
                         name="description"
@@ -179,18 +205,42 @@ const ReportPurchases = () => {
                         value={formData.description}
                         onChange={handleChange}
                     />
-                    <button type="submit" className="hover:bg-white hover:text-black text-white font-bold py-2 px-4 border-2 rounded-lg mt-10 duration-300" 
-                    onClick={() => {
-                        setTimeout(() => {
-                            Navigate("/Dashboard");
-                        }, 3000); // 3 seconds delay
-                    }}>
-                        Submit
-                    </button>
+                    
+                    <div className = "flex justify-center items-center">
+                        <button type="submit" className="hover:bg-gray-800 hover:text-white text-stone-800 font-bold py-2 px-4 border-2 border-stone-800 rounded-lg mt-10 duration-300" 
+                        onClick={() => {
+                            setTimeout(() => {
+                                Navigate("/Dashboard");
+                            }, 3000); // 3 seconds delay
+                        }}>
+                            Submit
+                        </button>
 
+                    </div>
                 </div>
                 
             </form>
+                </div>
+                    
+               {showSecondGrid && <div className="row-span-5">
+                        <div className=' mt-20 second-grid flex flex-col justify-center items-center border-2 rounded-lg px-14 py-7 bg-slate-200'>
+                            <p className='text-stone-800 text-2xl text-center'>Current Total: ${income}</p>
+                            <p className='text-stone-800 text-2xl text-center my-10'>{formData.description}: {`$${formData.amount}`} </p>
+                            <p className='text-stone-800 text-2xl text-center'>
+                                New Total: ${formData.category === 'Deposit' ? parseFloat(income) + parseFloat(formData.amount) : parseFloat(income) - parseFloat(formData.amount)}
+                            </p>
+
+
+                        </div>
+                
+                
+                
+                </div>}
+            </div>
+
+            
+
+            </div>
             
             {errorMessage && <p className="text-red-500">{errorMessage}</p>}
             {successMessage && <p className="text-green-500">{successMessage}</p>}

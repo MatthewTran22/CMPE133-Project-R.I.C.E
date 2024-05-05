@@ -82,6 +82,11 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* user transaction for input info */
+.second-grid {
+  transition: opacity 1s ease-in-out;
+}
+
 @keyframes animStar {
   from {
     transform: translateY(0px);
