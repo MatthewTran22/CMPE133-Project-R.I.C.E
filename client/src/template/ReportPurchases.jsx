@@ -23,6 +23,8 @@ const ReportPurchases = () => {
         const { amount, category, description } = formData;
         if (amount && category && description) {
             setShowSecondGrid(true);
+        } else {
+            setShowSecondGrid(false);
         }
     }, [formData]);
 
@@ -54,12 +56,7 @@ const ReportPurchases = () => {
             console.error('Error fetching info:', error);
         }
     };
-    
 
-    const goToSettings = () => {
-        // Navigate to the register page
-        Navigate('/UserSettings');
-    };
 
     // State to manage error message
     const [errorMessage, setErrorMessage] = useState('');
@@ -115,7 +112,7 @@ const ReportPurchases = () => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        if (name === 'bills') {
+        if (name=== 'bills') {
             const bill = bills.find(bill => bill.bill_id === value);
             setFormData({
                 ...formData,
@@ -140,114 +137,100 @@ const ReportPurchases = () => {
 
             <Nav1 />
 
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex items-center justify-center h-screen">
+                <div className="relative max-w-80rem bg-slate-200 p-6 rounded-lg shadow-md">
+                    <h1 className='text-center text-5xl font-bold mb-10'>Report Transactions</h1>
+                    <div className="grid grid-cols-2 gap-4">
+                        <form onSubmit={handleSubmit} className="flex flex-col justify-start items-center">
+                            <div className="border-2 rounded-lg px-14 py-7 bg-slate-200">
+                                <label htmlFor="category" className="block text-sm font-medium leading-6 text-stone-800">Category</label>
+                                <select
+                                    name="category"
+                                    id="category"
+                                    className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    value={formData.category}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Select Category</option>
+                                    <option value="Needs">Needs</option>
+                                    <option value="Debt">Debt Payment</option>
+                                    <option value="Wants">Wants</option>
+                                    <option value="Deposit">Deposit</option>
+                                    
+                                </select>
+                                
+                                <label htmlFor="bills" className="block text-sm font-medium leading-6 mt-4 text-stone-800">Bill (optional)</label>
+                                <select
+                                    name="bills"
+                                    id="bills"
+                                    className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    value={formData.bills}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Select Bill</option>
+                                    {bills.map((bill) => (
+                                        <option key={bill.bill_id} value={bill.bill_id}>{bill.description}</option>
+                                    ))}
+                                </select>
+                                
+                                
+                                <label htmlFor="amount" className="block text-sm font-medium leading-6 text-stone-800 mt-4">Amount</label>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    name="amount"
+                                    id="amount"
+                                    min="0.01"
+                                    className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-smsm:leading-6"
+                                    placeholder="$0.00"
+                                    value={formData.amount}
+                                    onChange={handleChange}
+                                />
 
-            <h1 className='text-white text-5xl font-bold text-center mt-24'>Report Transactions</h1>
+                                
+                                
+                                <label htmlFor="description" className="block text-sm font-medium leading-6 text-stone-800 mt-4">Description</label>
+                                <input
+                                    type="text"
+                                    name="description"
+                                    id="description"
+                                    className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    placeholder="Description"
+                                    value={formData.description}
+                                    onChange={handleChange}
+                                />
+                                
+                                <div className = "flex justify-center items-center">
+                                    <button type="submit" className="hover:bg-gray-800 hover:text-white text-stone-800 font-bold py-2 px-4 border-2 border-stone-800 rounded-lg mt-10 duration-300" 
+                                    onClick={() => {
+                                        setTimeout(() => {
+                                            Navigate("/Dashboard");
+                                        }, 3000); // 3 seconds delay
+                                    }}>
+                                        Submit
+                                    </button>
 
-            <div className={`${showSecondGrid ? 'grid grid-cols-2 grid-rows-5 gap-5' : ''}`}>
-                <div className={` ${showSecondGrid ? 'row-span-5' : ''}`}>
-                <form onSubmit={handleSubmit} className=" flex flex-col justify-start items-center" >
-                
-
-                <div className="mt-20 border-2 rounded-lg px-14 py-7 bg-slate-200">
-
-                    <label htmlFor="category" className="block text-sm font-medium leading-6 text-stone-800">Category</label>
-                    <select
-                        name="category"
-                        id="category"
-                        className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        value={formData.category}
-                        onChange={handleChange}
-                    >
-                        <option value="">Select Category</option>
-                        <option value="Needs">Needs</option>
-                        <option value="Wants">Wants</option>
-                        <option value="Deposit">Deposit</option>
-                    </select>
-                    
-                    <label htmlFor="bills" className="block text-sm font-medium leading-6 mt-4 text-stone-800">Bill (optional)</label>
-                    <select
-                        name="bills"
-                        id="bills"
-                        className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        value={formData.bills}
-                        onChange={handleChange}
-                    >
-                        <option value="">Select Bill</option>
-                        {bills.map((bill) => (
-                            <option key={bill.bill_id} value={bill.bill_id}>{bill.description}</option>
-                        ))}
-                    </select>
-                    
-                    
-                    <label htmlFor="amount" className="block text-sm font-medium leading-6 text-stone-800 mt-4">Amount</label>
-                    <input
-                        type="number"
-                        step="0.01"
-                        name="amount"
-                        id="amount"
-                        min="0.01"
-                        className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder="$0.00"
-                        value={formData.amount}
-                        onChange={handleChange}
-                    />
-
-                    
-                    
-                    <label htmlFor="description" className="block text-sm font-medium leading-6 text-stone-800 mt-4">Description</label>
-                    <input
-                        type="text"
-                        name="description"
-                        id="description"
-                        className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder="Description"
-                        value={formData.description}
-                        onChange={handleChange}
-                    />
-                    
-                    <div className = "flex justify-center items-center">
-                        <button type="submit" className="hover:bg-gray-800 hover:text-white text-stone-800 font-bold py-2 px-4 border-2 border-stone-800 rounded-lg mt-10 duration-300" 
-                        onClick={() => {
-                            setTimeout(() => {
-                                Navigate("/Dashboard");
-                            }, 3000); // 3 seconds delay
-                        }}>
-                            Submit
-                        </button>
-
+                                </div>
+                            </div>
+                        </form>
+                        {showSecondGrid && (
+                            <div className="second-grid flex flex-col justify-center items-center border-2 rounded-lg px-14 py-7 bg-slate-200">
+                                <p className='text-stone-800 text-2xl text-center'>Current Total: ${income}</p>
+                                <p className='text-stone-800 text-2xl text-center my-10'>{formData.description}: {`$${formData.amount}`} </p>
+                                <p className='text-stone-800 text-2xl text-center'>
+                                    New Total: ${formData.category === 'Deposit' ? (parseFloat(income) + parseFloat(formData.amount).toFixed(2)) : (parseFloat(income) - parseFloat(formData.amount)).toFixed(2)}
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
-                
-            </form>
-                </div>
-                    
-               {showSecondGrid && <div className="row-span-5">
-                        <div className=' mt-20 second-grid flex flex-col justify-center items-center border-2 rounded-lg px-14 py-7 bg-slate-200'>
-                            <p className='text-stone-800 text-2xl text-center'>Current Total: ${income}</p>
-                            <p className='text-stone-800 text-2xl text-center my-10'>{formData.description}: {`$${formData.amount}`} </p>
-                            <p className='text-stone-800 text-2xl text-center'>
-                                New Total: ${formData.category === 'Deposit' ? parseFloat(income) + parseFloat(formData.amount) : parseFloat(income) - parseFloat(formData.amount)}
-                            </p>
-
-
-                        </div>
-                
-                
-                
-                </div>}
             </div>
 
-            
-
-            </div>
-            
             <div className='mt-20 flex justify-center'>
                 {errorMessage && <p className="text-center text-lg p-4 border-2 rounded-lg bg-red-100 text-red-500">{errorMessage}</p>}
                 {successMessage && <p className="text-center text-lg p-4 border-2 rounded-lg bg-green-100 text-green-500">{successMessage}</p>}
             </div>
 
-            
         </div>
     );
 };
