@@ -242,8 +242,12 @@ const ReportPurchases = () => {
 
             </div>
             
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-            {successMessage && <p className="text-green-500">{successMessage}</p>}
+            <div className='mt-20 flex justify-center'>
+                {errorMessage && <p className="text-center text-lg p-4 border-2 rounded-lg bg-red-100 text-red-500">{errorMessage}</p>}
+                {successMessage && <p className="text-center text-lg p-4 border-2 rounded-lg bg-green-100 text-green-500">{successMessage}</p>}
+            </div>
+
+            
         </div>
     );
 };
