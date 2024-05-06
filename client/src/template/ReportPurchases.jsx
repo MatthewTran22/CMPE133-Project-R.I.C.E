@@ -15,8 +15,11 @@ const ReportPurchases = () => {
     });
 
     const [bills, setBills] = useState([]);
+    const [debts, setDebts] = useState([]);
     const [showSecondGrid, setShowSecondGrid] = useState(false);
     const [income, setIncome] = useState(0);
+    const [inputBill, setInputBill] = useState(false); // New state for controlling bills input visibility
+    const [inputDebt, setInputDebt] = useState(false); // New state for controlling bills input visibility
     
 
     useEffect(() => {
@@ -26,6 +29,14 @@ const ReportPurchases = () => {
         } else {
             setShowSecondGrid(false);
         }
+
+        // Set inputBill state based on the selected category
+        
+        setInputBill(category === 'Needs');
+        setInputDebt(category === 'Debt');
+        
+        
+       
     }, [formData]);
 
     // get the bills 
@@ -46,6 +57,23 @@ const ReportPurchases = () => {
 
         return data;
     }
+
+    // get the debts 
+    useEffect(() => {
+        const getDebts = async () => {
+            const debtsFromServer = await fetchDebts();
+            setDebts(debtsFromServer);
+        }
+        getDebts();
+    }, []);
+
+    const fetchDebts = async () => {
+        const res = await fetch('/getDebts');
+        const data = await res.json();
+
+        return data;
+    }
+
 
     const fetchRemainingTotal = async () => {
         try {
@@ -109,24 +137,40 @@ const ReportPurchases = () => {
     };
 
     // Function to handle input changes
-    const handleChange = (event) => {
-        const { name, value } = event.target;
+    // Function to handle input changes
+const handleChange = (event) => {
+    const { name, value } = event.target;
 
-        if (name=== 'bills') {
-            const bill = bills.find(bill => bill.bill_id === value);
-            setFormData({
-                ...formData,
-                amount: parseFloat(bill.amount).toFixed(2),
-                description: bill.description
-            });
-        } else {
-            setFormData({
-                ...formData,
-                [name]: value
-            });
-        }
-        
-    };
+    if (name === 'category') {
+        // Reset amount and description when category is changed
+        setFormData({
+            ...formData,
+            amount: '',
+            description: '',
+            [name]: value
+        });
+    } else if (name === 'bills') {
+        const bill = bills.find((bill) => bill.bill_id === value);
+        setFormData({
+            ...formData,
+            amount: parseFloat(bill.amount).toFixed(2),
+            description: bill.description
+        });
+    } else if (name === 'debts') {
+        const debt = debts.find((debt) => debt.debt_key === value);
+        setFormData({
+            ...formData,
+            description: debt.description
+        });
+    }
+        else {
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    }
+};
+
 
     return (
         <div className= "star-bg w-full h-lvh">
@@ -158,22 +202,42 @@ const ReportPurchases = () => {
                                     <option value="Deposit">Deposit</option>
                                     
                                 </select>
+                                {inputBill && ( // Conditionally render bills input based on inputBill state
+                                    <>
+                                        <label htmlFor="bills" className="block text-sm font-medium leading-6 mt-4 text-stone-800">Bill (optional)</label>
+                                        <select
+                                            name="bills"
+                                            id="bills"
+                                            className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={formData.bills}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">Select Bill</option>
+                                            {bills.map((bill) => (
+                                                <option key={bill.bill_id} value={bill.bill_id}>{bill.description}</option>
+                                            ))}
+                                        </select>
+                                    </>
+                                )}
                                 
-                                <label htmlFor="bills" className="block text-sm font-medium leading-6 mt-4 text-stone-800">Bill (optional)</label>
-                                <select
-                                    name="bills"
-                                    id="bills"
-                                    className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    value={formData.bills}
-                                    onChange={handleChange}
-                                >
-                                    <option value="">Select Bill</option>
-                                    {bills.map((bill) => (
-                                        <option key={bill.bill_id} value={bill.bill_id}>{bill.description}</option>
-                                    ))}
-                                </select>
-                                
-                                
+                                {inputDebt && ( // Conditionally render debts input based on inputDebt state
+                                    <>
+                                        <label htmlFor="debts" className="block text-sm font-medium leading-6 mt-4 text-stone-800">Debts/Loans</label>
+                                        <select
+                                            name="debts"
+                                            id="debts"
+                                            className="block w-full mt-4 rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={formData.debts}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">Select Payment</option>
+                                            {debts.map((debt) => (
+                                                <option key={debt.debt_key} value={debt.debt_key}>{debt.description}</option>
+                                            ))}
+                                        </select>
+                                    </>
+                                )}
+
                                 <label htmlFor="amount" className="block text-sm font-medium leading-6 text-stone-800 mt-4">Amount</label>
                                 <input
                                     type="number"
@@ -187,8 +251,6 @@ const ReportPurchases = () => {
                                     onChange={handleChange}
                                 />
 
-                                
-                                
                                 <label htmlFor="description" className="block text-sm font-medium leading-6 text-stone-800 mt-4">Description</label>
                                 <input
                                     type="text"
@@ -200,7 +262,7 @@ const ReportPurchases = () => {
                                     onChange={handleChange}
                                 />
                                 
-                                <div className = "flex justify-center items-center">
+                                <div className="flex justify-center items-center">
                                     <button type="submit" className="hover:bg-gray-800 hover:text-white text-stone-800 font-bold py-2 px-4 border-2 border-stone-800 rounded-lg mt-10 duration-300" 
                                     onClick={() => {
                                         setTimeout(() => {
@@ -209,7 +271,6 @@ const ReportPurchases = () => {
                                     }}>
                                         Submit
                                     </button>
-
                                 </div>
                             </div>
                         </form>
