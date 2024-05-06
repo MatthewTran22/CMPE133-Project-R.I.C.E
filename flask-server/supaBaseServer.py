@@ -160,7 +160,7 @@ def ReportPurchases():
     moneyChange = float(data.get('money'))
 
     category = data.get('chosenCategory').lower() #setup to make category fit the column name
-    if category == 'income':
+    if category == 'deposit':
         category = "total_savings"
         new_total = current_total + moneyChange #adds to current total since we are adding money to our budget
         update_response = supabase.table('user_info').update({'total_remaining': new_total}).eq('user_id', id).execute()
@@ -256,7 +256,7 @@ def updateTransaction():
     response = supabase.table('transaction_reports').select('category').eq('transaction_id', transaction_id).execute()
     category = response.data[0]['category']
 
-    if category != 'Income':
+    if category != 'Deposit':
         category = category.lower() + "_spent" #gets either the wants or needs category
         response = supabase.table('user_info').select(category).eq('user_id', id).execute()   
         new_spent = response.data[0][category] - difference
@@ -282,7 +282,7 @@ def deleteTransaction():
     response = supabase.table('transaction_reports').select('category').eq('transaction_id', id).execute()
     category = response.data[0]['category']
 
-    if category == 'Income':
+    if category == 'Deposit':
         response = supabase.table('user_info').select('total_remaining').eq('user_id', uid).execute()   
         total = response.data[0]['total_remaining']
         total = total - amount
