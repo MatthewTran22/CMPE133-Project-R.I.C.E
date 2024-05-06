@@ -451,7 +451,7 @@ def getProgress():
         stepOne = True
         percent = 33
     else:
-        percent = int(total/100)
+        percent = int((total/1000)*33)
 
     if not stepOne:
         return jsonify({'percent':percent})
