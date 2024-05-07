@@ -42,8 +42,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className= "star-bg">
-      <div className="w-full h-screen">
+    <div className= "star-bg1 user-settings-container">
           <div id="stars"></div>
           <div id="stars2"></div>
           <div id="stars3"></div>
@@ -58,7 +57,7 @@ const Dashboard = () => {
         <Nav1 />
        
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-80rem mt-4">
-          <div className="relative bg-transparent p-4 flex flex-col items-center">
+          <div className="relative bg-transparent p-4 flex flex-col items-center mb-5">
 
             <Totals Category="Current Total" otherTotals={info[0].total_remaining} /> <br/>
             <Chart data={info} />
@@ -71,7 +70,6 @@ const Dashboard = () => {
         </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-80rem mt-4">
           <Bar/>
-        </div>
         </div><br/>
         
       </div>

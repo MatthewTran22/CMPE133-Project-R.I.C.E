@@ -41,7 +41,7 @@ const Front = () => {
       const topBorderOffset = firstSectionRef.current.offsetTop;
       const bottomBorderOffset = fourthSectionRef.current.offsetTop;
 
-      const scrolledToBottom = window.scrollY + window.innerHeight >= bottomBorderOffset;
+      const scrolledToBottom = window.scrollY + (window.innerHeight - 100) >= bottomBorderOffset;
 
       if (scrolledToBottom) {
         setShowSuccessImage(true);
@@ -98,7 +98,7 @@ const Front = () => {
         <div style={{ position: 'relative', width: '100%', height: '100%' }}>
           <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', color: 'rgb(239, 239, 255)', fontSize: '1em' }}>
             <img src={riceLogoImg} alt="1 Image" />
-            <b style={{ fontFamily: 'Gruppo', textAlign: 'left' }}>A lightweight tool to help you budget and save</b>
+            <b style={{ fontFamily: 'Gruppo', textAlign: 'left' }}>Reflect • Improve • Control • Empower</b>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
               <div className='space-x-16' style={{ fontFamily: 'Russo One' }}>
                 <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40 hover:bg-white hover:text-black cursor-pointer duration-300' onClick={goToLogin}>Login</button>
@@ -110,9 +110,10 @@ const Front = () => {
       </div>
       
       {/* Second Section */}
-      <div style={{ height: '100vh', display: 'flex', color: 'white', fontFamily: 'Helvetica', alignItems: 'center', fontSize: '2em', background: 'radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)' }}>
-        <div className='space-x-0' style={{ maxWidth: 'calc(60% - 200px)', overflow: 'hidden', textAlign: 'left', display: 'inline-block', verticalAlign: 'top' }}>
-          <b style={{ fontFamily: 'Gruppo', marginLeft: '200px', display: 'inline-block' }}>New revolutionary budgeting app kjasldjkf jhasdhfl jhkasdfjkla jahksdfk asdhals dfasjhd fal</b>
+      <div style={{ height: '100vh', display: 'flex', color: 'black', fontFamily: 'Helvetica', alignItems: 'center', fontSize: '2em', background: 'radial-gradient(ellipse at top, #F1F2F3 0%, #090a0f 160%)' }}>
+        <div className='space-y-3' style={{ maxWidth: 'calc(70% - 200px)', overflow: 'hidden', textAlign: 'left', display: 'inline-block', verticalAlign: 'top' }}>
+          <b style={{ maxWidth: 'calc(110% - 200px)', fontFamily: 'Russo One', marginLeft: '120px', display: 'inline-block' }}>Budgeting Made Simple</b>
+          <b style={{ maxWidth: 'calc(100% - 200px)', fontFamily: 'Gruppo', marginLeft: '120px', display: 'inline-block' }}>Effortlessly track expenses, set savings goals, and achieve financial freedom — all in one intuitive platform.</b>
         </div>
         <div className={`${hasScrolled ? 'fade-in-right' : ''}`} style={{position: 'absolute', top: '127%', right: '10%', transform: 'translate(-50%, -50%)', maxWidth: '33%', maxHeight: '30%', width: 'auto', height: 'auto' }}>
           <img src={imac} alt="Box 1 Image" />
@@ -133,12 +134,12 @@ const Front = () => {
         style={{
           height: '100vh',
           display: 'flex',
-          color: 'white',
+          color: 'black',
           fontFamily: 'Helvetica',
           alignItems: 'center', // Align items in the center vertically
           justifyContent: 'center', // Center items horizontally
           fontSize: '2em',
-          background: 'radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)'
+          background: 'radial-gradient(ellipse at top, #F1F2F3 0%, #090a0f 200%)'
         }}
       >
       <div
@@ -153,7 +154,7 @@ const Front = () => {
 
         <div className='space-x-0 space-y-6 ml-16' style={{ maxWidth: 'calc(60% - 200px)', overflow: 'hidden', textAlign: 'right', display: 'inline-block', verticalAlign: 'top' }}>
           <b style={{ fontFamily: 'Gruppo', marginRight: '180px', display: 'inline-block' }}>Start today and have full control of your finance!</b>
-          <button className='text-lg border-2 p-3 rounded-3xl h-15 w-40 hover:bg-white hover:text-black cursor-pointer duration-300' 
+          <button className='text-2xl border-2 border-black p-3 rounded-3xl h-16 w-44 hover:bg-white hover:border-white hover:text-black cursor-pointer duration-300' 
                   style={{ fontFamily: 'Russo One', marginRight: '180px', display: 'inline-block' }} 
                   onClick={goToRegister}> 
                   
@@ -161,11 +162,7 @@ const Front = () => {
           </button>
         </div>
       </div>
-
-
-
-
-
+      
       {/* Footer */}
       <div className={`footer ${hasScrolled ? 'show' : ''}`}>
         Copyright © 2024 RICE

@@ -110,9 +110,9 @@ const InputInfo = () => {
       <div id="title"></div>
 
       <div className="w-full h-screen flex justify-center items-center">
-        <div className="flex justify-center items-center space-x-10">
-          <div className="flex flex-col justify-center items-center bg-slate-200 p-5 rounded-lg relative" style={{ minHeight: "600px", minWidth: "700px" }}>
-            <h2 className="mb-5 text-left text-4xl font-bold leading-9 tracking-tight text-black">Let's Get Started</h2>
+        <div className="flex justify-center items-center space-x-20">
+          <div className="flex flex-col justify-center items-center bg-slate-200 p-20 rounded-lg relative" style={{ minHeight: "600px", minWidth: "700px" }}>
+            <h2 className="mb-10 text-left text-4xl font-bold leading-9 tracking-tight text-black">Let's Get Started</h2>
             <div className="grid grid-cols-2 gap-20 bg-transparent relative">
               <div>
                 <form className="space-y-10" onSubmit={handleSubmit}>
@@ -142,7 +142,7 @@ const InputInfo = () => {
                   </div>
 
                   <div className="space-y-1">
-                    <label htmlFor="budgetPlan" className="block text-sm font-medium text-gray-700">Choose a Budget Plan</label>
+                    <label htmlFor="budgetPlan" className="block text-sm font-medium text-gray-700">Choose Budget Plan (Needs/Saving/Wants)</label>
                     <select
                       id="budgetPlan"
                       name="budgetPlan"
@@ -166,7 +166,7 @@ const InputInfo = () => {
                 </form>
               </div>
               <div className="flex justify-center items-center">
-                <div className="h-56 w-56 bg-slate-200 p-5 rounded-lg"> {/*change bg-slate to 100 to see the "border"*/}
+                <div className="h-56 w-56 bg-slate-200 p-6 rounded-lg"> {/*change bg-slate to 100 to see the "border"*/}
                   <ResponsiveContainer width="100%" height="100%">
                     {loading ? (
                       <div></div>

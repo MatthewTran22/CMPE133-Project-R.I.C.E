@@ -49,7 +49,7 @@ const BillList = () => {
   };
 
   return (
-    <div className = 'relative w-96 rounded-3xl box-border p-4 border-4 whitespace-nowrap bg-dark-blue' style={{  height: '43rem'}}>
+    <div className = 'relative w-96 rounded-3xl box-border p-4 border-4 whitespace-nowrap bg-dark-blue border-double' style={{  height: '43rem'}}>
       <div className='text-white text-5xl flex'>
       Bill List
       <div className="absolute top-62% right-50% " style={{ fontSize: '1rem' }}>
