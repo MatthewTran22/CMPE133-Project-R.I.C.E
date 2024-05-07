@@ -119,7 +119,7 @@ const RecentTransactions = () => {
                     </div>
                     <div>{transaction.description }
                     </div>
-                    <div className={`${transaction.category === 'Income' ? 'text-green-500' : 'text-red-500'}`}>
+                    <div className={`${transaction.category === 'Deposit' ? 'text-green-500' : 'text-red-500'}`}>
                       ${transaction.amount.toFixed(2)}
                     </div>
                     <div>
