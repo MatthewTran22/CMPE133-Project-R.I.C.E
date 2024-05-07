@@ -164,9 +164,16 @@ def ReportPurchases():
         category = "total_savings"
         new_total = current_total + moneyChange #adds to current total since we are adding money to our budget
         update_response = supabase.table('user_info').update({'total_remaining': new_total}).eq('user_id', id).execute()
-
+        
     else:
-        category = category + "_spent" #gets either the wants or needs category
+        if category == 'debt':
+            category = 'needs_spent'
+            getPaid = supabase.table('user_debts').select('debt_paid').eq('description', data.get('description')).execute()
+            paid = float(getPaid.data[0]['debt_paid']) + moneyChange
+            response = supabase.table('user_debts').update({'debt_paid': paid}).eq('description', data.get('description')).execute()
+        
+        else:
+            category = category + "_spent" #gets either the wants or needs category
         new_total = current_total - moneyChange #subtracts money since we are using from our budget
         response = supabase.table('user_info').select(category).eq('user_id', id).execute()
         current_category_spent = response.data[0][category]
@@ -256,6 +263,14 @@ def updateTransaction():
     response = supabase.table('transaction_reports').select('category').eq('transaction_id', transaction_id).execute()
     category = response.data[0]['category']
 
+    if category == 'Debt':
+        category = 'Needs'
+        response = supabase.table('transaction_reports').select('description').eq('transaction_id', transaction_id).execute()
+        description = response.data[0]['description']
+        response = supabase.table('user_debts').update({'debt_paid': newAmount}).eq('description', description).execute()
+        response = supabase.table('transaction_reports').update({'amount': newAmount, 'description': data.get('description'), 'date': data.get('date')}).eq('transaction_id', transaction_id).execute()
+        return "Success"
+
     if category != 'Deposit':
         category = category.lower() + "_spent" #gets either the wants or needs category
         response = supabase.table('user_info').select(category).eq('user_id', id).execute()   
@@ -291,6 +306,13 @@ def deleteTransaction():
 
 
     else:
+        if category == 'Debt':
+            category = 'Needs'
+            response = supabase.table('transaction_reports').select('description').eq('transaction_id', id).execute()
+            description = response.data[0]['description']
+            response = supabase.table('user_debts').select('debt_paid').eq('description', description).execute()
+            paid = response.data[0]['debt_paid'] - amount
+            response = supabase.table('user_debts').update({'debt_paid': paid}).eq('description', description).execute()
         category = category.lower() + "_spent"
         response = supabase.table('user_info').select(category).eq('user_id', uid).execute()   
         spent = response.data[0][category]
@@ -451,7 +473,7 @@ def getProgress():
         stepOne = True
         percent = 33
     else:
-        percent = int((total/1000)*33)
+        percent = max(int((total/1000)*33), 0)
 
     if not stepOne:
         return jsonify({'percent':percent})
