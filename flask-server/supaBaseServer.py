@@ -535,7 +535,7 @@ def getProgress():
         stepTwo = True
         percent = 66
     else:
-        percent = int(percent + ((paidTotal/debtTotal) * 100))
+        percent = int(percent + ((paidTotal/debtTotal) * 33))
 
     if not stepTwo:
         return jsonify({'percent':percent})
