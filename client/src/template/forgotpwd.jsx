@@ -37,6 +37,7 @@ function ForgotPwd() {
           setSuccess(true);
         } else {
           setMessage(err);
+          setSuccess(false);
         }
 
       } catch (error){
@@ -73,7 +74,7 @@ function ForgotPwd() {
               </button>
             </div>
       )}
-      
+
       <div className='sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center'>
         <div onClick={() => { nav("/") }}>
           <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo" />
