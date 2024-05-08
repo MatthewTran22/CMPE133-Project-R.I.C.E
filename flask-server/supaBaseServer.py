@@ -515,7 +515,7 @@ def getProgress():
         return jsonify({'percent':percent})
     #Step 2: pay off all loans/debts
     #Goal: total debt amount = 0
-    response =  response = supabase.table('user_debts').select('total_amount').eq('user_id', id).execute()
+    response = supabase.table('user_debts').select('total_amount').eq('user_id', id).execute()
     if not response:
         percent = 66
         stepTwo = True
@@ -531,11 +531,11 @@ def getProgress():
             paidTotal = paidTotal + paid['debt_paid']
         
     
-    if debtTotal == 0:
-        stepTwo = True
-        percent = 66
-    else:
-        percent = int(percent + ((paidTotal/debtTotal) * 100))
+        if debtTotal - paidTotal == 0:
+            stepTwo = True
+            percent = 66
+        else:
+            percent = int(percent + ((paidTotal/debtTotal) * 33))
 
     if not stepTwo:
         return jsonify({'percent':percent})
@@ -556,7 +556,7 @@ def getProgress():
     response =  response = supabase.table('user_info').select('monthly_income').eq('user_id', id).execute()
     monthly = response.data[0]['monthly_income'] * 6
     goal = monthly + initialTotal
-    percent = min(int(percent + (currentTotal / goal * 100)), 100)
+    percent = min(int(percent + (currentTotal / (goal + 1000) * 100)), 100)
     return jsonify({'percent':percent})
 
 if __name__ == '__main__':

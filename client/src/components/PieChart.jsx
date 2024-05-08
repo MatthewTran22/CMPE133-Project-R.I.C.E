@@ -21,7 +21,10 @@ const Chart = ({ data }) => {
       const COLORS = ['#ED8E90', '#31f5e4', '#15cc0e'];
 
       const RADIAN = Math.PI / 180;
-      const renderInnerLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+      const renderInnerLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index, value }) => {
+        if(value === 0){
+          return null;
+        }
         const x = cx + (outerRadius - innerRadius) / 5 * Math.cos(-midAngle * RADIAN);
         const y = cy + (outerRadius - innerRadius) / 2 * Math.sin(-midAngle * RADIAN);
       
@@ -52,6 +55,7 @@ const Chart = ({ data }) => {
           <Pie
             data={data01}
             dataKey="value"
+            outline = 'none'
             cx="31%"
             cy="50%"
             outerRadius={225}
@@ -65,6 +69,7 @@ const Chart = ({ data }) => {
             </Pie>
             <Pie
               outline = 'none'
+              
               data={data02}
               dataKey="value"
               cx="31%"
