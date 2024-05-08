@@ -223,11 +223,14 @@ def UserSettings():
         update_response = supabase.table('user_info').update({'username': newUsername}).eq('user_id', id).execute()
         
 
-    if not newPassword == '':
-        response = supabase.table('users').select('password').eq('user_id', id).execute()
-        if oldPassword == response.data[0]['password']:
-            update_response = supabase.table('users').update({'password': newPassword}).eq('user_id', id).execute()
-            return "Success"
+    
+    response = supabase.table('users').select('password').eq('user_id', id).execute()
+    if (oldPassword == response.data[0]['password']) and newPassword != '':
+        update_response = supabase.table('users').update({'password': newPassword}).eq('user_id', id).execute()
+        return "Success"
+    else:
+        return Exception("Invalid old password or empty new password")
+
             
 
     if not(newSavingsBudget == '' or newWantsBudget == '' or newNeedsBudget == ''):

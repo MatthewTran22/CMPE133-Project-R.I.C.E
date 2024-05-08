@@ -5,7 +5,8 @@ import useSessionChecker from '../components/SessionCheck';
 
 const UserSettings = () => {
     // Define state to hold the value of the input field
-const [editedUsername, setEditedUsername] = useState('');
+    const [editedUsername, setEditedUsername] = useState('');
+    const [shouldRefresh, setShouldRefresh] = useState(false);
     // Error Messages
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
@@ -51,6 +52,17 @@ const [editedUsername, setEditedUsername] = useState('');
             });
     }, []);
 
+    useEffect(() => {
+        if (shouldRefresh === true) { // Replace shouldRefresh with your own condition
+            const timer = setTimeout(() => {
+                window.location.reload();
+            }, 500);
+
+            return () => clearTimeout(timer);
+        }
+    }, [shouldRefresh]); // Replace shouldRefresh with the state that triggers the refresh
+
+    // ************* NO USEEFFECT AFTER THIS *************
     if (info.length === 0) {
         return (
           <div className= "star-bg1 user-settings-container">
@@ -78,7 +90,7 @@ const [editedUsername, setEditedUsername] = useState('');
     formData.savingsBudget = '';
     formData.wantsBudget = '';
 
-    if (formData.username && (!formData.password || !formData.newPassword)) {
+    if (formData.username) {
 
         formData.password = '';
         formData.newPassword = '';
@@ -96,6 +108,7 @@ const [editedUsername, setEditedUsername] = useState('');
             if (response.ok) {
                 console.log('updated');
                 setSuccessMessageUP('Success!');
+                setShouldRefresh(true);
             } else {
                 setErrorMessageUP('Failed to submit data. Please try again later.');
             }
@@ -105,31 +118,33 @@ const [editedUsername, setEditedUsername] = useState('');
         }
         return;
     }
+    
+    if ((formData.password && formData.newPassword)) {
+        console.log("Form submitted with data:", formData);
 
-    if ((!formData.password || !formData.newPassword)) {
-        setErrorMessageUP("Please enter both your password and new password.");
-        return;
-    }
-
-    console.log("Form submitted with data:", formData);
-
-    try {
-        const response = await fetch('/UserSettings', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-        if (response.ok) {
-            console.log('updated');
-            setSuccessMessageUP('Success!');
-        } else {
-            setErrorMessageUP('Failed to submit data. Please try again later.');
+        try {
+            const response = await fetch('/UserSettings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            if (response.ok) {
+                console.log('updated');
+                setSuccessMessageUP('Success!');
+                setShouldRefresh(true);
+            } else {
+                setErrorMessageUP('Incorrect Password');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setErrorMessageUP('Failed to connect to the server. Please try again later.');
         }
-    } catch (error) {
-        console.error('Error:', error);
-        setErrorMessageUP('Failed to connect to the server. Please try again later.');
+    }
+    else{
+        setErrorMessageUP("Please enter both fields.");
+        return;
     }
 };
     
@@ -298,7 +313,7 @@ const [editedUsername, setEditedUsername] = useState('');
                         {inputVisible.password ? (
                             <div>
                                 <input
-                                    className="shadow-xl appearance-none border rounded py-2 w-full px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow appearance-none border rounded py-2 w-full px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
                                     id="password"
                                     name="password"
                                     type="password"
@@ -333,6 +348,16 @@ const [editedUsername, setEditedUsername] = useState('');
                                 <p className="text-red-500 mt-2">{errorMessageUsernamePassword}</p>
                             ) : null}
                             {successMessageUsernamePassword && <p className="text-green-500 mt-2">{successMessageUsernamePassword}</p>}
+                        </div>
+                        <div className='flex justify-center mt-2'>
+                        <button
+                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline  ${(formData.username || formData.password) ? '' : 'invisible'}`}
+                                type="submit"
+                                disabled={!formData.username && !formData.password} // Disable button if any of the required fields are empty
+                                onClick={handleSubmitUP}
+                            >
+                                Save
+                            </button>
                         </div>
                     </form>
 
