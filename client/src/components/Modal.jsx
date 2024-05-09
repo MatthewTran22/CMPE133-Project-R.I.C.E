@@ -33,7 +33,7 @@ const Modal = ({ transaction, onClose }) => {
       setDescriptionError(false);
     }
 
-    if (event.target.value.trim() === '' || formData.amount.trim() === '') {
+    if (event.target.value.trim() === '' || formData.amount === '') {
       setFormInvalid(true);
     } else {
       setFormInvalid(false);
