@@ -1,10 +1,10 @@
 Installation Guide
 
 Requirements:
-Python
-Node.js
-Git Bash Terminal (Windows Users only)
-Supabase database
+1. Python
+2. Node.js
+3. Git Bash Terminal (Windows Users only)
+4. Supabase database
 
 Backend imports
 1. pip install supabase
@@ -24,7 +24,7 @@ Frontend imports
 
 How to setup:
 1. Place the dotenv containing your supabase url and supabase key into the flask-server directory
-2. In Git Bash Terminal, enter CMPE133-Project-R.I.C.E directory
+2. In Git Bash Terminal (for MacOS users just enter terminal), enter CMPE133-Project-R.I.C.E directory
 3. Split the terminal into two Git Bash terminals, terminal one enter client directory and terminal two enter flask-server directory
 4. In terminal one, execute the command npm start to run the front end code
 5. In terminal two, execute source RICE/bin/activate for Mac, RICE-win/scripts/activate for Windows
