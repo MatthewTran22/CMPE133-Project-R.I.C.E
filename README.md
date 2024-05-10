@@ -7,18 +7,20 @@ Git Bash Terminal (Windows Users only)
 Supabase database
 
 Backend imports
-pip install supabase
-pip install dotenv
-pip install flask
-pip install flask-mail
-pip install --force-reinstall itsdangerous==2.0.1
+1. pip install supabase
+2. pip install dotenv
+3. pip install flask
+4. pip install flask-mail
+5. pip install --force-reinstall itsdangerous==2.0.1
+
+
 
 Frontend imports
-npm install react
-npm install react-router-dom
-npm install react-icons
-npm install recharts
-npm install @tailwindcss/typography
+1. npm install react
+2. npm install react-router-dom
+3. npm install react-icons
+4. npm install recharts
+5. npm install @tailwindcss/typography
 
 How to setup:
 1. Place the dotenv containing your supabase url and supabase key into the flask-server directory
