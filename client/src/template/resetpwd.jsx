@@ -184,8 +184,8 @@ const ResetPwd = () => {
                   }`}
                   onClick={() => {
                     setTimeout(() => {
-                        nav("/Login");
-                    }, 3000) // 3 seconds delay
+                        nav("/login");
+                    }, 2000) // 2 seconds delay
                   }}
                 >
                   Submit
