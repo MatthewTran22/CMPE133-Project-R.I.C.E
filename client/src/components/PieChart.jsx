@@ -47,15 +47,15 @@ const Chart = ({ data }) => {
 
       return (
         <div>
-           <div className='text-white rounded-3xl box-border border-double p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer bg-dark-blue relative' style={{ width: '55rem'}}>
+          <div className='text-white rounded-3xl box-border border-double p-4 border-4 whitespace-nowrap overflow-hidden cursor-pointer bg-dark-blue relative' style={{ width: '55rem'}}>
           <div className = 'text-5xl'>Budget Plan: {data[0].budget_split} Split</div><br/>
           <div className = 'text-2xl'>Monthly Income: ${data[0].monthly_income}</div>
         <PieChart width={1300} height={800}>
           
           <Pie
             data={data01}
-            dataKey="value"
             outline = 'none'
+            dataKey="value"
             cx="31%"
             cy="50%"
             outerRadius={225}
@@ -69,7 +69,6 @@ const Chart = ({ data }) => {
             </Pie>
             <Pie
               outline = 'none'
-              
               data={data02}
               dataKey="value"
               cx="31%"
