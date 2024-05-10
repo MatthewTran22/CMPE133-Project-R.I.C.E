@@ -3,12 +3,6 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { useNavigate } from 'react-router-dom'; 
 import Logo from './images/ricelogo.png';
 
-/**n what to revamp for this page:
- * implement star background
- * form 
- * message display
- * 
- */
 
 function ForgotPwd() {
     
