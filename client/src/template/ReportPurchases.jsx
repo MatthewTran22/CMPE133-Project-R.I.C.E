@@ -173,7 +173,7 @@ const handleChange = (event) => {
 
 
     return (
-        <div className= "star-bg w-full h-lvh">
+        <div className= "star-bg1 user-settings-container">
             <div id="stars"></div>
             <div id="stars2"></div>
             <div id="stars3"></div>
