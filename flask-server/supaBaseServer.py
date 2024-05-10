@@ -219,17 +219,19 @@ def UserSettings():
         monthlyIncome = float(monthlyIncome)
         update_response = supabase.table('user_info').update({'monthly_income': monthlyIncome}).eq('user_id', id).execute()
 
-    if not newUsername == '':
+    if newUsername != '':
         update_response = supabase.table('user_info').update({'username': newUsername}).eq('user_id', id).execute()
+        return "Success"
         
 
     
     response = supabase.table('users').select('password').eq('user_id', id).execute()
-    if (oldPassword == response.data[0]['password']) and newPassword != '':
-        update_response = supabase.table('users').update({'password': newPassword}).eq('user_id', id).execute()
-        return "Success"
-    else:
-        return Exception("Invalid old password or empty new password")
+    if oldPassword != '' and newPassword != '':
+        if (oldPassword == response.data[0]['password']) and newPassword != '':
+            update_response = supabase.table('users').update({'password': newPassword}).eq('user_id', id).execute()
+            return "Success"
+        else:
+            return Exception("Invalid old password or empty new password")
 
             
 

@@ -101,13 +101,13 @@ const Register = () => {
 
 
   return (
-    <div className="star-bg1 overflow-hidden relative">
-      <div style={{ minHeight: '100vh' }} className="flex flex-col justify-center px-6 py-12 lg:px-8 relative">
-        <div id="stars"></div>
-        <div id="stars2"></div>
-        <div id="stars3"></div>
-        <div id="title"></div>
-        
+    <div className="star-bg1 overflow-hidden">
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
+      <div id="title"></div>
+      
+      <div style={{ minHeight: '100vh' }} className="flex flex-col justify-center px-6 py-12 lg:px-8 relative">  
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
           <div onClick={() => { nav("/") }}>
             <img src={Logo} style={{ width: '200px', height: 'auto' }} alt="Logo" />
@@ -117,7 +117,7 @@ const Register = () => {
           </h2>
         </div>
   
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-100 p-6 flex flex-col justify-center" style={{minWidth: "500px" }}>
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-100 p-6 flex flex-col justify-center relative" style={{minWidth: "500px" }}>
           <form onSubmit={handleSubmit}>
             <p ref={errRef} className={`text-center ${errMsg ? "text-red-600" : "hidden"}`} aria-live="assertive">{errMsg}</p>
             <div className="mb-6">

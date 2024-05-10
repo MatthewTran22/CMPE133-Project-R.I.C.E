@@ -11,8 +11,10 @@ const UserSettings = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-    const [errorMessageUsernamePassword, setErrorMessageUP] = useState('');
-    const [successMessageUsernamePassword, setSuccessMessageUP] = useState('');
+    const [errorMessageUsername, setErrorMessageUP1] = useState('');
+    const [errorMessagePassword, setErrorMessageUP2] = useState('');
+    const [successMessageUsername, setSuccessMessageUP1] = useState('');
+    const [successMessagePassword, setSuccessMessageUP2] = useState('');
 
     const [errorMessageMonthlyIncome, setErrorMessageMI] = useState('');
     const [successMessageMonthlyIncome, setSuccessMessageMI] = useState('');
@@ -78,8 +80,10 @@ const UserSettings = () => {
     // Function to handle form submission
     const handleSubmitUP = async (event) => {
     event.preventDefault();
-    setSuccessMessageUP('');
-    setErrorMessageUP('');
+    setSuccessMessageUP1('');
+    setErrorMessageUP1('');
+    setSuccessMessageUP2('');
+    setErrorMessageUP2('');
     setSuccessMessageMI('');
     setErrorMessageMI('');
     setSuccessMessageBS('');
@@ -91,9 +95,6 @@ const UserSettings = () => {
     formData.wantsBudget = '';
 
     if (formData.username) {
-
-        formData.password = '';
-        formData.newPassword = '';
 
         console.log("Form submitted with data:", formData);
 
@@ -107,14 +108,14 @@ const UserSettings = () => {
             });
             if (response.ok) {
                 console.log('updated');
-                setSuccessMessageUP('Success!');
+                setSuccessMessageUP1('Success!');
                 setShouldRefresh(true);
             } else {
-                setErrorMessageUP('Failed to submit data. Please try again later.');
+                setErrorMessageUP1('Failed to submit data. Please try again later.');
             }
         } catch (error) {
             console.error('Error:', error);
-            setErrorMessageUP('Failed to connect to the server. Please try again later.');
+            setErrorMessageUP1('Failed to connect to the server. Please try again later.');
         }
         return;
     }
@@ -132,46 +133,31 @@ const UserSettings = () => {
             });
             if (response.ok) {
                 console.log('updated');
-                setSuccessMessageUP('Success!');
+                setSuccessMessageUP2('Success!');
                 setShouldRefresh(true);
             } else {
-                setErrorMessageUP('Incorrect Password');
+                setErrorMessageUP2('Incorrect Password');
             }
         } catch (error) {
             console.error('Error:', error);
-            setErrorMessageUP('Failed to connect to the server. Please try again later.');
+            setErrorMessageUP2('Failed to connect to the server. Please try again later.');
         }
     }
     else{
-        setErrorMessageUP("Please enter both fields.");
+        setErrorMessageUP2("Please enter both fields.");
         return;
     }
 };
     
 
-    const handleSubmitMI = async (event) => {
-        event.preventDefault();
-        setSuccessMessageUP('');
-        setErrorMessageUP('');
-        setSuccessMessageMI('');
-        setErrorMessageMI('');
-        setSuccessMessageBS('');
-        setErrorMessageBS('');
+const handleSubmitMI = async (event) => {
+    event.preventDefault();
+    setSuccessMessageMI('');
+    setErrorMessageMI('');
+    setSuccessMessageBS('');
+    setErrorMessageBS('');
 
-        formData.username = '';
-        formData.password = '';
-        formData.newPassword = '';
-        formData.needsBudget = '';
-        formData.savingsBudget = '';
-        formData.wantsBudget = '';
-
-        let isMonthlyIncomeEmpty = !formData.monthlyIncome;
-
-        if (isMonthlyIncomeEmpty) {
-            setErrorMessageMI('Please fill in the fields');
-            return;
-        }
-
+    if (formData.monthlyIncome) {
         console.log("Form submitted with data:", formData);
 
         try {
@@ -185,6 +171,7 @@ const UserSettings = () => {
             if (response.ok) {
                 console.log('updated');
                 setSuccessMessageMI('Success!');
+                setShouldRefresh(true);
             } else {
                 setErrorMessageMI('Failed to submit data. Please try again later.');
             }
@@ -194,11 +181,12 @@ const UserSettings = () => {
         }
 
     }
+    
+}
+
 
     const handleSubmitBS = async (event) => {
         event.preventDefault();
-        setSuccessMessageUP('');
-        setErrorMessageUP('');
         setSuccessMessageMI('');
         setErrorMessageMI('');
         setSuccessMessageBS('');
@@ -209,39 +197,33 @@ const UserSettings = () => {
         formData.newPassword = '';
         formData.monthlyIncome = '';
 
-        if (!formData.needsBudget || !formData.savingsBudget || !formData.wantsBudget) {
-            setErrorMessageBS('Please fill out all budget fields.');
-            return;
-        }
 
         const needsBudget = parseInt(formData.needsBudget);
         const savingsBudget = parseInt(formData.savingsBudget);
         const wantsBudget = parseInt(formData.wantsBudget);
 
-        if (needsBudget + savingsBudget + wantsBudget !== 100) {
-            setErrorMessageBS('Budget fields must add up to 100.');
-            return;
-        }
+        if (formData.needsBudget && formData.savingsBudget && formData.wantsBudget){
+            console.log("Form submitted with data:", formData);
 
-        console.log("Form submitted with data:", formData);
-
-        try {
-            const response = await fetch('/UserSettings', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            if (response.ok) {
-                console.log('updated');
-                setSuccessMessageBS('Success!');
-            } else {
-                setErrorMessageBS('Failed to submit data. Please try again later.');
+            try {
+                const response = await fetch('/UserSettings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                if (response.ok) {
+                    console.log('updated');
+                    setSuccessMessageBS('Success!');
+                    setShouldRefresh(true);
+                } else {
+                    setErrorMessageBS('Failed to submit data. Please try again later.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                setErrorMessageBS('Failed to connect to the server. Please try again later.');
             }
-        } catch (error) {
-            console.error('Error:', error);
-            setErrorMessageBS('Failed to connect to the server. Please try again later.');
         }
     }
 
@@ -250,6 +232,12 @@ const UserSettings = () => {
             ...formData,
             [event.target.name]: event.target.value
         });
+        setErrorMessageUP1("");
+        setErrorMessageUP2("");
+        setErrorMessageMI("");
+        setErrorMessageBS("");
+        setSuccessMessageBS("");
+
     };
 
     const toggleInput = (fieldName) => {
@@ -273,21 +261,25 @@ const UserSettings = () => {
                 <div className="flex justify-center items-center">
                     <div className="flex flex-col items-center">
                         
-                    {/* Username & Password Section */}
-                    <form onSubmit={handleSubmitUP} className="bg-white shadow-md rounded px-8 pt-6 pb-6 mb-4 relative" style={{ minHeight: "250px", maxWidth: "450px", minWidth: "450px" }}>
+                    {/* Username Section */}
+                    <div className="bg-white shadow-md rounded px-8 pt-6 pb-6 mb-3 relative" style={{ minHeight: "250px", maxWidth: "450px", minWidth: "450px" }}>
+
+                    <form onSubmit={handleSubmitUP}>
                         <div className="mt-0 flex justify-between items-center">
                             <label className="block text-gray-700 text-xl font-bold mb-2" htmlFor="username">
                                 Username
                             </label>
-                            <button style={{ transform: 'translateX(10%) translateY(-20%)' }} className="text-blue-500 cursor-pointer" onClick={() => toggleInput('username')}>Edit</button>
+                            <button style={{ transform: 'translateX(10%) translateY(-20%)' }} className="text-blue-500 cursor-pointer" onClick={() => toggleInput('username')}>
+                                {inputVisible.username ? 'Cancel' : 'Edit'}
+                            </button>
                         </div>
                         {inputVisible.username ? (
                             <input
                                 className="w-full shadow appearance-none border rounded py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
                                 id="username"
                                 name="username"
-                                pattern=".{3,}"
-                                title="Username must be at least 3 characters long"
+                                pattern="[A-Za-z ]{3,}"
+                                title="Username must be at least 3 letters long and contain no numbers or special characters"
                                 type="text"
                                 placeholder="Username"
                                 onChange={handleChange}
@@ -304,11 +296,30 @@ const UserSettings = () => {
                             />
                         )}
 
-                        <div className="mt-5 flex justify-between items-center">
+                        <div className="flex justify-left">
+                            {formData.username && !/^[A-Za-z ]+$/.test(formData.username) ? (
+                                <p className="text-red-500 mt-2">Username must be at least 3 letters long and contain no numbers or special characters</p>
+                            ) : null}
+                            {successMessageUsername && <p className="text-green-500 mt-2">{successMessageUsername}</p>}
+                        </div>
+                        <div className='flex justify-center mt-2'>
+                            <button
+                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${(inputVisible.username && formData.username && formData.username.length >= 3 && /^[A-Za-z ]+$/.test(formData.username)) ? '' : 'invisible'}`}
+                                type="submit"
+                                onClick={handleSubmitUP}
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </form>
+
+                    {/* Password Section */}
+                    <form onSubmit={handleSubmitUP}>
+                        <div className="flex justify-between items-center">
                             <label className="block text-gray-700 text-xl font-bold mb-2" htmlFor="password">
                                 Password
                             </label>
-                            <span className="text-blue-500 cursor-pointer" onClick={() => toggleInput('password')}>Edit</span>
+                            <button style={{ transform: 'translateX(10%) translateY(-10%)' }} className="text-blue-500 cursor-pointer" onClick={() => toggleInput('monthlyIncome')}>Edit</button>
                         </div>
                         {inputVisible.password ? (
                             <div>
@@ -325,12 +336,24 @@ const UserSettings = () => {
                                     id="newPassword"
                                     name="newPassword"
                                     type="password"
-                                    pattern=".{8,}"
-                                    title="Password must be at least 8 characters long"
+                                    pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{8,}$"
+                                    title="Password must be at least 8 characters long and contain at least one number, one lowercase letter, one uppercase letter, and one special character (!@#$%)"
                                     placeholder="New Password"
                                     onChange={handleChange}
                                 />
                                 {formData.passwordError && <p className="text-red-500 mt-2">{formData.passwordError}</p>}
+                                {formData.newPassword && /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{8,}$/.test(formData.newPassword) ? null : (
+                                    <div className='text-md'>
+                                        <p className="text-gray-600 mt-2">Password requirements:</p>
+                                        <ul className="list-disc pl-5 text-gray-600">
+                                            <li className={`${formData.newPassword.length >= 8 ? 'text-green-500' : 'text-red-500'}`}>At least 8 characters</li>
+                                            <li className={`${/[0-9]/.test(formData.newPassword) ? 'text-green-500' : 'text-red-500'}`}>At least one number</li>
+                                            <li className={`${/[a-z]/.test(formData.newPassword) ? 'text-green-500' : 'text-red-500'}`}>At least one lowercase letter</li>
+                                            <li className={`${/[A-Z]/.test(formData.newPassword) ? 'text-green-500' : 'text-red-500'}`}>At least one uppercase letter</li>
+                                            <li className={`${/[!@#$%]/.test(formData.newPassword) ? 'text-green-500' : 'text-red-500'}`}>At least one special character (!@#$%)</li>
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             <input
@@ -345,21 +368,23 @@ const UserSettings = () => {
 
                         <div className="flex justify-left">
                             {formData.password ? (
-                                <p className="text-red-500 mt-2">{errorMessageUsernamePassword}</p>
+                                <p className="text-red-500 mt-2">{errorMessagePassword}</p>
                             ) : null}
-                            {successMessageUsernamePassword && <p className="text-green-500 mt-2">{successMessageUsernamePassword}</p>}
+                            {successMessagePassword && <p className="text-green-500 mt-2">{successMessagePassword}</p>}
                         </div>
                         <div className='flex justify-center mt-2'>
-                        <button
-                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline  ${(formData.username || formData.password) ? '' : 'invisible'}`}
+                            <button
+                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline  ${(formData.password && inputVisible.password) ? '' : 'invisible'}`}
                                 type="submit"
-                                disabled={!formData.username && !formData.password} // Disable button if any of the required fields are empty
+                                disabled={!formData.username && !formData.password && !inputVisible.password} // Disable button if any of the required fields are empty or nothing is toggled
                                 onClick={handleSubmitUP}
                             >
                                 Save
                             </button>
                         </div>
                     </form>
+
+                    </div>
 
                     {/* Monthly Income Section */}     
                     <form onSubmit={handleSubmitMI} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 relative" style={{ minHeight: "200px", maxWidth: "450px", minWidth: "450px" }}>
@@ -380,7 +405,13 @@ const UserSettings = () => {
                                     min="0.01"
                                     placeholder='New Monthly Income'
                                     max="999999999999.99"
-                                    onChange={handleChange}
+                                    onChange={(e) => {
+                                        // Prevent input of negative sign
+                                        if (e.target.value < 0) {
+                                            e.target.value = '';
+                                        }
+                                        handleChange(e);
+                                    }}
                                 />
                             </div>
                         ) : (
@@ -396,7 +427,6 @@ const UserSettings = () => {
                         <div className="flex selection:justify-left">
                             {errorMessageMonthlyIncome && <p className="text-red-500 mt-2">{errorMessageMonthlyIncome}</p>}
                             {successMessageMonthlyIncome && <p className="text-green-500 mt-2">{successMessageMonthlyIncome}</p>}
-                            
                         </div>
                         <div className='flex justify-center mt-4'>
                             <button
@@ -409,72 +439,88 @@ const UserSettings = () => {
                         </div>
                     </form>
 
+
                     {/* Customize Budget Plan Section */}     
-                    <form onSubmit={handleSubmitBS} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96" style={{ minHeight: "250px", maxWidth: "450px", minWidth: "450px" }}>
-                        <br></br>
-                        <div className="mb-4 flex justify-between items-center">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="needsBudget">
-                                Needs Budget Split
-                            </label>
-                            <span className="text-blue-500 cursor-pointer" onClick={() => toggleInput('budgetSplit')}>Edit</span>
-                        </div>
-                        {inputVisible.budgetSplit ? (
-                            <div>
-                                <input
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="needsBudget"
-                                    name="needsBudget"
-                                    type="number"
-                                    placeholder="Needs Budget Split"
-                                    onChange={handleChange}
-                                />
-                                <br></br>
-                                <br></br>
-                                <div className="mb-4 flex justify-between items-center">
-                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="savingsBudget">
-                                        Savings Budget Split
-                                    </label>
-                                </div>
-                                <input
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="savingsBudget"
-                                    name="savingsBudget"
-                                    type="number"
-                                    placeholder="Savings Budget Split"
-                                    onChange={handleChange}
-                                />
-                                <br></br>
-                                <br></br>
-                                <div className="mb-6 flex justify-between items-center">
-                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="wantsBudget">
-                                        Wants Budget Split
-                                    </label>
-                                </div>
-                                <input
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="wantsBudget"
-                                    name="wantsBudget"
-                                    type="number"
-                                    placeholder="Wants Budget Split"
-                                    onChange={handleChange}
-                                /> </div>
-                        ) : (
-                            <span>Current Split: {info[0].budget_split}</span>
-                        )}
-                        <br></br>
-                        <br></br>
-                        <div className="flex items-center justify-center">
-                            <button
-                                className={`bg-${formData.wantsBudget && formData.needsBudget && formData.savingsBudget ? 'blue' : ''}-500 ${formData.wantsBudget && formData.needsBudget && formData.savingsBudget ? 'hover:bg-blue-700' : ''} text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
-                                type="submit"
-                                disabled={!formData.wantsBudget || !formData.needsBudget || !formData.savingsBudget}
-                            >
-                                Save Budget Split
-                            </button>
-                            {errorMessageBudgetSplit && <p className="text-red-500 mt-2">{errorMessageBudgetSplit}</p>}
-                            {successMessageBudgetSplit && <p className="text-green-500 mt-2">{successMessageBudgetSplit}</p>}
-                        </div>
-                    </form>
+                    <form onSubmit={handleSubmitBS} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-5 w-96 relative" style={{ minHeight: "200px", maxWidth: "450px", minWidth: "450px" }}>
+    <div className="mt=0 flex justify-between items-center">
+        <label className="block text-gray-700 text-xl font-bold mb-6" htmlFor="needsBudget">
+            Customize Budget Split
+        </label>
+        <button style={{ transform: 'translateX(10%) translateY(-45%)' }} className="text-blue-500 cursor-pointer" onClick={() => toggleInput('budgetSplit')}>Edit</button>
+    </div>
+    {inputVisible.budgetSplit ? (
+        <div>
+            <div className="mt-0 flex justify-between items-center">
+                <label className="block text-gray-700 text-md font-bold mb-2" htmlFor="needsBudget">
+                    Needs
+                </label>
+            </div>
+            <input
+                className="mb-4 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="needsBudget"
+                name="needsBudget"
+                type="number"
+                placeholder="Needs Budget Split"
+                min="10"
+                onChange={handleChange}
+            />
+            <div className="mt-4 flex justify-between items-center">
+                <label className="block text-gray-700 text-md font-bold mb-2" htmlFor="savingsBudget">
+                    Savings
+                </label>
+            </div>
+            <input
+                className="mb-4 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="savingsBudget"
+                name="savingsBudget"
+                type="number"
+                placeholder="Savings Budget Split"
+                min="10"
+                onChange={handleChange}
+            />
+
+            <div className="mt-4 flex justify-between items-center">
+                <label className="block text-gray-700 text-md font-bold mb-2" htmlFor="wantsBudget">
+                    Wants
+                </label>
+            </div>
+            <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="wantsBudget"
+                name="wantsBudget"
+                type="number"
+                placeholder="Wants Budget Split"
+                min="10"
+                onChange={handleChange}
+            />
+        </div>
+    ) : (
+        <input
+            className="w-full shadow appearance-none border rounded py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            id="unchangable"
+            placeholder={info[0].budget_split} // Display current username
+            disabled // Disable input so it's not editable
+            style={{ backgroundColor: "#F3F4F6" }} // Adjust background color for the current username
+        />
+
+    )}
+    <div className="flex items-center justify-left">
+        {errorMessageBudgetSplit && <p className="text-red-500 mt-2">{errorMessageBudgetSplit}</p>}
+        {successMessageBudgetSplit && <p className="text-green-500 mt-2">{successMessageBudgetSplit}</p>}
+    </div>
+    <div className='flex justify-center mt-4'>
+        <button
+            className={`bg-${formData.wantsBudget && formData.needsBudget && formData.savingsBudget ? 'blue' : ''}-500 ${formData.wantsBudget && formData.needsBudget && formData.savingsBudget ? 'hover:bg-blue-700' : ''} text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+            type="submit"
+            disabled={!formData.wantsBudget || !formData.needsBudget || !formData.savingsBudget}
+        >
+            Save
+        </button>
+    </div>
+</form>
+
+
 
 
                     </div>

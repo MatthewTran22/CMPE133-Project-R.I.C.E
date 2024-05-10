@@ -48,12 +48,12 @@ const Login = () => {
   }
 
   return (
-    <div className="star-bg1 overflow-hidden relative">
+    <div className="star-bg1 overflow-hidden">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+
      <div style={{ minHeight: '100vh' }} className="flex flex-col justify-center px-6 pb-12 lg:px-8">
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
-      <div id="title"></div>
       
         {errMsg && (
           <div className="absolute top-10 left-0 right-0 bg-red-100 border border-red-400 text-red-700 px-4 py-1 rounded mx-auto w-1/2 flex items-center">
@@ -73,7 +73,7 @@ const Login = () => {
           </h2>
         </div>
         <div
-          className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-200 p-5 flex flex-col justify-center"
+          className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-200 p-5 flex flex-col justify-center relative"
           style={{ minHeight: "300px", minWidth: "500px" }}
         >
           <form className="space-y-10" onSubmit={handleSubmit}>
@@ -126,7 +126,7 @@ const Login = () => {
               <span className="block w-full rounded-md shadow-sm">
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out"
+                  className="relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out"
                 >
                   Sign in
                 </button>
