@@ -319,7 +319,7 @@ const handleSubmitMI = async (event) => {
                             <label className="block text-gray-700 text-xl font-bold mb-2" htmlFor="password">
                                 Password
                             </label>
-                            <button style={{ transform: 'translateX(10%) translateY(-10%)' }} className="text-blue-500 cursor-pointer" onClick={() => toggleInput('monthlyIncome')}>Edit</button>
+                            <button style={{ transform: 'translateX(10%) translateY(-10%)' }} className="text-blue-500 cursor-pointer" onClick={() => toggleInput('password')}>Edit</button>
                         </div>
                         {inputVisible.password ? (
                             <div>
