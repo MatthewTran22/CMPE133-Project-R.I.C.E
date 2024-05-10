@@ -76,12 +76,12 @@ const ResetPwd = () => {
 
 
   return (
-    <div className="star-bg1 overflow-hidden relative">
+    <div className="star-bg1 overflow-hidden">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        <div id="title"></div>
       <div style={{ minHeight: '100vh' }} className="flex flex-col justify-center px-6 pb-12 lg:px-8">
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
-      <div id="title"></div>
 
       {msg && ( success ? 
             <div className='flex flex-row justify-between items-center bg-green-100 border-2 mx-auto w-1/2 py-2 px-6 mb-20 rounded-lg'>
@@ -109,14 +109,14 @@ const ResetPwd = () => {
       </div>
 
       <div
-        className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-200 p-5 flex flex-col justify-center"
+        className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-200 p-5 flex flex-col justify-center relative"
         style={{ minHeight: "220px", minWidth: "500px" }}
       >
       <form className="space-y-10" onSubmit={handleSubmit}>
       <div className="mb-6">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium leading-6 text-stone-800 mb-4"
+                className="block text-md font-medium leading-6 text-stone-800 mb-4"
               >
                 New Password
               </label>
@@ -130,7 +130,8 @@ const ResetPwd = () => {
                   onFocus={() => setPwdFocus(true)}
                   onBlur={() => setPwdFocus(false)}
                   placeholder="Enter new password"
-                  className="block w-full form-input rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`text-sm py-2 px-2 w-full border-2 rounded-md shadow-sm ${validPwd ? 'border-green-500' : ''}`} // Add green border color if password is valid
+                  style={{ outline: 'none' }} 
                 />
                 {pwdFocus && !validPwd && (
                 <div className="text-sm text-gray-600 mt-1">
@@ -148,7 +149,7 @@ const ResetPwd = () => {
 
             <div className="mb-6">
               <div className="flex justify-between">
-                <label htmlFor="confirm_pwd" className="block text-sm font-medium leading-6 text-stone-800 mb-4">Confirm Password</label>
+                <label htmlFor="confirm_pwd" className="block text-md font-medium leading-6 text-stone-800 mb-4">Confirm Password</label>
               </div>
               <input
                 type="password"
@@ -165,7 +166,7 @@ const ResetPwd = () => {
                   setConfirmPwdFinished(false); // Reset confirm password finished when user leaves the field
                 }}
                 placeholder="Confirm new password"
-                className={`block w-full form-input rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${validMatch ? 'border-green-500' : (!validMatch && matchFocus ? 'border-red-500' : '')}`} // Add border color based on password match status
+                className={`text-sm py-2 px-2 w-full border-2 rounded-md shadow-sm ${validMatch ? 'border-green-500' : (!validMatch && matchFocus ? 'border-red-500' : '')}`} // Add border color based on password match status
                 style={{ outline: 'none' }} 
               />
               {matchFocus && !validMatch && <p className="text-red-500 text-sm mt-1">Passwords do not match</p>} {/* Show error message if confirm password does not match */}

@@ -202,12 +202,13 @@ const handleSubmitMI = async (event) => {
         const savingsBudget = parseInt(formData.savingsBudget);
         const wantsBudget = parseInt(formData.wantsBudget);
 
-        if (needsBudget + savingsBudget + wantsBudget != 100){
-            setErrorMessageBS('Splits must add up to 100%.');
-            return;
-        }
 
         if (formData.needsBudget && formData.savingsBudget && formData.wantsBudget){
+            if (needsBudget + savingsBudget + wantsBudget != 100){
+                setErrorMessageBS('Splits must add up to 100%.');
+                return;
+            }
+    
 
             console.log("Form submitted with data:", formData);
 
@@ -251,6 +252,7 @@ const handleSubmitMI = async (event) => {
             ...inputVisible,
             [fieldName]: !inputVisible[fieldName],
         });
+        setErrorMessageBS("");
     };
 
     return (

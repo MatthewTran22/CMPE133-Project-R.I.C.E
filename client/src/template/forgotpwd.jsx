@@ -45,12 +45,13 @@ function ForgotPwd() {
 
 
   return (
-    <div className="star-bg1 overflow-hidden relative">
+    <div className="star-bg1 overflow-hidden">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+
+
       <div style={{ minHeight: '100vh' }} className="flex flex-col justify-center px-6 pb-12 lg:px-8">
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
-      <div id="title"></div>
 
 
       {message && ( success ? 
@@ -80,7 +81,7 @@ function ForgotPwd() {
 
 
       <div
-        className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-200 p-5 flex flex-col justify-center"
+        className="mt-10 sm:mx-auto sm:w-full sm:max-w-md border-2 rounded-lg bg-slate-200 p-5 flex flex-col justify-center relative"
         style={{ minHeight: "220px", minWidth: "500px" }}
       >
         <form className="space-y-10" onSubmit={handleSubmit}>
