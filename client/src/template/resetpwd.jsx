@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'; 
+import { TiDeleteOutline } from "react-icons/ti";
 import Logo from './images/ricelogo.png';
 
 /** what to revamp for this page:
@@ -10,15 +11,42 @@ import Logo from './images/ricelogo.png';
  * password limitaions
  */
 
-function ResetPwd() {
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
+const ResetPwd = () => {
   const { token } = useParams();
   const [password, setPassword] = useState("");
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
+  const [pwdRequirementsMet, setPwdRequirementsMet] = useState(false);
+  const [confirmPwdFinished, setConfirmPwdFinished] = useState(false);
+  const [matchPwd, setMatchPwd] = useState('');
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false);
+
   const [msg, setMsg] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const nav = useNavigate();
 
+  useEffect(() => {
+    const result = PWD_REGEX.test(password);
+    setValidPwd(result);
+    setPwdRequirementsMet(password.length >= 8 && /[0-9]/.test(password) && /[a-z]/.test(password) && /[A-Z]/.test(password) && /[!@#$%]/.test(password));
+    if (confirmPwdFinished) {
+      const match = password === matchPwd;
+      setValidMatch(match);
+    }
+  }, [password, matchPwd, confirmPwdFinished]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const v1 = PWD_REGEX.test(password);
+    if (!v1) {
+      setMsg("Invalid Entry");
+      return;
+    }
+
     try {
       const res = await fetch(`/reset_password/${token}`, {
         method: "POST",
@@ -32,9 +60,11 @@ function ResetPwd() {
 
       if (res.ok) {
         setMsg(data.message);
+        setSuccess(true);
       }
       else {
         setMsg(err);
+        setSuccess(false);
       }
     } catch (err) {
       console.log(err);
@@ -52,6 +82,22 @@ function ResetPwd() {
       <div id="stars2"></div>
       <div id="stars3"></div>
       <div id="title"></div>
+
+      {msg && ( success ? 
+            <div className='flex flex-row justify-between items-center bg-green-100 border-2 mx-auto w-1/2 py-2 px-6 mb-20 rounded-lg'>
+            <span className='text-green-700'>{msg}</span>
+            <button onClick={() => setMsg('')} className="ml-auto">
+              <TiDeleteOutline className="text-green-500" size={20} />
+            </button>
+          </div>
+           : 
+           <div className='flex flex-row justify-between items-center bg-red-100 border-2 mx-auto w-1/2 py-2 px-6 mb-20 rounded-lg'>
+              <span className='text-red-700'>{msg}</span>
+              <button onClick={() => setMsg('')} className="ml-auto">
+                <TiDeleteOutline className="text-red-500" size={20} />
+              </button>
+            </div>
+      )}
       
       <div className='sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center'>
         <div onClick={() => { nav("/") }}>
@@ -80,18 +126,67 @@ function ResetPwd() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  aria-describedby="pwdnote"
+                  onFocus={() => setPwdFocus(true)}
+                  onBlur={() => setPwdFocus(false)}
                   placeholder="Enter new password"
                   className="block w-full form-input rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {pwdFocus && !validPwd && (
+                <div className="text-sm text-gray-600 mt-1">
+                  <ul>
+                    <li className={`${password.length >= 8 ? 'text-green-500' : 'text-gray-500'}`}>At least 8 characters</li>
+                    <li className={`${/[0-9]/.test(password) ? 'text-green-500' : 'text-gray-500'}`}>At least one number</li>
+                    <li className={`${/[a-z]/.test(password) ? 'text-green-500' : 'text-gray-500'}`}>At least one lowercase letter</li>
+                    <li className={`${/[A-Z]/.test(password) ? 'text-green-500' : 'text-gray-500'}`}>At least one uppercase letter</li>
+                    <li className={`${/[!@#$%]/.test(password) ? 'text-green-500' : 'text-gray-500'}`}>At least one special character '!@#$%'</li>
+                  </ul>
+                </div>
+              )}
               </div>
+            </div>
+
+            <div className="mb-6">
+              <div className="flex justify-between">
+                <label htmlFor="confirm_pwd" className="block text-sm font-medium leading-6 text-stone-800 mb-4">Confirm Password</label>
+              </div>
+              <input
+                type="password"
+                id="confirm_pwd"
+                onChange={(e) => {
+                  setMatchPwd(e.target.value);
+                  setConfirmPwdFinished(true); // Set confirm password finished when user finishes inputting
+                }}
+                required
+                aria-describedby="confirmnote"
+                onFocus={() => setMatchFocus(true)}
+                onBlur={() => {
+                  setMatchFocus(false);
+                  setConfirmPwdFinished(false); // Reset confirm password finished when user leaves the field
+                }}
+                placeholder="Confirm new password"
+                className={`block w-full form-input rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${validMatch ? 'border-green-500' : (!validMatch && matchFocus ? 'border-red-500' : '')}`} // Add border color based on password match status
+                style={{ outline: 'none' }} 
+              />
+              {matchFocus && !validMatch && <p className="text-red-500 text-sm mt-1">Passwords do not match</p>} {/* Show error message if confirm password does not match */}
             </div>
 
 
             <div className="mb-6">
               <span className="block w-full rounded-md shadow-sm">
                 <button
+                  disabled={!validPwd || !validMatch ? true : false}
                   type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out"
+                  className={`w-full flex justify-center py-2 px-5 border border-transparent text-sm font-medium rounded-md ${
+                    !validPwd || !validMatch
+                      ? 'bg-blue-300 text-white hover:bg-disabled focus:bg-disabled'
+                      : 'bg-blue-600 text-white hover:bg-blue-500 focus:bg-blue-500'
+                  }`}
+                  onClick={() => {
+                    setTimeout(() => {
+                        nav("/Login");
+                    }, 3000) // 3 seconds delay
+                  }}
                 >
                   Submit
                 </button>
