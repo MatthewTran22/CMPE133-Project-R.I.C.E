@@ -137,8 +137,8 @@ const AllDebts = () => {
                     <div>
                       {debt.description }
                     </div>
-                    <div className={`${debt.total_amount ? 'text-red-500' : 'text-green-500'} rounded-3xl box-border p-4 border-0 overflow-auto whitespace-nowrap bg-transparent number-comma`}>
-                        ${debt.total_amount.toFixed(2)}
+                    <div className={`${debt.total_amount - debt.debt_paid === 0 ? 'text-green-500' : 'text-red-500'} rounded-3xl box-border p-4 border-0 overflow-auto whitespace-nowrap bg-transparent number-comma`}>
+                        ${(debt.total_amount - debt.debt_paid).toFixed(2)}
                     </div>
                     <div>
                         <button className="bg-sky-950 hover:bg-sky-900 font-bold py-1 px-2 rounded" onClick={() => handleOnClick(debt)}>
