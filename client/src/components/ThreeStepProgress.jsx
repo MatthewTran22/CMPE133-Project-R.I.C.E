@@ -24,13 +24,13 @@ const Bar = () => {
             <div className=' text-5xl mr-4 flex'>Three Step Improvement Plan 
                 <div className="relative inline-block">
                     <IoMdInformationCircleOutline size='1.75rem' onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} />
-                    <div className={`text-xl absolute z-20 bg-white text-black p-2 rounded-md shadow-md mt-1 ml-3 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                    <div className={`mb-[30rem] text-xl absolute z-20 bg-white text-black p-2 rounded-md shadow-md mt-1 ml-3 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`} style={{ top: '-17rem' }}>
                         <div className='inline-block'>
-                          <h1 className='w-5'>3 Step Improvement Plan: Checkpoints to secure yourself faster made by radio finance personality Dave Ramsey</h1>
-                          <p>Step 1: Create a starting emergency fund.  Have a minimum of $1000 saved for small emergencies</p>
-                          <p>Step 2: Pay off all debt.  Pay off all your loans by using the debt snowball strategy, 
-                              making minimum payments to all your loans expect for the current smallest, the smallest loan you will pay as much as you can.</p>
-                          <p>Step 3: Save 6 months of expenses into the emergency fund. This will help you prepare for more serious emergencies like layoffs</p>
+                          <h1 className='w-5'>3 Step Improvement Plan: Checkpoints to secure yourself faster</h1>
+                          <p>Step 1: Create a starting emergency fund.  Have a minimum of $1000</p><p> saved for small emergencies</p>
+                          <p>Step 2: Pay off all debt.  Pay off all your loans by using the debt</p><p> 
+                          snowball strategy,making minimum payments to all your loans </p><p>expect for the current smallest, the smallest loan you will </p><p>pay as much as you can.</p>
+                          <p>Step 3: Save 6 months of expenses into the emergency fund. This will </p><p>help you prepare for more serious emergencies like layoffs</p>
                         </div>
                     </div>
                 </div>
