@@ -159,7 +159,7 @@ def ReportPurchases():
     current_total = response.data[0]['total_remaining']
     moneyChange = float(data.get('money'))
     #Check if report is on a bill
-    response = supabase.table('bills').select('bill_paid').eq('user_id', data.get('description')).eq('user_id', id).execute()
+    response = supabase.table('bills').select('bill_paid').eq('description', data.get('description')).eq('user_id', id).execute()
     if response.data:
         bill_paid = float(response.data[0]['bill_paid']) + moneyChange
         response = supabase.table('bills').select('amount').eq('description', data.get('description')).eq('user_id', id).execute()
@@ -558,10 +558,10 @@ def getProgress():
         response =  response = supabase.table('user_info').update({'step_three_data': initialTotal}).eq('user_id', id).execute()
     
     #get monthly income so we can multiply by 6
-    response =  response = supabase.table('user_info').select('monthly_income').eq('user_id', id).execute()
-    monthly = response.data[0]['monthly_income'] * 6
+    response =  response = supabase.table('user_info').select('total_needs').eq('user_id', id).execute()
+    monthly = response.data[0]['total_needs'] * 6
     goal = monthly + initialTotal
-    percent = min(int(percent + (currentTotal / (goal + 1000) * 100)), 100)
+    percent = min(int(currentTotal / (goal + 1000) * 100), 100)
     return jsonify({'percent':percent})
 
 if __name__ == '__main__':
