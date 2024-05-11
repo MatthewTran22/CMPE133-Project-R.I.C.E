@@ -561,7 +561,7 @@ def getProgress():
     response =  response = supabase.table('user_info').select('total_needs').eq('user_id', id).execute()
     monthly = response.data[0]['total_needs'] * 6
     goal = monthly + initialTotal
-    percent = min(int(currentTotal / (goal + 1000) * 100), 100)
+    percent = min(int(percent + (currentTotal / (goal + 1000) * 34)), 100)
     return jsonify({'percent':percent})
 
 if __name__ == '__main__':

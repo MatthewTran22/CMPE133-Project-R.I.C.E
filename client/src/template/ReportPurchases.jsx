@@ -279,7 +279,7 @@ const handleChange = (event) => {
                                 <p className='text-stone-800 text-2xl text-center'>Current Total: ${income}</p>
                                 <p className='text-stone-800 text-2xl text-center my-10'>{formData.description}: {`$${formData.amount}`} </p>
                                 <p className='text-stone-800 text-2xl text-center'>
-                                    New Total: ${formData.category === 'Deposit' ? (parseFloat(income) + parseFloat(formData.amount).toFixed(2)) : (parseFloat(income) - parseFloat(formData.amount)).toFixed(2)}
+                                    New Total: ${formData.category === 'Deposit' ? ((parseFloat(income) + parseFloat(formData.amount)).toFixed(2)) : (parseFloat(income) - parseFloat(formData.amount)).toFixed(2)}
                                 </p>
                             </div>
                         )}
