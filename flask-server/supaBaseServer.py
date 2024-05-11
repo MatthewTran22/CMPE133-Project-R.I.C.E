@@ -159,13 +159,13 @@ def ReportPurchases():
     current_total = response.data[0]['total_remaining']
     moneyChange = float(data.get('money'))
     #Check if report is on a bill
-    response = supabase.table('bills').select('bill_paid').eq('description', data.get('description')).execute()
+    response = supabase.table('bills').select('bill_paid').eq('user_id', data.get('description')).eq('user_id', id).execute()
     if response.data:
         bill_paid = float(response.data[0]['bill_paid']) + moneyChange
-        response = supabase.table('bills').select('amount').eq('description', data.get('description')).execute()
+        response = supabase.table('bills').select('amount').eq('description', data.get('description')).eq('user_id', id).execute()
         bill_amount = float(response.data[0]['amount'])
         done = bill_paid >= bill_amount
-        response = supabase.table('bills').update({'bill_paid': bill_paid, 'paid': done}).eq('description', data.get('description')).execute()
+        response = supabase.table('bills').update({'bill_paid': bill_paid, 'paid': done}).eq('description', data.get('description')).eq('user_id', id).execute()
 
 
     category = data.get('chosenCategory').lower() #setup to make category fit the column name
@@ -177,9 +177,9 @@ def ReportPurchases():
     else:
         if category == 'debt':
             category = 'needs_spent'
-            getPaid = supabase.table('user_debts').select('debt_paid').eq('description', data.get('description')).execute()
+            getPaid = supabase.table('user_debts').select('debt_paid').eq('description', data.get('description')).eq('user_id', id).execute()
             paid = float(getPaid.data[0]['debt_paid']) + moneyChange
-            response = supabase.table('user_debts').update({'debt_paid': paid}).eq('description', data.get('description')).execute()
+            response = supabase.table('user_debts').update({'debt_paid': paid}).eq('description', data.get('description')).eq('user_id', id).execute()
         
         else:
             category = category + "_spent" #gets either the wants or needs category
@@ -281,21 +281,21 @@ def updateTransaction():
         category = 'Needs'
         response = supabase.table('transaction_reports').select('description').eq('transaction_id', transaction_id).execute()
         description = response.data[0]['description']
-        response = supabase.table('user_debts').update({'debt_paid': newAmount}).eq('description', description).execute()
+        response = supabase.table('user_debts').update({'debt_paid': newAmount}).eq('description', description).eq('user_id', id).execute()
         response = supabase.table('transaction_reports').update({'amount': newAmount, 'description': data.get('description'), 'date': data.get('date')}).eq('transaction_id', transaction_id).execute()
         return "Success"
     
     #Check if update is on a bill
     response = supabase.table('transaction_reports').select('description').eq('transaction_id', transaction_id).execute()
     description = response.data[0]['description']
-    response = supabase.table('bills').select('amount').eq('description', description).execute()
+    response = supabase.table('bills').select('amount').eq('description', description).eq('user_id', id).execute()
     if response.data:
         still_paid = response.data[0]['amount'] <= newAmount
         if description != data.get('description'):
             amt = 0
         else:
             amt = newAmount
-        response = supabase.table('bills').update({'bill_paid': amt, 'paid' : still_paid}).eq('description', description).execute()
+        response = supabase.table('bills').update({'bill_paid': amt, 'paid' : still_paid}).eq('description', description).eq('user_id', id).execute()
 
 
     if category != 'Deposit':
@@ -327,10 +327,10 @@ def deleteTransaction():
     #Check if its a bill
     response = supabase.table('transaction_reports').select('description').eq('transaction_id', id).execute()
     description = response.data[0]['description']
-    response = supabase.table('bills').select('amount').eq('description', description).execute()
+    response = supabase.table('bills').select('amount').eq('description', description).eq('user_id',uid).execute()
     if response.data:  
         amt = response.data[0]['amount']      
-        response = supabase.table('bills').select('bill_paid').eq('description', description).execute()
+        response = supabase.table('bills').select('bill_paid').eq('description', description).eq('user_id', uid).execute()
         newAmount = max(response.data[0]['bill_paid'] - amount, 0)
         still_paid = newAmount >= amt
 
@@ -351,9 +351,9 @@ def deleteTransaction():
             category = 'Needs'
             response = supabase.table('transaction_reports').select('description').eq('transaction_id', id).execute()
             description = response.data[0]['description']
-            response = supabase.table('user_debts').select('debt_paid').eq('description', description).execute()
+            response = supabase.table('user_debts').select('debt_paid').eq('description', description).eq('user_id', uid).execute()
             paid = response.data[0]['debt_paid'] - amount
-            response = supabase.table('user_debts').update({'debt_paid': paid}).eq('description', description).execute()
+            response = supabase.table('user_debts').update({'debt_paid': paid}).eq('description', description).eq('user_id', uid).execute()
         category = category.lower() + "_spent"
         response = supabase.table('user_info').select(category).eq('user_id', uid).execute()   
         spent = response.data[0][category]
