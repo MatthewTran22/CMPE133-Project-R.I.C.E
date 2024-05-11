@@ -107,7 +107,7 @@ const BillList = () => {
                     </div>
                     <div>
                     </div>
-                    <div className={`${debt.total_amount === 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    <div className={`${debt.total_amount - debt.debt_paid <= 0 ? 'text-green-500' : 'text-red-500'}`}>
                      ${(debt.total_amount - debt.debt_paid).toFixed(2)}
                     </div>
                   </div>
